@@ -1,0 +1,29 @@
+exclude: |
+  (?x)
+  # Exclude binary and minified assets
+  ^static/description/.*|
+  ^static/src/img/.*
+
+repos:
+  - repo: https://github.com/OCA/maintainer-tools
+    rev: OCA-maintainer-tools-odoo18
+    hooks:
+      - id: oca-gen-addon-readme
+        args:
+          - --org=ansis-ai
+          - --repo-name=ansis_web_theme
+          - --branch=18.0
+          - --addons-dir=.
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.4
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        types_or: [javascript, scss, xml, json, yaml, markdown]

@@ -1,4 +1,8 @@
 /** @odoo-module **/
+/*
+    Copyright 2024-2026 ANSIS Pte Ltd
+    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.html).
+*/
 
 import { BurgerMenu } from "@web/webclient/burger_menu/burger_menu";
 import { patch } from "@web/core/utils/patch";

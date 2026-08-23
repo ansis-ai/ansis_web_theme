@@ -1,0 +1,4 @@
+- **1.2 Keyboard Navigation**: Arrow keys (<kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>) and Enter to navigate and launch apps directly in Home Menu overlay.
+- **3.2 Deep-Link URL Share Action**: Systray button to copy clean direct URL to clipboard with native Web Share API support on mobile.
+- **5.1 Collapsible Kanban Columns**: Fold kanban stages into compact vertical pills with item counts to reclaim horizontal space.
+- **5.2 Stage Header Progress Bars**: Visual progress and distribution bars on stage headers.
