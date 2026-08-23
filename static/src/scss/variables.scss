@@ -46,8 +46,8 @@ $o-border-radius-sm: 6px;
 // Global Typography & Antialiasing
 body,
 .o_web_client {
-  font-family: var(--ansis-font-sans) !important;
-  font-size: var(--ansis-font-size-base) !important;
+  font-family: var(--ansis-font-sans);
+  font-size: var(--ansis-font-size-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -55,14 +55,14 @@ body,
   background-color: var(--ansis-canvas) !important;
 }
 
-// Inherit primary font family across core UI controls
-button,
+// Inherit primary font family across core UI controls while strictly excluding icon font elements
+button:not(.oi):not(.fa):not([class*="oi-"]):not([class*="fa-"]),
 input,
 select,
 textarea,
 .form-control,
 .form-select,
-.btn,
+.btn:not(.oi):not(.fa):not([class*="oi-"]):not([class*="fa-"]),
 .o_form_view,
 .o_list_view,
 .o_kanban_view,
@@ -71,5 +71,17 @@ textarea,
 .o_field_widget,
 .o_notebook,
 .o_searchview {
-  font-family: var(--ansis-font-sans) !important;
+  font-family: var(--ansis-font-sans);
+}
+
+// Explicitly protect and guarantee icon fonts from being overridden
+.oi,
+[class*="oi-"],
+.o_facet_remove.oi {
+  font-family: "odoo_icons" !important;
+}
+
+.fa,
+[class*="fa-"] {
+  font-family: "FontAwesome" !important;
 }
