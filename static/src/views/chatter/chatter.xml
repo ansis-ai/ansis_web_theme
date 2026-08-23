@@ -8,7 +8,6 @@
                     'btn-primary': state.composerType !== 'note',
                     'btn-secondary': state.composerType === 'note',
                     'active': state.composerType === 'message',
-                    'my-2': !props.compactHeight
                 }" 
                 t-att-disabled="!state.thread.hasWriteAccess and !(state.thread.hasReadAccess and state.thread.canPostOnReadonly) and props.threadId" 
                 data-hotkey="m" 
@@ -24,7 +23,6 @@
                 t-att-class="{
                     'btn-primary active': state.composerType === 'note',
                     'btn-secondary': state.composerType !== 'note',
-                    'my-2': !props.compactHeight
                 }" 
                 data-hotkey="shift+m" 
                 t-on-click="() => this.toggleComposer('note')"
@@ -41,14 +39,14 @@
         </xpath>
         <xpath expr="//button[@t-on-click='onClickSearch']" position="after">
             <button
-                class="btn btn-link text-action px-1"
+                class="o_ansis_chatter_notification_toggle btn btn-link text-action"
                 aria-label="Show/Hide Notifications"
                 title="Show/Hide Notifications"
                 t-on-click="onClickNotificationsToggle"
                 t-att-disabled="state.isSearchOpen"
             >
                 <i
-                    class="fa fa-lg"
+                    class="fa"
                     t-att-class="{
                         'fa-eye': state.showNotificationMessages,
                         'fa-eye-slash': !state.showNotificationMessages,

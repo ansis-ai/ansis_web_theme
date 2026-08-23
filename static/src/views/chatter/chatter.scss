@@ -10,23 +10,51 @@
     // Top Chatter Action Buttons Bar
     .o-mail-Chatter-topbar,
     .o_Chatter_topbar {
-        padding: 8px 12px;
+        display: flex !important;
+        align-items: center !important;
+        min-height: 46px;
+        padding: 6px 12px;
         background-color: #ffffff;
         border-radius: var(--ansis-radius-md, 8px);
         border: 1px solid var(--ansis-border, #e2e8f0);
         margin-bottom: 12px;
         box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.03);
+        gap: 4px;
 
-        .btn {
+        // Reset all button margins and vertically center everything
+        .btn,
+        button,
+        .o-mail-Followers,
+        .o-mail-Followers-button,
+        .o-mail-Chatter-attachFiles,
+        .o-mail-Chatter-follow,
+        .o_ansis_chatter_notification_toggle {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+        }
+
+        // Action Buttons (Send message, Log note, Activities)
+        .o-mail-Chatter-sendMessage,
+        .o-mail-Chatter-logNote,
+        .o-mail-Chatter-activity {
             height: 32px;
             font-size: 0.84rem;
             font-weight: 600;
             border-radius: 6px;
             padding: 0 12px;
-            display: inline-flex;
-            align-items: center;
             gap: 6px;
             transition: all 0.15s ease;
+
+            i, .fa, .oi {
+                font-size: 0.875rem;
+                line-height: 1;
+                display: inline-flex;
+                align-items: center;
+            }
 
             &.btn-primary,
             &.active {
@@ -46,6 +74,54 @@
                     border-color: #cbd5e1;
                     color: #0f172a;
                 }
+            }
+        }
+
+        // Icon Utility Buttons (Search, Eye Filter, Attach Files, Followers)
+        .btn-link.text-action,
+        .o-mail-Followers-button,
+        .o-mail-Chatter-attachFiles,
+        .o_ansis_chatter_notification_toggle {
+            height: 32px;
+            min-width: 32px;
+            padding: 0 6px !important;
+            color: var(--ansis-text-muted, #64748b) !important;
+            border-radius: 6px;
+            text-decoration: none !important;
+            transition: all 0.15s ease;
+
+            i, .fa, .oi {
+                font-size: 1rem !important;
+                line-height: 1 !important;
+                vertical-align: middle !important;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            sup {
+                font-size: 0.72rem;
+                font-weight: 600;
+                top: -0.35em;
+                margin-left: 2px;
+            }
+
+            &:hover {
+                background-color: #f1f5f9;
+                color: var(--ansis-text-main, #0f172a) !important;
+            }
+        }
+
+        // Follow / Unfollow Text Pill Button
+        .o-mail-Chatter-follow {
+            height: 32px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 0 8px !important;
+            border-radius: 6px;
+
+            &:hover {
+                background-color: #f1f5f9;
             }
         }
     }
