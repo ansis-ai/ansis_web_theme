@@ -1,0 +1,198 @@
+// ==========================================================================
+// ANSIS Control Panel & Search Bar Modernization
+// ==========================================================================
+
+.o_control_panel {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid var(--ansis-border, #e2e8f0) !important;
+    box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.03) !important;
+    padding: 10px 16px !important;
+
+    // Breadcrumbs Hierarchy
+    .o_breadcrumb {
+        .breadcrumb-item {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--ansis-text-muted, #64748b);
+
+            a {
+                color: var(--ansis-text-muted, #64748b);
+                text-decoration: none;
+                transition: color 0.15s ease;
+
+                &:hover {
+                    color: var(--ansis-primary, #0284c7);
+                }
+            }
+
+            &.active {
+                color: var(--ansis-text-main, #0f172a);
+                font-weight: 700;
+            }
+        }
+    }
+
+    // Action Buttons (New, Save, Discard, Action Menu)
+    .o_cp_buttons {
+        .btn {
+            height: 34px;
+            border-radius: var(--ansis-radius-sm, 6px);
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 0 14px;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+
+            &.btn-primary {
+                background-color: var(--ansis-primary, #0284c7);
+                border-color: var(--ansis-primary, #0284c7);
+                color: #ffffff;
+                box-shadow: 0 1px 2px rgba(2, 132, 199, 0.2);
+
+                &:hover {
+                    background-color: var(--ansis-primary-hover, #0369a1);
+                    border-color: var(--ansis-primary-hover, #0369a1);
+                    transform: translateY(-0.5px);
+                    box-shadow: 0 3px 6px rgba(2, 132, 199, 0.25);
+                }
+            }
+
+            &.btn-secondary,
+            &.btn-light {
+                background-color: #ffffff;
+                border: 1px solid var(--ansis-border, #e2e8f0);
+                color: #334155;
+
+                &:hover {
+                    background-color: #f8fafc;
+                    border-color: #cbd5e1;
+                    color: #0f172a;
+                }
+            }
+        }
+    }
+
+    // Search Bar View Container
+    .o_searchview {
+        background-color: #ffffff;
+        border: 1px solid var(--ansis-border, #e2e8f0);
+        border-radius: var(--ansis-radius-md, 8px);
+        padding: 2px 8px;
+        min-height: 34px;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+        &:focus-within {
+            border-color: var(--ansis-primary, #0284c7);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+        }
+
+        .o_searchview_input {
+            font-size: 0.875rem;
+            color: var(--ansis-text-main, #0f172a);
+        }
+
+        // Active Search Filter Facets (Chips)
+        .o_searchview_facet {
+            background-color: var(--ansis-primary-light, #f0f9ff);
+            border: 1px solid var(--ansis-primary-border, #bae6fd);
+            border-radius: var(--ansis-radius-full, 9999px);
+            margin: 2px 4px 2px 0;
+            padding: 1px 8px;
+            font-size: 0.78rem;
+
+            .o_searchview_facet_label {
+                background-color: transparent;
+                color: var(--ansis-primary, #0284c7);
+                font-weight: 600;
+                padding-right: 4px;
+            }
+
+            .o_facet_values {
+                color: #0369a1;
+            }
+
+            .o_facet_remove {
+                color: var(--ansis-primary, #0284c7);
+                opacity: 0.7;
+                cursor: pointer;
+                margin-left: 4px;
+                transition: opacity 0.15s ease;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    // View Switcher Buttons (List, Kanban, Pivot, Graph)
+    .o_cp_switch_buttons {
+        display: inline-flex;
+        align-items: center;
+        background-color: #f1f5f9;
+        padding: 2px;
+        border-radius: var(--ansis-radius-md, 8px);
+        border: 1px solid var(--ansis-border, #e2e8f0);
+
+        .btn {
+            border: none !important;
+            background: transparent !important;
+            color: var(--ansis-text-muted, #64748b) !important;
+            height: 30px;
+            width: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.15s ease;
+
+            &:hover {
+                color: var(--ansis-text-main, #0f172a) !important;
+                background-color: rgba(255, 255, 255, 0.6) !important;
+            }
+
+            &.active {
+                background-color: #ffffff !important;
+                color: var(--ansis-primary, #0284c7) !important;
+                box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08) !important;
+                font-weight: 600;
+            }
+        }
+    }
+
+    // Pager Controls
+    .o_pager {
+        .o_pager_value {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--ansis-text-main, #0f172a);
+        }
+
+        .btn-group {
+            .btn {
+                height: 30px;
+                width: 30px;
+                padding: 0;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 6px;
+                border: 1px solid var(--ansis-border, #e2e8f0);
+                background-color: #ffffff;
+                color: var(--ansis-text-muted, #64748b);
+                transition: all 0.15s ease;
+
+                &:hover:not([disabled]) {
+                    background-color: #f8fafc;
+                    border-color: #cbd5e1;
+                    color: var(--ansis-text-main, #0f172a);
+                }
+            }
+        }
+    }
+}

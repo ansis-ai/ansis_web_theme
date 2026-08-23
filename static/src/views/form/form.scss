@@ -1,60 +1,151 @@
-// Modern Light Form View & Mobile Interactions (Phase 6)
+// ==========================================================================
+// ANSIS Modern Light Form View & Sheet Canvas
+// ==========================================================================
 
 .o_form_view {
-    // Background canvas & sheet elevation
+    background-color: var(--ansis-canvas, #f8fafc);
+
+    // Canvas Background Area
     .o_form_sheet_bg {
-        background-color: #f8fafc;
-        border-bottom: 1px solid #e2e8f0;
+        background-color: var(--ansis-canvas, #f8fafc) !important;
+        border-bottom: none !important;
+        padding-top: 16px;
         padding-bottom: 32px;
 
+        // Floating Pure-White Card Sheet
         .o_form_sheet {
-            background-color: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
-            padding: 24px 32px;
-            margin-top: 16px;
-            margin-bottom: 16px;
+            background-color: #ffffff !important;
+            border-radius: var(--ansis-radius-lg, 12px) !important;
+            border: 1px solid var(--ansis-border, #e2e8f0) !important;
+            box-shadow: var(--ansis-shadow-card, 0 4px 6px -1px rgba(15, 23, 42, 0.04), 0 10px 15px -3px rgba(15, 23, 42, 0.05)) !important;
+            padding: 24px 32px !important;
+            transition: box-shadow 0.2s ease;
 
             @media (max-width: 768px) {
-                padding: 16px 12px;
-                border-radius: 8px;
-                margin-top: 8px;
-                margin-bottom: 8px;
+                border-radius: 8px !important;
+                padding: 16px !important;
+                margin-left: 8px !important;
+                margin-right: 8px !important;
+                max-width: calc(100vw - 16px) !important;
+            }
+
+            // Ribbon Styling
+            .ribbon {
+                border-radius: 0 12px 0 8px;
             }
         }
     }
 
     // Title & Typography
     .oe_title {
+        margin-bottom: 16px;
+
         h1 {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #0f172a;
-            letter-spacing: -0.01em;
+            color: var(--ansis-text-main, #0f172a);
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+
+            .o_input {
+                font-size: 1.5rem !important;
+                font-weight: 700 !important;
+            }
         }
 
         h2 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #1e293b;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #334155;
         }
     }
 
-    // Input fields & widgets
+    // Field Labels
+    .o_form_label {
+        font-weight: 500 !important;
+        font-size: 0.85rem !important;
+        color: #475569 !important;
+        letter-spacing: -0.005em;
+
+        &.o_form_label_readonly {
+            color: #64748b !important;
+        }
+
+        &.o_required_modifier {
+            font-weight: 600 !important;
+            color: #1e293b !important;
+        }
+    }
+
+    // Input Fields & Widgets
     .o_field_widget {
-        .o_input {
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-            color: #0f172a;
+        .o_input,
+        &.o_field_char input,
+        &.o_field_number input,
+        &.o_field_date input,
+        &.o_field_datetime input,
+        &.o_field_monetary input,
+        &.o_field_many2one input {
+            border-radius: var(--ansis-radius-sm, 6px);
+            border: 1px solid var(--ansis-border, #e2e8f0);
+            background-color: #ffffff;
+            color: var(--ansis-text-main, #0f172a);
             font-size: 0.875rem;
             padding: 0.35rem 0.65rem;
-            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            min-height: 32px;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+
+            &:hover:not(:focus):not([disabled]):not([readonly]) {
+                border-color: #cbd5e1;
+            }
 
             &:focus {
-                border-color: #0284c7;
-                box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
-                outline: none;
+                border-color: var(--ansis-primary, #0284c7) !important;
+                box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.14) !important;
+                outline: none !important;
+                background-color: #ffffff !important;
+            }
+        }
+
+        // Textareas
+        textarea.o_input {
+            min-height: 68px;
+            padding: 0.5rem 0.65rem;
+            line-height: 1.4;
+        }
+
+        // Select Dropdowns
+        select.o_input {
+            padding-right: 1.5rem;
+            background-position: right 0.5rem center;
+        }
+
+        // Many2Many Tags Pill Badges
+        .o_tag_badge,
+        .badge.dropdown-toggle {
+            border-radius: var(--ansis-radius-full, 9999px) !important;
+            font-weight: 500 !important;
+            font-size: 0.76rem !important;
+            padding: 3px 10px !important;
+            letter-spacing: 0 !important;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+            transition: all 0.15s ease;
+
+            .o_delete {
+                margin-left: 4px;
+                opacity: 0.6;
+                transition: opacity 0.15s ease;
+
+                &:hover {
+                    opacity: 1;
+                }
             }
         }
     }
@@ -81,13 +172,13 @@
             height: auto !important;
             min-height: 46px !important;
             padding: 6px 12px !important;
-            border-radius: 8px !important;
-            border: 1px solid #e2e8f0 !important;
+            border-radius: var(--ansis-radius-md, 8px) !important;
+            border: 1px solid var(--ansis-border, #e2e8f0) !important;
             background-color: #ffffff !important;
             color: #334155 !important;
             text-decoration: none !important;
             box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03) !important;
-            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease !important;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease !important;
 
             // Stat Icon Box
             .o_button_icon {
@@ -98,8 +189,8 @@
                 height: 32px !important;
                 min-width: 32px !important;
                 border-radius: 6px !important;
-                background-color: #f0f9ff !important;
-                color: #0284c7 !important;
+                background-color: var(--ansis-primary-light, #f0f9ff) !important;
+                color: var(--ansis-primary, #0284c7) !important;
                 font-size: 1.1rem !important;
                 margin-right: 8px !important;
                 transition: background-color 0.15s ease, color 0.15s ease;
@@ -110,7 +201,7 @@
             .o_field_statinfo .o_stat_value {
                 font-weight: 700 !important;
                 font-size: 1rem !important;
-                color: #0f172a !important;
+                color: var(--ansis-text-main, #0f172a) !important;
                 line-height: 1.2 !important;
             }
 
@@ -118,7 +209,7 @@
             .o_field_statinfo .o_stat_text {
                 font-size: 0.72rem !important;
                 font-weight: 600 !important;
-                color: #64748b !important;
+                color: var(--ansis-text-muted, #64748b) !important;
                 text-transform: uppercase !important;
                 letter-spacing: 0.02em !important;
                 line-height: 1.2 !important;
@@ -126,12 +217,12 @@
 
             &:hover {
                 background-color: #ffffff !important;
-                border-color: #0284c7 !important;
+                border-color: var(--ansis-primary, #0284c7) !important;
                 box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.12), 0 2px 4px -2px rgba(2, 132, 199, 0.08) !important;
                 transform: translateY(-1px) !important;
 
                 .o_button_icon {
-                    background-color: #0284c7 !important;
+                    background-color: var(--ansis-primary, #0284c7) !important;
                     color: #ffffff !important;
                 }
             }
@@ -145,8 +236,8 @@
 
     // Phase 6.3: Statusbar Stage Pipeline & Action Controls
     .o_form_statusbar {
-        background-color: #f8fafc;
-        border-bottom: 1px solid #e2e8f0;
+        background-color: var(--ansis-canvas, #f8fafc);
+        border-bottom: 1px solid var(--ansis-border, #e2e8f0);
         border-radius: 12px 12px 0 0;
         padding: 8px 16px;
         min-height: 52px;
@@ -181,20 +272,20 @@
                 transition: all 0.15s ease;
 
                 &.btn-primary {
-                    background-color: #0284c7;
-                    border-color: #0284c7;
+                    background-color: var(--ansis-primary, #0284c7);
+                    border-color: var(--ansis-primary, #0284c7);
                     color: #ffffff;
                     box-shadow: 0 1px 2px rgba(2, 132, 199, 0.2);
 
                     &:hover {
-                        background-color: #0369a1;
-                        border-color: #0369a1;
+                        background-color: var(--ansis-primary-hover, #0369a1);
+                        border-color: var(--ansis-primary-hover, #0369a1);
                     }
                 }
 
                 &.btn-secondary {
                     background-color: #ffffff;
-                    border-color: #e2e8f0;
+                    border-color: var(--ansis-border, #e2e8f0);
                     color: #334155;
 
                     &:hover {
@@ -218,9 +309,9 @@
                 padding: 5px 14px;
                 font-size: 0.82rem;
                 font-weight: 500;
-                color: #64748b;
+                color: var(--ansis-text-muted, #64748b);
                 background-color: #f1f5f9;
-                border: 1px solid #e2e8f0;
+                border: 1px solid var(--ansis-border, #e2e8f0);
                 border-radius: 6px !important;
                 margin: 0 2px;
                 transition: all 0.15s ease;
@@ -237,8 +328,8 @@
                 }
 
                 &.o_arrow_button_current {
-                    background-color: #0284c7 !important;
-                    border-color: #0284c7 !important;
+                    background-color: var(--ansis-primary, #0284c7) !important;
+                    border-color: var(--ansis-primary, #0284c7) !important;
                     color: #ffffff !important;
                     font-weight: 600;
                     box-shadow: 0 1px 3px rgba(2, 132, 199, 0.25);

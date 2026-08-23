@@ -1,3 +1,38 @@
+// ==========================================================================
+// ANSIS Typography & Global Design Tokens
+// ==========================================================================
+
+:root {
+  --ansis-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ansis-primary: #0284c7;
+  --ansis-primary-hover: #0369a1;
+  --ansis-primary-light: #f0f9ff;
+  --ansis-primary-border: #bae6fd;
+  
+  --ansis-surface: #ffffff;
+  --ansis-canvas: #f8fafc;
+  --ansis-canvas-alt: #f1f5f9;
+  
+  --ansis-text-main: #0f172a;
+  --ansis-text-muted: #64748b;
+  --ansis-text-subtle: #94a3b8;
+  
+  --ansis-border: #e2e8f0;
+  --ansis-border-focus: #cbd5e1;
+  
+  --ansis-radius-sm: 6px;
+  --ansis-radius-md: 8px;
+  --ansis-radius-lg: 12px;
+  --ansis-radius-full: 9999px;
+  
+  --ansis-shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --ansis-shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08);
+  --ansis-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
+  --ansis-shadow-card: 0 4px 6px -1px rgba(15, 23, 42, 0.04), 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 0 0 1px #e2e8f0;
+  --ansis-shadow-floating: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+}
+
+// Odoo Core SCSS Variables
 $o-navbar-badge-bg: #ef4444;
 $o-navbar-badge-color: #ffffff;
 $o-view-background-color: #f8fafc;
@@ -5,3 +40,14 @@ $o-form-sheet-min-width: 990px;
 $o-border-radius: 8px;
 $o-border-radius-lg: 12px;
 $o-border-radius-sm: 6px;
+
+// Global Typography & Antialiasing
+body,
+.o_web_client {
+  font-family: var(--ansis-font-sans) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.011em;
+  background-color: var(--ansis-canvas) !important;
+}
