@@ -25,9 +25,25 @@ patch(NavBar.prototype, {
         this._onPopState = this.onPopState.bind(this);
         this._onRouteChange = this.onRouteChange.bind(this);
 
+        this._onDocumentClick = (ev) => {
+            const toggle = ev.target.closest(
+                ".o_menu_brand, .o_navbar_apps_menu button, .mk_app_menu button, button[data-hotkey='h'], .o_menu_toggle"
+            );
+            if (toggle && !this.state.isCustomHomeMenuOpen) {
+                // If it's a submenu dropdown or entry inside .o_menu_sections, ignore unless it is the brand tile
+                if (toggle.closest(".o_menu_sections") && !toggle.classList.contains("o_menu_brand")) {
+                    return;
+                }
+                ev.preventDefault();
+                ev.stopPropagation();
+                this.openCustomHomeMenu();
+            }
+        };
+
         onMounted(() => {
             this.renderCustomOverlay();
             this.bindBrandClick();
+            document.addEventListener("click", this._onDocumentClick);
             document.addEventListener("keydown", this._onCustomHomeMenuKeydown);
             window.addEventListener("popstate", this._onPopState);
             this.env.bus?.addEventListener("ROUTE_CHANGE", this._onRouteChange);
@@ -39,10 +55,19 @@ patch(NavBar.prototype, {
         });
 
         onWillUnmount(() => {
+            document.removeEventListener("click", this._onDocumentClick);
             document.removeEventListener("keydown", this._onCustomHomeMenuKeydown);
             window.removeEventListener("popstate", this._onPopState);
             this.env.bus?.removeEventListener("ROUTE_CHANGE", this._onRouteChange);
         });
+    },
+
+    onNavBarDropdownItemSelection(menu) {
+        if (menu && this.currentApp && menu.id === this.currentApp.id) {
+            this.openCustomHomeMenu();
+            return;
+        }
+        super.onNavBarDropdownItemSelection(menu);
     },
 
     toggleCustomHomeMenu() {
@@ -226,15 +251,6 @@ patch(NavBar.prototype, {
     bindBrandClick() {
         const brand = document.querySelector(".o_menu_brand");
         if (brand) {
-            if (!brand._hasAnsisBrandHandler) {
-                brand._hasAnsisBrandHandler = true;
-                brand.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.openCustomHomeMenu();
-                });
-            }
-
             const currentApp = this.menuService?.getCurrentApp();
 
             if (currentApp) {
@@ -391,109 +407,104 @@ patch(NavBar.prototype, {
         const wallpaperUrl = hasWallpaper
             ? `/web/image/res.company/${currentCompany.id}/background_image`
             : "";
-        const overlayStyle = wallpaperUrl ? `background-image: url('${wallpaperUrl}');` : "";
-        const wallpaperClass = hasWallpaper ? "ansis_has_wallpaper" : "";
 
         return `
-            <div class="ansis_home_menu_overlay custom_home_menu_overlay ${wallpaperClass}" style="${overlayStyle}">
-              <div class="ansis_home_menu_backdrop"></div>
-              <div class="ansis_home_menu_container custom_home_menu_container">
-                <div class="ansis_home_menu_search_wrapper">
-                  <div class="ansis_home_menu_search_box">
-                    <i class="fa fa-search ansis_search_icon"></i>
-                    <input type="text"
-                           class="ansis_home_menu_search_input"
-                           id="ansis_home_menu_search_input"
-                           placeholder="Search apps or navigate with arrow keys..."
-                           autocomplete="off"
-                           spellcheck="false" />
-                    <button type="button" class="ansis_search_clear_btn" id="ansis_search_clear_btn" style="display: none;">
-                      <i class="fa fa-times-circle"></i>
-                    </button>
-                    <span class="ansis_search_kbd">ESC</span>
-                  </div>
+            <div class="ansis_home_menu_overlay custom_home_menu_overlay ${hasWallpaper ? 'has_wallpaper' : ''}">
+                ${hasWallpaper ? `<div class="ansis_home_menu_bg" style="background-image: url('${wallpaperUrl}');"></div>` : ''}
+                
+                <div class="ansis_home_menu_search_container">
+                    <div class="ansis_home_menu_search_box">
+                        <i class="oi oi-search ansis_search_icon"></i>
+                        <input type="text"
+                               id="ansis_home_menu_search_input"
+                               placeholder="Search apps and menus..."
+                               autocomplete="off"
+                               spellcheck="false"/>
+                        <button type="button" id="ansis_home_menu_search_clear" class="ansis_search_clear" style="display: none;">
+                            <i class="oi oi-close"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="ansis_home_menu_grid custom_home_menu_grid" id="ansis_home_menu_grid">
-                  ${appCards}
+                <div class="ansis_home_menu_grid custom_home_menu_grid">
+                    ${appCards}
                 </div>
-
-                <div class="ansis_search_no_results" id="ansis_search_no_results" style="display: none;">
-                  <div class="ansis_no_results_icon">
-                    <i class="fa fa-search"></i>
-                  </div>
-                  <div class="ansis_no_results_title">No matching apps found</div>
-                  <div class="ansis_no_results_subtitle">Press <kbd>ESC</kbd> to reset search</div>
-                </div>
-              </div>
             </div>
         `;
     },
 
     attachOverlayEventListeners(container) {
         const searchInput = container.querySelector("#ansis_home_menu_search_input");
-        const clearBtn = container.querySelector("#ansis_search_clear_btn");
-        const grid = container.querySelector("#ansis_home_menu_grid");
-        const noResults = container.querySelector("#ansis_search_no_results");
-        const appCards = Array.from(container.querySelectorAll(".custom_home_menu_app_card, .ansis_home_menu_app_card"));
+        const clearBtn = container.querySelector("#ansis_home_menu_search_clear");
+        const grid = container.querySelector(".ansis_home_menu_grid");
+        const appCards = Array.from(container.querySelectorAll(".ansis_home_menu_app_card"));
 
-        const filterApps = (query) => {
-            const q = query.trim().toLowerCase();
-            let matchCount = 0;
-            let firstMatch = null;
+        // Auto focus search input on desktop
+        if (searchInput && window.innerWidth > 768) {
+            setTimeout(() => searchInput.focus(), 80);
+        }
 
-            appCards.forEach((card) => {
-                const name = card.dataset.appName || (card.querySelector(".ansis_home_menu_app_name")?.innerText || "").toLowerCase();
-                const matches = !q || name.includes(q);
-                card.style.display = matches ? "flex" : "none";
-                card.classList.remove("ansis_focused");
+        // --- Live Search Logic ---
+        if (searchInput) {
+            const filterApps = () => {
+                const query = searchInput.value.trim().toLowerCase();
+                let matchCount = 0;
+                let firstMatch = null;
 
-                if (matches) {
-                    matchCount++;
-                    if (!firstMatch) {
-                        firstMatch = card;
-                    }
+                if (clearBtn) {
+                    clearBtn.style.display = query.length > 0 ? "flex" : "none";
                 }
-            });
 
-            this.focusedAppIndex = 0;
-            if (firstMatch) {
-                firstMatch.classList.add("ansis_focused");
-            }
+                appCards.forEach((card) => {
+                    const name = card.dataset.appName || (card.querySelector(".ansis_home_menu_app_name")?.innerText || "").toLowerCase();
+                    const matches = query === "" || name.includes(query);
+                    card.style.display = matches ? "flex" : "none";
+                    if (matches) {
+                        matchCount++;
+                        if (!firstMatch) {
+                            firstMatch = card;
+                        }
+                    }
+                });
+
+                // Update focused card on search filter
+                appCards.forEach((c) => c.classList.remove("ansis_focused"));
+                if (firstMatch) {
+                    firstMatch.classList.add("ansis_focused");
+                    this.focusedAppIndex = 0;
+                }
+
+                let noResults = container.querySelector(".ansis_home_menu_no_results");
+                if (matchCount === 0) {
+                    if (!noResults) {
+                        noResults = document.createElement("div");
+                        noResults.className = "ansis_home_menu_no_results";
+                        noResults.innerHTML = `
+                            <div class="ansis_no_results_icon"><i class="oi oi-search"></i></div>
+                            <div class="ansis_no_results_text">No applications found matching "<strong>${query}</strong>"</div>
+                        `;
+                        grid.appendChild(noResults);
+                    } else {
+                        noResults.querySelector("strong").innerText = query;
+                        noResults.style.display = "flex";
+                    }
+                } else if (noResults) {
+                    noResults.style.display = "none";
+                }
+            };
+
+            searchInput.addEventListener("input", filterApps);
 
             if (clearBtn) {
-                clearBtn.style.display = q ? "block" : "none";
+                clearBtn.addEventListener("click", () => {
+                    searchInput.value = "";
+                    filterApps();
+                    searchInput.focus();
+                });
             }
-            if (grid) {
-                grid.style.display = matchCount > 0 ? "grid" : "none";
-            }
-            if (noResults) {
-                noResults.style.display = matchCount === 0 ? "flex" : "none";
-            }
-
-            return firstMatch;
-        };
-
-        if (searchInput) {
-            setTimeout(() => {
-                searchInput.focus();
-            }, 60);
-
-            searchInput.addEventListener("input", (e) => {
-                filterApps(e.target.value);
-            });
         }
 
-        if (clearBtn && searchInput) {
-            clearBtn.addEventListener("click", (e) => {
-                e.preventDefault();
-                searchInput.value = "";
-                searchInput.focus();
-                filterApps("");
-            });
-        }
-
-        // Mouse hover synchronizes keyboard focus
+        // --- Mouse Hover & Focus Sync ---
         appCards.forEach((card) => {
             card.addEventListener("mouseenter", () => {
                 const visible = appCards.filter((c) => c.style.display !== "none");

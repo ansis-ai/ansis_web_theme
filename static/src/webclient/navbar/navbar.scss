@@ -15,6 +15,7 @@
     padding: 0 12px !important;
     z-index: 1000 !important;
     overflow: visible !important;
+    pointer-events: auto !important;
 
     /* Hide brand & submenus when Home Menu overlay is active */
     body.o_custom_home_menu_shown & {
@@ -76,6 +77,7 @@
             text-decoration: none !important;
             white-space: nowrap !important;
             background: transparent !important;
+            pointer-events: auto !important;
             transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1) !important;
 
             // App Icon Placeholder in Brand
@@ -92,6 +94,7 @@
                 background-size: contain;
                 border-radius: 4px;
                 opacity: 1;
+                pointer-events: none !important;
                 transition: opacity 0.10s ease;
             }
 
@@ -123,12 +126,23 @@
             height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
+            overflow: visible !important;
+            pointer-events: auto !important;
+
+            .dropdown {
+                position: relative !important;
+                display: inline-block !important;
+                height: auto !important;
+                overflow: visible !important;
+                pointer-events: auto !important;
+            }
 
             // Target all buttons, links, and dropdown triggers inside sections
             .o_nav_entry,
-            .dropdown,
-            button,
-            a,
+            .dropdown > button,
+            .dropdown > a,
+            > button,
+            > a,
             .dropdown-toggle {
                 display: inline-flex !important;
                 align-items: center !important;
@@ -147,7 +161,12 @@
                 white-space: nowrap !important;
                 cursor: pointer !important;
                 box-shadow: none !important;
+                pointer-events: auto !important;
                 transition: color 0.12s ease, background-color 0.12s ease !important;
+
+                i.fa, i.oi {
+                    pointer-events: none !important;
+                }
 
                 &:hover {
                     color: #0f172a !important;
@@ -185,9 +204,11 @@
                     padding: 0 !important;
                     justify-content: center !important;
                     color: #64748b !important;
+                    pointer-events: auto !important;
 
                     i {
                         font-size: 0.82rem !important;
+                        pointer-events: none !important;
                     }
 
                     &:hover {
@@ -213,6 +234,8 @@
             overflow: hidden !important;
             text-overflow: ellipsis !important;
             white-space: nowrap !important;
+            pointer-events: auto !important;
+            cursor: pointer !important;
 
             &::before {
                 display: none !important;
@@ -226,6 +249,7 @@
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
+            pointer-events: auto !important;
 
             button {
                 width: 36px !important;
@@ -238,105 +262,89 @@
                 align-items: center !important;
                 justify-content: center !important;
                 font-size: 1rem !important;
-                padding: 0 !important;
-                margin: 0 !important;
+                cursor: pointer !important;
+                pointer-events: auto !important;
+
+                i {
+                    pointer-events: none !important;
+                }
 
                 &:hover {
                     background-color: #f8fafc !important;
                     color: #0284c7 !important;
+                    border-color: #cbd5e1 !important;
                 }
             }
         }
     }
 
     /* ----------------------------------------------------------------------
-       RIGHT HAND SIDE - SYSTRAY ITEMS
+       RIGHT HAND SIDE (Systray Items)
        ---------------------------------------------------------------------- */
     .o_menu_systray {
-        margin-left: auto !important;
-        margin-right: 0 !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: flex-end !important;
         gap: 4px !important;
         height: 100% !important;
-        padding-right: 4px !important;
+        margin-left: auto !important;
+        padding: 0 !important;
         overflow: visible !important;
+        pointer-events: auto !important;
 
-        // Hide third-party support clutter
-        .o_auto_database_backup_systray {
-            display: none !important;
+        .dropdown {
+            position: relative !important;
+            overflow: visible !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            pointer-events: auto !important;
         }
 
-        // DESKTOP: Explicitly hide mobile burger toggle in systray so NO duplicate user avatar renders!
+        // Hide duplicate mobile burger avatar button on desktop
         @media (min-width: 769px) {
             .o_mobile_menu_toggle,
             .o_burger_menu_avatar,
-            .d-md-none,
-            div:has(> .o_mobile_menu_toggle) {
+            div:has(> .o_mobile_menu_toggle),
+            button.o_mobile_menu_toggle {
                 display: none !important;
+                visibility: hidden !important;
+                width: 0 !important;
+                height: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                pointer-events: none !important;
             }
         }
 
-        // MOBILE: Hide full desktop user menu in favor of mobile offcanvas drawer
+        // Hide desktop user menu on mobile in favor of bottom burger drawer
         @media (max-width: 768px) {
             .o_user_menu {
                 display: none !important;
             }
-            .o_mobile_menu_toggle {
-                display: inline-flex !important;
-            }
         }
 
-        // Generic systray item containers
-        > .o_nav_entry,
-        > div,
-        > .dropdown {
+        .o_nav_entry,
+        button,
+        a,
+        .dropdown-toggle {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            height: 36px !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: none !important;
-            background: transparent !important;
-            position: relative !important;
-            overflow: visible !important;
-        }
-
-        // Standard Icon action buttons (Messaging, Activities, Profiling, Debug, Share, etc.)
-        > .o_nav_entry > button,
-        > .o_nav_entry > a,
-        > div:not(.o_user_menu):not(.o_switch_company_menu) button,
-        .dropdown-toggle:not(.o_user_menu button):not(.o_switch_company_menu button) {
-            position: relative !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 36px !important;
-            height: 36px !important;
-            min-width: 36px !important;
-            padding: 0 !important;
+            height: 34px !important;
+            min-width: 34px !important;
+            padding: 0 8px !important;
             margin: 0 !important;
             border: none !important;
-            border-radius: 8px !important;
+            outline: none !important;
             background: transparent !important;
             color: #64748b !important;
-            font-size: 1rem !important;
-            line-height: 1 !important;
+            border-radius: 8px !important;
             cursor: pointer !important;
+            box-shadow: none !important;
+            position: relative !important;
             pointer-events: auto !important;
-            transition: color 0.15s ease, background-color 0.15s ease !important;
+            transition: color 0.12s ease, background-color 0.12s ease !important;
 
-            i.fa,
-            i.oi,
-            i {
-                color: inherit !important;
-                font-size: 1rem !important;
-                line-height: 1 !important;
-                background: transparent !important;
+            i.fa, i.oi {
                 pointer-events: none !important;
             }
 
@@ -345,137 +353,57 @@
                 background-color: #f1f5f9 !important;
             }
 
-            &.show,
+            &:active,
+            &.active,
             &[aria-expanded="true"] {
                 color: #0284c7 !important;
-                background-color: #e0f2fe !important;
+                background-color: #f0f9ff !important;
+            }
+
+            // Notification / Activity Badges
+            .badge,
+            .o_notification_counter {
+                position: absolute !important;
+                top: 4px !important;
+                right: 4px !important;
+                padding: 0 4px !important;
+                min-width: 16px !important;
+                height: 16px !important;
+                line-height: 16px !important;
+                font-size: 10px !important;
+                font-weight: 700 !important;
+                border-radius: 9999px !important;
+                background-color: #ef4444 !important;
+                color: #ffffff !important;
+                border: 2px solid #ffffff !important;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+                pointer-events: none !important;
             }
         }
 
-        // Notification Badges (Pills)
-        .o_notification_counter,
-        .badge,
-        .o-mail-MessagingMenu-counter,
-        .o-mail-ActivityMenu-counter {
-            position: absolute !important;
-            top: 2px !important;
-            right: 2px !important;
-            min-width: 17px !important;
-            height: 17px !important;
-            padding: 0 4px !important;
-            font-size: 0.65rem !important;
-            font-weight: 700 !important;
-            line-height: 15px !important;
-            text-align: center !important;
+        // User Avatar in Systray
+        .o_user_avatar,
+        img.rounded-circle {
+            width: 26px !important;
+            height: 26px !important;
             border-radius: 9999px !important;
-            background-color: #ef4444 !important;
-            color: #ffffff !important;
-            border: 1.5px solid #ffffff !important;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
+            object-fit: cover !important;
+            border: 1.5px solid #e2e8f0 !important;
             pointer-events: none !important;
         }
 
-        // Company Switcher Pill (Generous space for full company name)
+        // Switch Company Menu
         .o_switch_company_menu {
-            display: inline-flex !important;
-            align-items: center !important;
-            height: 100% !important;
-
-            button {
-                display: inline-flex !important;
-                align-items: center !important;
-                gap: 6px !important;
-                height: 32px !important;
-                padding: 0 12px !important;
-                border-radius: 8px !important;
-                background-color: #f8fafc !important;
-                border: 1px solid #e2e8f0 !important;
-                color: #334155 !important;
-                font-size: 0.82rem !important;
-                font-weight: 600 !important;
-                max-width: 320px !important;
-                cursor: pointer !important;
-                pointer-events: auto !important;
-                transition: all 0.15s ease !important;
-
-                .oe_topbar_name {
-                    max-width: 240px !important;
-                    overflow: hidden !important;
-                    text-overflow: ellipsis !important;
-                    white-space: nowrap !important;
-                    pointer-events: none !important;
-                }
-
-                i {
-                    pointer-events: none !important;
-                }
-
-                &:hover {
-                    background-color: #f1f5f9 !important;
-                    border-color: #cbd5e1 !important;
-                    color: #0284c7 !important;
-                }
-
-                &[aria-expanded="true"] {
-                    background-color: #e0f2fe !important;
-                    border-color: #bae6fd !important;
-                    color: #0284c7 !important;
-                }
-            }
-        }
-
-        // User Profile Menu Button (Responsive & Clickable)
-        .o_user_menu {
-            display: inline-flex !important;
-            align-items: center !important;
-            height: 100% !important;
-
-            button {
-                display: inline-flex !important;
-                align-items: center !important;
-                gap: 8px !important;
-                height: 36px !important;
-                width: auto !important;
-                min-width: 0 !important;
-                padding: 2px 8px 2px 2px !important;
-                border-radius: 20px !important;
-                border: 1px solid transparent !important;
-                background: transparent !important;
-                color: #334155 !important;
+            .dropdown-toggle {
+                padding: 0 10px !important;
                 font-size: 0.85rem !important;
                 font-weight: 600 !important;
-                cursor: pointer !important;
-                pointer-events: auto !important;
-                transition: all 0.15s ease !important;
-
-                .o_user_avatar,
-                .o_avatar {
-                    width: 28px !important;
-                    height: 28px !important;
-                    border-radius: 50% !important;
-                    object-fit: cover !important;
-                    border: 1.5px solid #cbd5e1 !important;
-                    pointer-events: none !important;
-                }
-
-                .oe_topbar_name {
-                    max-width: 160px !important;
-                    overflow: hidden !important;
-                    text-overflow: ellipsis !important;
-                    white-space: nowrap !important;
-                    pointer-events: none !important;
-                }
+                color: #334155 !important;
+                background-color: #f8fafc !important;
+                border: 1px solid #e2e8f0 !important;
+                border-radius: 6px !important;
 
                 &:hover {
-                    background-color: #f8fafc !important;
-                    border-color: #e2e8f0 !important;
-                    color: #0f172a !important;
-                }
-
-                &[aria-expanded="true"] {
                     background-color: #f1f5f9 !important;
                     border-color: #cbd5e1 !important;
                 }
@@ -495,6 +423,7 @@
         min-width: 180px !important;
         margin-top: 4px !important;
         z-index: 1050 !important;
+        pointer-events: auto !important;
 
         .dropdown-item {
             border-radius: 6px !important;
@@ -502,6 +431,8 @@
             font-size: 0.85rem !important;
             font-weight: 500 !important;
             color: #334155 !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
             transition: all 0.12s ease !important;
 
             &:hover,
@@ -539,242 +470,138 @@
 body.o_custom_home_menu_shown {
     overflow: hidden !important;
 
-    // HIDE entire underlying action manager so NO settings/form/list view bleeds through
     .o_action_manager,
     .o_settings_container,
     .o_form_view,
     .o_list_view,
     .o_kanban_view {
-        display: none !important;
         visibility: hidden !important;
         pointer-events: none !important;
     }
+}
 
-    .o_web_client .o_main_navbar,
-    .o_main_navbar {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        height: 48px !important;
-        background: transparent !important;
-        border-bottom: none !important;
-        box-shadow: none !important;
-        z-index: 2001 !important;
+#ansis_home_menu_overlay_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    pointer-events: auto;
 
-        * {
-            background-color: transparent !important;
-            box-shadow: none !important;
-        }
-
-        .o_menu_brand,
-        .o_menu_sections,
-        .o_navbar_breadcrumbs,
-        .o_navbar_apps_menu,
-        .o_menu_toggle,
-        .mk_app_menu {
-            display: none !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-
-        .o_menu_systray {
-            display: flex !important;
-            z-index: 2002 !important;
-        }
+    body:not(.o_custom_home_menu_shown) & {
+        display: none !important;
+        pointer-events: none !important;
     }
 }
 
 .custom_home_menu_overlay,
 .ansis_home_menu_overlay {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 2000 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #f8fafc;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    padding-top: 72px;
+    padding-bottom: 40px;
     overflow-y: auto;
-    padding-top: 76px;
-    animation: fadeIn 0.2s ease-in-out;
+    box-sizing: border-box;
 
-    &:not(.ansis_has_wallpaper) {
-        background-color: #f8fafc;
-        background-image: linear-gradient(145deg, #f8fafc 0%, #edf2f7 50%, #f1f5f9 100%);
-    }
-
-    .ansis_home_menu_backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    &.ansis_has_wallpaper {
-        .ansis_home_menu_backdrop {
-            background: rgba(248, 250, 252, 0.84);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .ansis_home_menu_search_box {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.06);
-        }
-
-        .custom_home_menu_app_card,
-        .ansis_home_menu_app_card {
-            background: rgba(255, 255, 255, 0.94) !important;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
-
-            &:hover:not(.ansis_dragging):not(.ansis_drag_over),
-            &.ansis_focused,
-            &:focus-visible {
-                background: #ffffff !important;
-                box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.22), 0 14px 28px rgba(2, 132, 199, 0.16), 0 4px 8px rgba(15, 23, 42, 0.06) !important;
-                border-color: #0284c7 !important;
-            }
-        }
-    }
-
-    .custom_home_menu_container,
-    .ansis_home_menu_container {
-        position: relative !important;
-        z-index: 10 !important;
-        width: 100%;
-        max-width: 1080px;
-        padding: 20px 24px 60px 24px;
-        margin: 0 auto;
+    &.has_wallpaper {
+        background: #0f172a;
     }
 }
 
-.ansis_home_menu_search_wrapper {
+.ansis_home_menu_bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    max-width: 440px;
-    margin: 0 auto 36px auto;
-    padding: 0 12px;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(24px) brightness(0.65) saturate(1.2);
+    transform: scale(1.08);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.ansis_home_menu_search_container {
+    width: 100%;
+    max-width: 480px;
+    padding: 0 16px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
 }
 
 .ansis_home_menu_search_box {
     position: relative;
+    width: 100%;
     display: flex;
     align-items: center;
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
-    border-radius: 9999px;
-    padding: 9px 16px;
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 
-    &:focus-within {
-        border-color: #0284c7;
-        box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.14), 0 8px 20px rgba(15, 23, 42, 0.08);
-        transform: translateY(-1px);
+    .ansis_search_icon {
+        position: absolute;
+        left: 16px;
+        font-size: 16px;
+        color: #64748b;
+        pointer-events: none;
+    }
 
-        .ansis_search_icon {
-            color: #0284c7;
+    input {
+        width: 100%;
+        height: 44px;
+        padding: 0 44px 0 44px;
+        background: #ffffff;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        border-radius: 9999px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #0f172a;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+        outline: none;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &::placeholder {
+            color: #94a3b8;
+        }
+
+        &:focus {
+            border-color: #0284c7;
+            box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15), 0 8px 24px rgba(15, 23, 42, 0.08);
         }
     }
-}
 
-.ansis_search_icon {
-    font-size: 14px;
-    color: #64748b;
-    margin-right: 10px;
-    flex-shrink: 0;
-    transition: color 0.15s ease;
-}
-
-.ansis_home_menu_search_input {
-    flex: 1;
-    border: none !important;
-    outline: none !important;
-    background: transparent !important;
-    font-size: 14px;
-    font-weight: 500;
-    color: #0f172a;
-    padding: 0;
-    margin: 0;
-
-    &::placeholder {
-        color: #94a3b8;
-        font-weight: 400;
-    }
-}
-
-.ansis_search_clear_btn {
-    border: none;
-    background: transparent;
-    color: #94a3b8;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 0 4px;
-    margin-right: 6px;
-    line-height: 1;
-    transition: color 0.15s ease;
-
-    &:hover {
+    .ansis_search_clear {
+        position: absolute;
+        right: 12px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: #e2e8f0;
+        border-radius: 50%;
         color: #475569;
-    }
-}
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.15s ease;
 
-.ansis_search_kbd {
-    font-size: 10px;
-    font-weight: 600;
-    color: #64748b;
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
-    border-radius: 5px;
-    padding: 2px 6px;
-    letter-spacing: 0.5px;
-}
-
-.ansis_search_no_results {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 50px 20px;
-    text-align: center;
-    color: #64748b;
-
-    .ansis_no_results_icon {
-        font-size: 40px;
-        color: #94a3b8;
-        margin-bottom: 12px;
-    }
-
-    .ansis_no_results_title {
-        font-size: 15px;
-        font-weight: 600;
-        color: #1e293b;
-        margin-bottom: 6px;
-    }
-
-    .ansis_no_results_subtitle {
-        font-size: 12.5px;
-        color: #64748b;
-
-        kbd {
-            background: #e2e8f0;
-            color: #334155;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
+        &:hover {
+            background: #cbd5e1;
+            color: #0f172a;
         }
     }
 }
@@ -782,10 +609,34 @@ body.o_custom_home_menu_shown {
 .custom_home_menu_grid,
 .ansis_home_menu_grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(116px, 1fr));
-    gap: 32px 20px;
-    justify-items: center;
-    align-items: start;
+    grid-template-columns: repeat(6, 110px);
+    gap: 24px 20px;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 20px 40px 20px;
+    box-sizing: border-box;
+}
+
+.ansis_home_menu_no_results {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+    color: #64748b;
+
+    .ansis_no_results_icon {
+        font-size: 32px;
+        margin-bottom: 12px;
+        color: #94a3b8;
+    }
+
+    .ansis_no_results_text {
+        font-size: 14px;
+        color: #475569;
+    }
 }
 
 .custom_home_menu_app_card,
@@ -793,10 +644,10 @@ body.o_custom_home_menu_shown {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    width: 104px;
-    height: 124px;
-    padding: 12px 6px 10px 6px;
+    justify-content: center;
+    width: 110px;
+    height: 118px;
+    padding: 12px 6px 8px 6px;
     background: #ffffff;
     border: 1px solid rgba(226, 232, 240, 0.9);
     border-radius: 16px;
