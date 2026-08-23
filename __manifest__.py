@@ -23,7 +23,6 @@
     ],
     "depends": [
         "mail",
-        "muk_web_dialog",
         "muk_web_appsbar",
         "muk_web_colors",
     ],
@@ -50,11 +49,15 @@
         ],
         "web.assets_backend": [
             "ansis_web_theme/static/src/scss/**/*.scss",
+            "ansis_web_theme/static/src/core/**/*.scss",
+            "ansis_web_theme/static/src/core/**/*.xml",
+            "ansis_web_theme/static/src/core/**/*.js",
             "ansis_web_theme/static/src/webclient/**/*.xml",
             "ansis_web_theme/static/src/webclient/**/*.scss",
             "ansis_web_theme/static/src/webclient/**/*.js",
             "ansis_web_theme/static/src/views/**/*.scss",
             "ansis_web_theme/static/src/views/**/*.xml",
+            "ansis_web_theme/static/src/views/**/*.js",
             (
                 "after",
                 "mail/static/src/chatter/web_portal/chatter.js",
@@ -65,8 +68,6 @@
                 "mail/static/src/chatter/web/form_compiler.js",
                 "ansis_web_theme/static/src/views/form/form_compiler.js",
             ),
-            "ansis_web_theme/static/src/views/form/form_renderer.js",
-            "ansis_web_theme/static/src/views/chatter/thread.js",
         ],
     },
     "images": [

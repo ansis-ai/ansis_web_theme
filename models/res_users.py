@@ -10,11 +10,11 @@ class ResUsers(models.Model):
 
     @property
     def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS + ["chatter_position"]
+        return super().SELF_READABLE_FIELDS + ["chatter_position", "dialog_size"]
 
     @property
     def SELF_WRITEABLE_FIELDS(self):
-        return super().SELF_WRITEABLE_FIELDS + ["chatter_position"]
+        return super().SELF_WRITEABLE_FIELDS + ["chatter_position", "dialog_size"]
 
     chatter_position = fields.Selection(
         selection=[
@@ -25,4 +25,15 @@ class ResUsers(models.Model):
         default="side",
         required=True,
         help="Position of the chatter panel relative to the main form view sheet.",
+    )
+
+    dialog_size = fields.Selection(
+        selection=[
+            ("minimize", "Standard (Minimize)"),
+            ("maximize", "Fullscreen (Maximize)"),
+        ],
+        string="Dialog Size",
+        default="minimize",
+        required=True,
+        help="Default display size when opening modal dialogs and wizards.",
     )

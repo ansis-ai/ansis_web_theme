@@ -1,0 +1,61 @@
+// ==========================================================================
+// ANSIS Modern Dialogs & Maximize/Minimize Controls
+// ==========================================================================
+
+.ansis_btn_dialog_size,
+.mk_btn_dialog_size {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    color: var(--ansis-text-muted, #64748b);
+    opacity: 0.8;
+    transition: all 0.15s ease;
+
+    i {
+        font-size: 0.875rem;
+    }
+
+    &:hover {
+        opacity: 1;
+        background-color: var(--ansis-canvas-alt, #f1f5f9);
+        color: var(--ansis-text-main, #0f172a);
+    }
+}
+
+// Fullscreen Modal Mode
+.modal-fs {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+
+    .modal-content {
+        height: 100vh !important;
+        border-radius: 0 !important;
+        border: none !important;
+    }
+}
+
+// Modal aesthetics
+.modal-dialog {
+    transition: max-width 0.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .modal-content {
+        border-radius: var(--ansis-radius-lg, 12px);
+        border: 1px solid var(--ansis-border, #e2e8f0);
+        box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+        overflow: hidden;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid var(--ansis-border, #e2e8f0);
+        padding: 14px 20px;
+        background-color: #ffffff;
+    }
+
+    .modal-footer {
+        border-top: 1px solid var(--ansis-border, #e2e8f0);
+        padding: 12px 20px;
+        background-color: #f8fafc;
+    }
+}

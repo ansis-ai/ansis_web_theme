@@ -11,6 +11,7 @@ class IrHttp(models.AbstractModel):
     def session_info(self):
         result = super().session_info()
         result["chatter_position"] = self.env.user.chatter_position or "side"
+        result["dialog_size"] = self.env.user.dialog_size or "minimize"
         if self.env.user._is_internal():
             user_companies = result.get("user_companies", {})
             allowed_companies = user_companies.get("allowed_companies", {})

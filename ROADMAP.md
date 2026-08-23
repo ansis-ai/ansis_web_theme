@@ -183,8 +183,12 @@ This roadmap documents the implementation progress, UX architecture, and planned
   - **Dynamic Compiler & Renderer**: Patched OWL `FormCompiler` and `FormRenderer` to handle split-screen side/bottom positioning, horizontal drag-to-resize, width persistence, and double-click reset.
   - **Notification Filter Toggle**: Added eye icon toggle button in `Chatter` to filter out automated notification messages on demand.
   - **Dependency Decoupling**: Replaced `muk_web_chatter` dependency with standard `mail` module.
-- [ ] **8.2 Draggable & Resizable Dialogs (`muk_web_dialog`)**
-  - Native modal draggable headers and corner resizing handles with viewport clamping.
+- [x] **8.2 Draggable & Resizable Dialogs (`muk_web_dialog`)** `[Status: ✅ Completed]`
+  - **Models & Session**: Added `dialog_size` Selection field (`minimize` / `maximize`) on `res.users` and serialized into `session_info.dialog_size`.
+  - **User Preferences Form**: Added Dialog Size preference setting to user form view (`views/res_users.xml`).
+  - **Dynamic Maximize/Restore Toggle**: Patched OWL `Dialog` and `SelectCreateDialog` with size state management and added header maximize/compress toggle button.
+  - **Modern Dialog Aesthetics**: Added fullscreen modal mode (`.modal-fs`), smooth transition curves, elevated shadow layers, and custom control buttons (`.ansis_btn_dialog_size`).
+  - **Dependency Decoupling**: Completely eliminated `muk_web_dialog` dependency.
 - [ ] **8.3 Navigation & AppsBar Clean Architecture (`muk_web_appsbar`)**
   - Self-contained navigation, app switcher, and navbar brand hooks without external dependency.
 - [ ] **8.4 Theme Color Engine & Asset Utilities (`muk_web_colors` / `muk_web_utils`)**
