@@ -408,7 +408,7 @@ patch(NavBar.prototype, {
         const allowedCompanies = session.user_companies?.allowed_companies || {};
         const companyData = allowedCompanies[currentCompanyId] || currentCompany || {};
 
-        const hasWallpaper = Boolean(companyData?.has_background_image);
+        const hasWallpaper = Boolean(companyData?.has_background_image || session.user_companies?.current_company_theme?.has_background_image);
         const wallpaperUrl = hasWallpaper
             ? `/web/image/res.company/${currentCompanyId}/background_image`
             : "";

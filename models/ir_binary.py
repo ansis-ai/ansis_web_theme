@@ -1,0 +1,13 @@
+# Copyright 2024-2026 ANSIS Pte Ltd
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.html).
+
+from odoo import models
+
+
+class IrBinary(models.AbstractModel):
+    _inherit = "ir.binary"
+
+    def _find_record_check_access(self, record, access_token, field):
+        if record._name == "res.company" and field in ("background_image", "favicon", "logo"):
+            return record.sudo()
+        return super()._find_record_check_access(record, access_token, field=field)

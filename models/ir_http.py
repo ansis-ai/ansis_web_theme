@@ -12,7 +12,7 @@ class IrHttp(models.AbstractModel):
         if self.env.user._is_internal():
             user_companies = result.get("user_companies", {})
             allowed_companies = user_companies.get("allowed_companies", {})
-            for company in self.env.user.company_ids.with_context(
+            for company in self.env.user.company_ids.sudo().with_context(
                 bin_size=True
             ):
                 if company.id in allowed_companies:
@@ -30,6 +30,7 @@ class IrHttp(models.AbstractModel):
             current_company = user_companies.get("current_company")
             if current_company and current_company in allowed_companies:
                 user_companies["current_company_theme"] = {
+                    "has_background_image": allowed_companies[current_company].get("has_background_image", False),
                     "theme_font_family": allowed_companies[current_company].get("theme_font_family", "inter"),
                     "theme_font_size": allowed_companies[current_company].get("theme_font_size", "standard"),
                     "theme_brand_color": allowed_companies[current_company].get("theme_brand_color", "#0284c7"),
