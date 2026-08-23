@@ -3,7 +3,7 @@
 .o_notebook {
     --notebook-link-border-color: #e2e8f0;
     --notebook-link-border-color-hover: #cbd5e1;
-    --notebook-link-border-color-active-accent: #0284c7;
+    --notebook-link-border-color-active-accent: var(--ansis-primary, #0284c7);
 
     .o_notebook_headers {
         border-bottom: 1px solid #e2e8f0;
@@ -56,14 +56,14 @@
             }
 
             &.active {
-                color: #0284c7 !important;
-                border-bottom-color: #0284c7 !important;
+                color: var(--ansis-primary, #0284c7) !important;
+                border-bottom-color: var(--ansis-primary, #0284c7) !important;
                 background-color: transparent !important;
                 font-weight: 600;
 
                 .badge {
-                    background-color: #e0f2fe;
-                    color: #0284c7;
+                    background-color: var(--ansis-primary-light, var(--ansis-primary-light, #f0f9ff));
+                    color: var(--ansis-primary, #0284c7);
                 }
             }
 
@@ -102,9 +102,9 @@
                 }
 
                 &.active {
-                    background-color: #f0f9ff !important;
-                    border-left-color: #0284c7 !important;
-                    color: #0284c7 !important;
+                    background-color: var(--ansis-primary-light, #f0f9ff) !important;
+                    border-left-color: var(--ansis-primary, #0284c7) !important;
+                    color: var(--ansis-primary, #0284c7) !important;
                     font-weight: 600;
                 }
             }

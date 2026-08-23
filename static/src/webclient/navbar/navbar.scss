@@ -100,7 +100,7 @@
 
             // Hover state: Transforms icon into back chevron '<'
             &:hover {
-                color: #0284c7 !important;
+                color: var(--ansis-primary, #0284c7) !important;
                 background-color: #f1f5f9 !important;
                 border-color: #e2e8f0 !important;
 
@@ -109,7 +109,7 @@
                     font-family: inherit !important;
                     font-size: 16px !important;
                     font-weight: 800 !important;
-                    color: #0284c7 !important;
+                    color: var(--ansis-primary, #0284c7) !important;
                     line-height: 20px !important;
                     text-align: center !important;
                     background-image: none !important;
@@ -176,8 +176,8 @@
                 &:active,
                 &.active,
                 &[aria-expanded="true"] {
-                    color: #0284c7 !important;
-                    background-color: #f0f9ff !important;
+                    color: var(--ansis-primary, #0284c7) !important;
+                    background-color: var(--ansis-primary-light, #f0f9ff) !important;
                     font-weight: 600 !important;
                 }
             }
@@ -213,7 +213,7 @@
 
                     &:hover {
                         background-color: #f1f5f9 !important;
-                        color: #0284c7 !important;
+                        color: var(--ansis-primary, #0284c7) !important;
                     }
                 }
             }
@@ -271,7 +271,7 @@
 
                 &:hover {
                     background-color: #f8fafc !important;
-                    color: #0284c7 !important;
+                    color: var(--ansis-primary, #0284c7) !important;
                     border-color: #cbd5e1 !important;
                 }
             }
@@ -366,8 +366,8 @@
             &:active,
             &.active,
             &[aria-expanded="true"] {
-                color: #0284c7 !important;
-                background-color: #f0f9ff !important;
+                color: var(--ansis-primary, #0284c7) !important;
+                background-color: var(--ansis-primary-light, #f0f9ff) !important;
             }
 
             // Notification / Activity Badges
@@ -447,13 +447,13 @@
 
             &:hover,
             &:focus {
-                background-color: #f0f9ff !important;
-                color: #0284c7 !important;
+                background-color: var(--ansis-primary-light, #f0f9ff) !important;
+                color: var(--ansis-primary, #0284c7) !important;
                 transform: none !important;
             }
 
             &.active {
-                background-color: #0284c7 !important;
+                background-color: var(--ansis-primary, #0284c7) !important;
                 color: #ffffff !important;
             }
         }
@@ -600,8 +600,8 @@ body.o_custom_home_menu_shown {
         }
 
         &:focus {
-            border-color: #0284c7;
-            box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15), 0 8px 24px rgba(15, 23, 42, 0.08);
+            border-color: var(--ansis-primary, #0284c7);
+            box-shadow: 0 0 0 4px var(--ansis-focus-ring, rgba(2, 132, 199, 0.15)), 0 8px 24px rgba(15, 23, 42, 0.08);
         }
     }
 
@@ -690,14 +690,14 @@ body.o_custom_home_menu_shown {
     &.ansis_focused,
     &:focus-visible {
         transform: translateY(-4px) scale(1.02);
-        box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.22), 0 14px 28px rgba(2, 132, 199, 0.16), 0 4px 8px rgba(15, 23, 42, 0.06) !important;
-        border-color: #0284c7 !important;
+        box-shadow: 0 0 0 3px var(--ansis-focus-ring, rgba(2, 132, 199, 0.22)), 0 14px 28px rgba(2, 132, 199, 0.16), 0 4px 8px rgba(15, 23, 42, 0.06) !important;
+        border-color: var(--ansis-primary, #0284c7) !important;
         background: #ffffff !important;
         outline: none !important;
 
         .custom_home_menu_app_name,
         .ansis_home_menu_app_name {
-            color: #0284c7 !important;
+            color: var(--ansis-primary, #0284c7) !important;
             font-weight: 700 !important;
         }
     }
@@ -705,16 +705,16 @@ body.o_custom_home_menu_shown {
     &.ansis_dragging {
         opacity: 0.35;
         transform: scale(0.92);
-        border: 2px dashed #0284c7;
+        border: 2px dashed var(--ansis-primary, #0284c7);
         box-shadow: none;
     }
 
     &.ansis_drag_over {
         transform: scale(1.06) translateY(-4px);
-        border-color: #0284c7;
+        border-color: var(--ansis-primary, #0284c7);
         border-width: 2px;
-        box-shadow: 0 14px 28px rgba(2, 132, 199, 0.22), 0 4px 8px rgba(15, 23, 42, 0.08);
-        background: #f0f9ff;
+        box-shadow: 0 14px 28px var(--ansis-focus-ring, rgba(2, 132, 199, 0.22)), 0 4px 8px rgba(15, 23, 42, 0.08);
+        background: var(--ansis-primary-light, #f0f9ff);
     }
 }
 
@@ -730,7 +730,7 @@ body.o_custom_home_menu_shown {
         &:hover,
         &.ansis_focused {
             background: #ffffff !important;
-            border-color: #0284c7 !important;
+            border-color: var(--ansis-primary, #0284c7) !important;
             box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.3), 0 16px 32px rgba(0, 0, 0, 0.22) !important;
         }
 
@@ -767,7 +767,7 @@ body.o_custom_home_menu_shown {
 
     i {
         font-size: 32px;
-        color: #0284c7;
+        color: var(--ansis-primary, #0284c7);
     }
 }
 

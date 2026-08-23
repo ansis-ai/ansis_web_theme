@@ -111,7 +111,7 @@
             }
 
             .o_facet_values {
-                color: #0369a1;
+                color: var(--ansis-primary-hover, #0369a1);
             }
 
             .o_facet_remove {

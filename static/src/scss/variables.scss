@@ -94,3 +94,98 @@ textarea,
 [class*="fa-"]:before {
   font-family: 'FontAwesome' !important;
 }
+
+// ==========================================================================
+// Dynamic Button & Primary Accent Color Bindings
+// ==========================================================================
+
+:root,
+.o_web_client {
+  --bs-primary: var(--ansis-primary, #0284c7);
+  --bs-primary-rgb: var(--ansis-primary-rgb, 2, 132, 199);
+  --bs-link-color: var(--ansis-primary, #0284c7);
+  --bs-link-hover-color: var(--ansis-primary-hover, #0369a1);
+  --o-brand-primary: var(--ansis-primary, #0284c7);
+  --o-brand-odoo: var(--ansis-primary, #0284c7);
+  --o-action: var(--ansis-primary, #0284c7);
+  --o-view-active-color: var(--ansis-primary, #0284c7);
+}
+
+.btn-primary,
+button.btn-primary,
+a.btn-primary,
+.btn-primary:not(:disabled):not(.disabled),
+.o_form_button_save,
+.o_list_button_add,
+.o_kanban_button_new {
+  --bs-btn-bg: var(--ansis-primary, #0284c7) !important;
+  --bs-btn-border-color: var(--ansis-primary, #0284c7) !important;
+  --bs-btn-hover-bg: var(--ansis-primary-hover, #0369a1) !important;
+  --bs-btn-hover-border-color: var(--ansis-primary-hover, #0369a1) !important;
+  --bs-btn-active-bg: var(--ansis-primary-hover, #0369a1) !important;
+  --bs-btn-active-border-color: var(--ansis-primary-hover, #0369a1) !important;
+  --bs-btn-focus-shadow-rgb: var(--ansis-primary-rgb, 2, 132, 199) !important;
+  --bs-btn-color: #ffffff !important;
+  --bs-btn-hover-color: #ffffff !important;
+  --bs-btn-active-color: #ffffff !important;
+  background-color: var(--ansis-primary, #0284c7) !important;
+  border-color: var(--ansis-primary, #0284c7) !important;
+  color: #ffffff !important;
+
+  &:hover {
+    background-color: var(--ansis-primary-hover, #0369a1) !important;
+    border-color: var(--ansis-primary-hover, #0369a1) !important;
+    color: #ffffff !important;
+  }
+
+  &:active,
+  &.active,
+  &.show {
+    background-color: var(--ansis-primary-hover, #0369a1) !important;
+    border-color: var(--ansis-primary-hover, #0369a1) !important;
+    color: #ffffff !important;
+  }
+
+  &:focus-visible {
+    background-color: var(--ansis-primary-hover, #0369a1) !important;
+    border-color: var(--ansis-primary-hover, #0369a1) !important;
+    box-shadow: 0 0 0 3px var(--ansis-focus-ring, rgba(2, 132, 199, 0.25)) !important;
+  }
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--ansis-primary, #0284c7) !important;
+  --bs-btn-border-color: var(--ansis-primary, #0284c7) !important;
+  --bs-btn-hover-bg: var(--ansis-primary, #0284c7) !important;
+  --bs-btn-hover-border-color: var(--ansis-primary, #0284c7) !important;
+  --bs-btn-hover-color: #ffffff !important;
+  --bs-btn-active-bg: var(--ansis-primary-hover, #0369a1) !important;
+  --bs-btn-active-border-color: var(--ansis-primary-hover, #0369a1) !important;
+  --bs-btn-active-color: #ffffff !important;
+  color: var(--ansis-primary, #0284c7) !important;
+  border-color: var(--ansis-primary, #0284c7) !important;
+
+  &:hover,
+  &:active,
+  &.active {
+    background-color: var(--ansis-primary, #0284c7) !important;
+    border-color: var(--ansis-primary, #0284c7) !important;
+    color: #ffffff !important;
+  }
+}
+
+.text-primary,
+.text-bg-primary {
+  color: var(--ansis-primary, #0284c7) !important;
+}
+
+.bg-primary,
+.badge.text-bg-primary {
+  background-color: var(--ansis-primary, #0284c7) !important;
+  color: #ffffff !important;
+}
+
+a {
+  --bs-link-color: var(--ansis-primary, #0284c7);
+  --bs-link-hover-color: var(--ansis-primary-hover, #0369a1);
+}

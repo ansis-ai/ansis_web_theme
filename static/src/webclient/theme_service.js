@@ -121,9 +121,16 @@ export const ansisThemeService = {
                 root.style.setProperty("--ansis-primary-border", `rgba(${rgbStr}, 0.28)`);
                 root.style.setProperty("--ansis-focus-ring", `rgba(${rgbStr}, 0.22)`);
 
-                // Odoo Core Brand Override
+                // Bootstrap & Odoo Core Brand Overrides
+                root.style.setProperty("--bs-primary", brandColorHex);
+                root.style.setProperty("--bs-primary-rgb", rgbStr);
+                root.style.setProperty("--bs-link-color", brandColorHex);
+                root.style.setProperty("--bs-link-hover-color", hoverHex);
                 root.style.setProperty("--o-brand-primary", brandColorHex);
                 root.style.setProperty("--o-brand-odoo", brandColorHex);
+                root.style.setProperty("--o-action", brandColorHex);
+                root.style.setProperty("--o-view-active-color", brandColorHex);
+                root.style.setProperty("--o-navbar-badge-bg", brandColorHex);
             }
         }
 
