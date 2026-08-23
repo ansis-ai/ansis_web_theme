@@ -151,9 +151,9 @@ This roadmap documents the implementation progress, UX architecture, and planned
     - Dedicated left navigation tab: **"Theme & Branding"** (`<app name="ansis_web_theme">`) with official theme icon.
     - Organized setting blocks: **Typography & Fonts**, **Brand Palette & Colors**, **Company Wallpaper & Assets**.
 
-- [ ] **7.2 Dynamic Typography & Font Selection**
+- [x] **7.2 Dynamic Typography & Font Selection**
   - **Goal**: Allow administrators to configure backend fonts dynamically without editing SCSS source files.
-  - **Status**: `⏳ Planned`
+  - **Status**: `✅ Completed`
   - **Features**:
     - **Font Family Selector**: Choose between curated modern font stacks:
       - *Inter* (Clean Modern SaaS default)

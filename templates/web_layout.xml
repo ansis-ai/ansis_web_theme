@@ -2,12 +2,16 @@
 <odoo>
 
     <template id="layout" inherit_id="web.layout">
-	    <xpath expr="//link[@rel='shortcut icon']" position="before">
-	    	<t 
-		    	t-set="x_icon" 
-		    	t-value="x_icon or '/web/image/res.company/%s/favicon' % request.env.company.id"
-	    	/>
-	    </xpath>
+        <xpath expr="//link[@rel='shortcut icon']" position="before">
+            <t 
+                t-set="x_icon" 
+                t-value="x_icon or '/web/image/res.company/%s/favicon' % request.env.company.id"
+            />
+            <!-- Preload modern Google Fonts for instant typography switching with zero layout shift -->
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Outfit:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet" />
+        </xpath>
     </template>
     
 </odoo>

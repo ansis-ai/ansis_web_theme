@@ -21,6 +21,17 @@ class IrHttp(models.AbstractModel):
                             "has_background_image": bool(
                                 company.background_image
                             ),
+                            "theme_font_family": company.theme_font_family or "inter",
+                            "theme_font_size": company.theme_font_size or "standard",
+                            "theme_brand_color": company.theme_brand_color or "#0284c7",
                         }
                     )
+            # Also update current_company dictionary if present
+            current_company = user_companies.get("current_company")
+            if current_company and current_company in allowed_companies:
+                user_companies["current_company_theme"] = {
+                    "theme_font_family": allowed_companies[current_company].get("theme_font_family", "inter"),
+                    "theme_font_size": allowed_companies[current_company].get("theme_font_size", "standard"),
+                    "theme_brand_color": allowed_companies[current_company].get("theme_brand_color", "#0284c7"),
+                }
         return result

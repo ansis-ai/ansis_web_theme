@@ -4,6 +4,8 @@
 
 :root {
   --ansis-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ansis-font-size-base: 14px;
+
   --ansis-primary: #0284c7;
   --ansis-primary-hover: #0369a1;
   --ansis-primary-light: #f0f9ff;
@@ -45,9 +47,29 @@ $o-border-radius-sm: 6px;
 body,
 .o_web_client {
   font-family: var(--ansis-font-sans) !important;
+  font-size: var(--ansis-font-size-base) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   letter-spacing: -0.011em;
   background-color: var(--ansis-canvas) !important;
+}
+
+// Inherit primary font family across core UI controls
+button,
+input,
+select,
+textarea,
+.form-control,
+.form-select,
+.btn,
+.o_form_view,
+.o_list_view,
+.o_kanban_view,
+.o_control_panel,
+.o_main_navbar,
+.o_field_widget,
+.o_notebook,
+.o_searchview {
+  font-family: var(--ansis-font-sans) !important;
 }
