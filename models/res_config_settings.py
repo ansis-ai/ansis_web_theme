@@ -42,6 +42,10 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.theme_font_size", readonly=False
     )
 
+    theme_ui_density = fields.Selection(
+        related="company_id.theme_ui_density", readonly=False
+    )
+
     theme_brand_color = fields.Char(
         related="company_id.theme_brand_color", readonly=False
     )

@@ -7,9 +7,11 @@
   --ansis-font-size-base: 14px;
 
   --ansis-primary: #0284c7;
+  --ansis-primary-rgb: 2, 132, 199;
   --ansis-primary-hover: #0369a1;
   --ansis-primary-light: #f0f9ff;
   --ansis-primary-border: #bae6fd;
+  --ansis-focus-ring: rgba(2, 132, 199, 0.22);
   
   --ansis-surface: #ffffff;
   --ansis-canvas: #f8fafc;
@@ -32,6 +34,13 @@
   --ansis-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
   --ansis-shadow-card: 0 4px 6px -1px rgba(15, 23, 42, 0.04), 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 0 0 1px #e2e8f0;
   --ansis-shadow-floating: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+
+  // Layout Density Tokens
+  --ansis-table-row-height: 40px;
+  --ansis-cell-padding-y: 8px;
+  --ansis-control-padding-y: 6px;
+  --ansis-form-gap: 14px;
+  --ansis-sheet-padding: 24px 32px;
 }
 
 // Odoo Core SCSS Variables

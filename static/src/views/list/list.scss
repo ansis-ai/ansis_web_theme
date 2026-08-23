@@ -1,7 +1,7 @@
 /* --------------------------------------------------------------------------
    ANSIS Web Theme — Modern List View Polish & Sticky Table Architecture
    Features: Sticky thead, Sticky tfoot aggregates, Sticky selector column,
-             Sticky right actions column, Sticky group headers.
+             Sticky right actions column, Sticky group headers, Density Scaling.
    -------------------------------------------------------------------------- */
 
 .o_list_renderer {
@@ -26,7 +26,7 @@
                 color: #475569;
                 background-color: #f8fafc !important;
                 border-bottom: 2px solid #e2e8f0 !important;
-                padding: 0.625rem 0.6rem;
+                padding: var(--ansis-cell-padding-y, 0.625rem) 0.6rem;
                 white-space: nowrap;
 
                 // Frozen Checkbox Selector (Top-Left)
@@ -66,6 +66,7 @@
         tbody > tr {
             transition: background-color 0.1s ease;
             background-color: #ffffff;
+            min-height: var(--ansis-table-row-height, 40px);
 
             &:hover {
                 background-color: #f8fafc !important;
@@ -76,15 +77,15 @@
             }
 
             &.o_data_row_selected {
-                background-color: #f0f9ff !important;
+                background-color: var(--ansis-primary-light, #f0f9ff) !important;
 
                 > td {
-                    background-color: #f0f9ff !important;
+                    background-color: var(--ansis-primary-light, #f0f9ff) !important;
                 }
             }
 
             > td {
-                padding: 0.55rem 0.6rem;
+                padding: var(--ansis-cell-padding-y, 0.55rem) 0.6rem;
                 vertical-align: middle;
                 border-bottom: 1px solid #f1f5f9;
                 color: #1e293b;
@@ -119,7 +120,7 @@
             > td {
                 background-color: #f1f5f9 !important;
                 border-bottom: 1px solid #e2e8f0 !important;
-                padding: 0.5rem 0.6rem !important;
+                padding: var(--ansis-cell-padding-y, 0.5rem) 0.6rem !important;
             }
         }
 
@@ -136,7 +137,7 @@
                 border-top: 2px solid #e2e8f0 !important;
                 color: #0f172a !important;
                 font-weight: 600 !important;
-                padding: 0.6rem !important;
+                padding: var(--ansis-cell-padding-y, 0.6rem) !important;
 
                 &.o_list_record_selector {
                     position: sticky !important;

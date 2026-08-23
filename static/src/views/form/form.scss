@@ -18,7 +18,7 @@
             border-radius: var(--ansis-radius-lg, 12px) !important;
             border: 1px solid var(--ansis-border, #e2e8f0) !important;
             box-shadow: var(--ansis-shadow-card, 0 4px 6px -1px rgba(15, 23, 42, 0.04), 0 10px 15px -3px rgba(15, 23, 42, 0.05)) !important;
-            padding: 24px 32px !important;
+            padding: var(--ansis-sheet-padding, 24px 32px) !important;
             transition: box-shadow 0.2s ease;
 
             @media (max-width: 768px) {
@@ -98,7 +98,7 @@
             background-color: #ffffff;
             color: var(--ansis-text-main, #0f172a);
             font-size: 0.875rem;
-            padding: 0.35rem 0.65rem;
+            padding: var(--ansis-control-padding-y, 0.35rem) 0.65rem;
             min-height: 32px;
             transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 
@@ -108,7 +108,7 @@
 
             &:focus {
                 border-color: var(--ansis-primary, #0284c7) !important;
-                box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.14) !important;
+                box-shadow: 0 0 0 3px var(--ansis-focus-ring, rgba(2, 132, 199, 0.14)) !important;
                 outline: none !important;
                 background-color: #ffffff !important;
             }
@@ -218,7 +218,7 @@
             &:hover {
                 background-color: #ffffff !important;
                 border-color: var(--ansis-primary, #0284c7) !important;
-                box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.12), 0 2px 4px -2px rgba(2, 132, 199, 0.08) !important;
+                box-shadow: 0 4px 6px -1px var(--ansis-focus-ring, rgba(2, 132, 199, 0.12)), 0 2px 4px -2px rgba(15, 23, 42, 0.08) !important;
                 transform: translateY(-1px) !important;
 
                 .o_button_icon {

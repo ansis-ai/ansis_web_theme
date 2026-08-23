@@ -33,7 +33,18 @@ class ResCompany(models.Model):
         ],
         default="standard",
         string="Theme Font Scale",
-        help="Base font sizing and UI layout density.",
+        help="Base font sizing across views and controls.",
+    )
+
+    theme_ui_density = fields.Selection(
+        selection=[
+            ("compact", "Compact (High Density / 32px Rows)"),
+            ("standard", "Standard (Balanced / 40px Rows)"),
+            ("comfortable", "Comfortable (Spacious / 48px Rows)"),
+        ],
+        default="standard",
+        string="UI Layout Density",
+        help="Controls row height in tables, form field padding, and layout density.",
     )
 
     theme_brand_color = fields.Char(

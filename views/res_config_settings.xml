@@ -33,8 +33,8 @@
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
                 <app data-string="Theme &amp; Branding" string="Theme &amp; Branding" name="ansis_web_theme">
-                    <!-- Typography & Fonts Block -->
-                    <block title="Typography &amp; Fonts" id="ansis_theme_typography_block">
+                    <!-- Typography & UI Density Block -->
+                    <block title="Typography &amp; Layout Density" id="ansis_theme_typography_block">
                         <setting id="ansis_theme_font_family_setting"
                                  string="Primary Font Family"
                                  help="Choose the default typography typeface for backend views, menus, and forms.">
@@ -47,11 +47,21 @@
                         </setting>
                         <setting id="ansis_theme_font_size_setting"
                                  string="Base Font Scale"
-                                 help="Select overall UI density, text sizing, and compact spacing.">
+                                 help="Select overall base font scaling for standard reading text.">
                             <div class="content-group">
                                 <div class="row mt16">
-                                    <label for="theme_font_size" string="Scale / Density" class="col-lg-4 o_light_label"/>
+                                    <label for="theme_font_size" string="Font Scale" class="col-lg-4 o_light_label"/>
                                     <field name="theme_font_size" class="col-lg-8"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting id="ansis_theme_ui_density_setting"
+                                 string="UI Layout Density"
+                                 help="Adjust vertical density across table rows (32px / 40px / 48px) and form sheets.">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="theme_ui_density" string="Density" class="col-lg-4 o_light_label"/>
+                                    <field name="theme_ui_density" class="col-lg-8"/>
                                 </div>
                             </div>
                         </setting>
@@ -63,9 +73,11 @@
                                  string="Primary Brand Accent"
                                  help="Main accent color for active navigation tabs, action buttons, and focus glow rings.">
                             <div class="content-group">
-                                <div class="row mt16">
+                                <div class="row mt16 align-items-center">
                                     <label for="theme_brand_color" string="Accent Color" class="col-lg-4 o_light_label"/>
-                                    <field name="theme_brand_color" widget="color" class="col-lg-8"/>
+                                    <div class="col-lg-8 d-flex align-items-center gap-2">
+                                        <field name="theme_brand_color" widget="color" class="flex-grow-1"/>
+                                    </div>
                                 </div>
                             </div>
                         </setting>
@@ -105,7 +117,7 @@
                         <setting id="ansis_theme_wallpaper_setting"
                                  string="Home Menu Wallpaper"
                                  company_dependent="1"
-                                 help="Background wallpaper image displayed with frosted-glass blur behind the Home Menu dashboard.">
+                                 help="Background wallpaper image displayed in the fullscreen Home Menu dashboard.">
                             <div class="content-group">
                                 <field name="theme_background_image" widget="image" class="w-75"/>
                             </div>

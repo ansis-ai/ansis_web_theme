@@ -164,13 +164,13 @@ This roadmap documents the implementation progress, UX architecture, and planned
     - **Base Font Scale**: Compact (`13px`), Standard (`14px`), Comfortable (`15px`).
     - Live CSS variable injection (`--ansis-font-sans`, `--ansis-font-size-base`).
 
-- [ ] **7.3 Brand Palette & UI Density Controls**
+- [x] **7.3 Brand Palette & UI Density Controls**
   - **Goal**: Configure primary brand colors, accent tints, and layout spacing.
-  - **Status**: `⏳ Planned`
+  - **Status**: `✅ Completed`
   - **Features**:
-    - Primary brand color picker with automatic generation of light tint (`#f0f9ff`), hover shade, and focus rings.
-    - Grid & List view density toggle (Compact vs Spacious).
-    - Multi-company wallpaper upload with real-time blur preview.
+    - Primary brand color picker with automatic dynamic generation of hover shade, soft pastel light tint, border accent, and focus glow rings.
+    - UI Layout Density controls: Compact (32px rows), Standard (40px rows), Comfortable (48px rows) scaling list tables and form sheets.
+    - Multi-company wallpaper and favicon streaming with zero ACL access errors.
 
 ---
 
