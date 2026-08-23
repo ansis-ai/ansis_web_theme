@@ -587,7 +587,8 @@ body.o_custom_home_menu_shown {
         background: #ffffff;
         border: 1px solid rgba(226, 232, 240, 0.8);
         border-radius: 9999px;
-        font-size: 14px;
+        font-family: var(--ansis-font-sans);
+        font-size: var(--ansis-font-size-base, 14px);
         font-weight: 500;
         color: #0f172a;
         box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
@@ -777,7 +778,8 @@ body.o_custom_home_menu_shown {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
+    font-family: var(--ansis-font-sans);
+    font-size: calc(var(--ansis-font-size-base, 14px) * 0.82);
     font-weight: 600;
     text-align: center;
     line-height: 1.2;
