@@ -107,6 +107,13 @@ Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for de
 
 ---
 
+## 👥 Credits & Attribution
+
+* **Developer & Maintainer**: [ANSIS Pte Ltd](https://ansis.com.sg)
+* **Original Foundation**: This module is derived from and incorporates architectural concepts originally developed by [MuK IT GmbH & Co. KG](https://www.mukit.at) (Mathias Markl) licensed under LGPL-3.0.
+
+---
+
 ## 📄 License
 
 This module is licensed under the **GNU Lesser General Public License v3.0 (LGPL-3.0)**.

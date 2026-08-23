@@ -1,14 +1,27 @@
+# Copyright 2017-2024 MuK IT GmbH & Co. KG
+# Copyright 2017-2024 MuK IT GmbH & Co. KG
 # Copyright 2024-2026 ANSIS Pte Ltd
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.html).
 
 {
     "name": "ANSIS Web Theme",
     "summary": "Modern Light SaaS Backend Theme for Odoo Community 18.0",
+    "description": """
+        ANSIS Web Theme for Odoo 18.0 Community.
+        Modern, responsive, high-performance web client theme.
+        Originally derived from and incorporating architectural elements of MuK Backend Theme
+        (Copyright MuK IT GmbH & Co. KG) under LGPL-3.0.
+    """,
     "version": "18.0.1.0.0",
     "category": "Themes/Backend",
     "license": "LGPL-3",
-    "author": "ANSIS Pte Ltd",
+    "author": "ANSIS Pte Ltd, MuK IT",
     "website": "https://ansis.com.sg",
+    "contributors": [
+        "ANSIS Pte Ltd <info@ansis.com.sg>",
+        "Mathias Markl <mathias.markl@mukit.at>",
+        "MuK IT GmbH & Co. KG <support@mukit.at>",
+    ],
     "depends": [
         "muk_web_chatter",
         "muk_web_dialog",
