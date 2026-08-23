@@ -299,6 +299,16 @@
             pointer-events: auto !important;
         }
 
+        // Hide third-party support systray buttons (e.g. auto_database_backup support launcher)
+        .o_auto_database_backup_systray,
+        div:has(> .o_auto_database_backup_systray) {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+            height: 0 !important;
+            pointer-events: none !important;
+        }
+
         // Hide duplicate mobile burger avatar button on desktop
         @media (min-width: 769px) {
             .o_mobile_menu_toggle,
