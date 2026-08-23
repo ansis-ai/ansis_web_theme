@@ -194,8 +194,11 @@ This roadmap documents the implementation progress, UX architecture, and planned
   - **Web Client Grid Streamlining**: Configured modern single-column CSS grid (`100%` width) in `WebClient` with zero sidebar overhead or layout shift.
   - **Clean Models & Views**: Streamlined `res.company`, `res.config.settings`, and `res.users` by eliminating sidebar-specific fields (`sidebar_type`, `appbar_image`).
   - **Dependency Decoupling**: Completely eliminated `muk_web_appsbar` dependency.
-- [ ] **8.4 Theme Color Engine & Asset Utilities (`muk_web_colors` / `muk_web_utils`)**
-  - Native SCSS color asset compiler and web editor asset reset tools.
+- [x] **8.4 Theme Color Engine & Asset Utilities (`muk_web_colors` / `muk_web_utils`)** `[Status: ✅ Completed]`
+  - **SCSS Color Variables & Dark Mode**: Added native SCSS primary color variables (`static/src/scss/colors.scss`) and dark mode palette overrides (`static/src/scss/colors_dark.scss`).
+  - **Native SCSS Asset Compiler (`web_editor.assets`)**: Implemented `models/web_editor_assets.py` supporting dynamic regex variable extraction, replacement, and custom asset attachment bundle overrides.
+  - **Asset Reset & Maintenance Actions**: Integrated color asset reset handlers directly into `res.config.settings`.
+  - **100% Zero-Muk Self-Contained Theme**: Decoupled and eliminated all external Muk dependencies (`muk_web_colors`, `muk_web_appsbar`, `muk_web_chatter`, `muk_web_dialog`, `muk_web_theme`), leaving `ansis_web_theme` completely standalone with only `["mail", "web_editor"]` core dependencies.
 
 ---
 

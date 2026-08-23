@@ -23,7 +23,7 @@
     ],
     "depends": [
         "mail",
-        "muk_web_colors",
+        "web_editor",
     ],
     "excludes": [
         "web_enterprise",
@@ -36,14 +36,20 @@
     "assets": {
         "web._assets_primary_variables": [
             (
-                "after",
-                "web/static/src/scss/primary_variables.scss",
+                "prepend",
                 "ansis_web_theme/static/src/scss/colors.scss",
             ),
             (
                 "after",
                 "web/static/src/scss/primary_variables.scss",
                 "ansis_web_theme/static/src/scss/variables.scss",
+            ),
+        ],
+        "web.assets_web_dark": [
+            (
+                "after",
+                "ansis_web_theme/static/src/scss/colors.scss",
+                "ansis_web_theme/static/src/scss/colors_dark.scss",
             ),
         ],
         "web.assets_backend": [

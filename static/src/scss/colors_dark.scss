@@ -1,13 +1,13 @@
 // ==========================================================================
-// ANSIS Modern Light Palette & Primary SCSS Variables
+// ANSIS Modern Dark Palette Overrides
 // ==========================================================================
 
-$color_brand: #0284c7;
-$color_primary: #0284c7;
-$color_success: #059669;
-$color_info: #0284c7;
-$color_warning: #d97706;
-$color_danger: #e11d48;
+$color_brand: #38bdf8;
+$color_primary: #38bdf8;
+$color_success: #34d399;
+$color_info: #60a5fa;
+$color_warning: #fbbf24;
+$color_danger: #f87171;
 
 $mk_color_brand: $color_brand;
 $mk_color_primary: $color_primary;
@@ -16,15 +16,12 @@ $mk_color_info: $color_info;
 $mk_color_warning: $color_warning;
 $mk_color_danger: $color_danger;
 
-// Odoo Core Brand Color Mapping
 $o-community-color: $color_brand;
 $o-enterprise-color: $color_brand;
 $o-enterprise-action-color: $color_primary;
 
 $o-brand-odoo: $color_brand;
 $o-brand-primary: $color_primary;
-$o-brand-secondary: #64748b;
-$o-brand-lightsecondary: #f8fafc;
 
 $o-success: $color_success;
 $o-info: $color_info;
