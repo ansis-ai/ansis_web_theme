@@ -23,7 +23,6 @@
     ],
     "depends": [
         "mail",
-        "muk_web_appsbar",
         "muk_web_colors",
     ],
     "excludes": [

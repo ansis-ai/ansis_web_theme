@@ -189,8 +189,12 @@ This roadmap documents the implementation progress, UX architecture, and planned
   - **Dynamic Maximize/Restore Toggle**: Patched OWL `Dialog` and `SelectCreateDialog` with size state management and added header maximize/compress toggle button.
   - **Modern Dialog Aesthetics**: Added fullscreen modal mode (`.modal-fs`), smooth transition curves, elevated shadow layers, and custom control buttons (`.ansis_btn_dialog_size`).
   - **Dependency Decoupling**: Completely eliminated `muk_web_dialog` dependency.
-- [ ] **8.3 Navigation & AppsBar Clean Architecture (`muk_web_appsbar`)**
-  - Self-contained navigation, app switcher, and navbar brand hooks without external dependency.
+- [x] **8.3 Navigation & AppsBar Clean Architecture (`muk_web_appsbar`)** `[Status: ✅ Completed]`
+  - **Models & Session**: Added `appbar_image` Binary on `res.company` / `res.config.settings`, `sidebar_type` Selection (`invisible` / `small` / `large`) on `res.users`, and serialized `has_appsbar_image` and `sidebar_type` into `session_info`.
+  - **User & Company Views**: Exposed Sidebar Type layout preference under user profile and Apps Sidebar Footer Logo upload under Theme & Branding settings.
+  - **OWL AppsBar & Menu Service**: Implemented native `appMenuService` and `AppsBar` component with event bus listeners for active app synchronization.
+  - **Modern Sidebar Styling & Grid Layout**: Implemented CSS grid layout in `WebClient` supporting full-width, compact icon strip (52px), and full labeled sidebar (180px) with zero layout shift and automatic mobile breakpoint collapsing.
+  - **Dependency Decoupling**: Completely eliminated `muk_web_appsbar` dependency.
 - [ ] **8.4 Theme Color Engine & Asset Utilities (`muk_web_colors` / `muk_web_utils`)**
   - Native SCSS color asset compiler and web editor asset reset tools.
 

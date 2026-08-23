@@ -12,6 +12,7 @@ class IrHttp(models.AbstractModel):
         result = super().session_info()
         result["chatter_position"] = self.env.user.chatter_position or "side"
         result["dialog_size"] = self.env.user.dialog_size or "minimize"
+        result["sidebar_type"] = self.env.user.sidebar_type or "large"
         if self.env.user._is_internal():
             user_companies = result.get("user_companies", {})
             allowed_companies = user_companies.get("allowed_companies", {})
@@ -23,6 +24,9 @@ class IrHttp(models.AbstractModel):
                         {
                             "has_background_image": bool(
                                 company.background_image
+                            ),
+                            "has_appsbar_image": bool(
+                                company.appbar_image
                             ),
                             "theme_font_family": company.theme_font_family or "inter",
                             "theme_font_size": company.theme_font_size or "standard",
@@ -36,6 +40,7 @@ class IrHttp(models.AbstractModel):
             if current_company and current_company in allowed_companies:
                 user_companies["current_company_theme"] = {
                     "has_background_image": allowed_companies[current_company].get("has_background_image", False),
+                    "has_appsbar_image": allowed_companies[current_company].get("has_appsbar_image", False),
                     "theme_font_family": allowed_companies[current_company].get("theme_font_family", "inter"),
                     "theme_font_size": allowed_companies[current_company].get("theme_font_size", "standard"),
                     "theme_ui_density": allowed_companies[current_company].get("theme_ui_density", "standard"),

@@ -7,68 +7,33 @@
 
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
-import { computeAppsAndMenuItems } from "@web/webclient/menus/menu_helpers";
+import { computeAppsAndMenuItems, reorderApps } from "@web/webclient/menus/menu_helpers";
 
-const serviceRegistry = registry.category("services");
-
-if (serviceRegistry.contains("app_menu")) {
-    const originalAppMenuService = serviceRegistry.get("app_menu");
-    serviceRegistry.add(
-        "app_menu",
-        {
-            ...originalAppMenuService,
-            async start(env, deps) {
-                const service = await originalAppMenuService.start(env, deps);
-                return {
-                    ...service,
-                    getAppsMenuItems() {
-                        const menu = deps.menu;
-                        const menuItems = computeAppsAndMenuItems(
-                            menu.getMenuAsTree("root")
-                        );
-                        const apps = menuItems.apps;
-
-                        let savedOrder = null;
-                        try {
-                            const local = localStorage.getItem(
-                                "ansis_apps_order"
-                            );
-                            if (local) {
-                                savedOrder = JSON.parse(local);
-                            } else if (user?.settings?.homemenu_config) {
-                                savedOrder = JSON.parse(
-                                    user.settings.homemenu_config
-                                );
-                            }
-                        } catch (e) {
-                            savedOrder = null;
-                        }
-
-                        if (Array.isArray(savedOrder) && savedOrder.length) {
-                            apps.sort((a, b) => {
-                                let aIdx = savedOrder.indexOf(a.xmlid);
-                                if (aIdx === -1)
-                                    aIdx = savedOrder.indexOf(a.id);
-                                if (aIdx === -1)
-                                    aIdx = savedOrder.indexOf(String(a.id));
-
-                                let bIdx = savedOrder.indexOf(b.xmlid);
-                                if (bIdx === -1)
-                                    bIdx = savedOrder.indexOf(b.id);
-                                if (bIdx === -1)
-                                    bIdx = savedOrder.indexOf(String(b.id));
-
-                                if (aIdx === -1 && bIdx === -1) return 0;
-                                if (aIdx === -1) return 1;
-                                if (bIdx === -1) return -1;
-                                return aIdx - bIdx;
-                            });
-                        }
-                        return apps;
-                    },
-                };
+export const appMenuService = {
+    dependencies: ["menu"],
+    async start(env, { menu }) {
+        return {
+            getCurrentApp() {
+                return menu.getCurrentApp();
             },
-        },
-        { force: true }
-    );
-}
+            getAppsMenuItems() {
+                const menuItems = computeAppsAndMenuItems(
+                    menu.getMenuAsTree("root")
+                );
+                const apps = menuItems.apps;
+                const menuConfig = JSON.parse(
+                    user.settings?.homemenu_config || "null"
+                );
+                if (menuConfig) {
+                    reorderApps(apps, menuConfig);
+                }
+                return apps;
+            },
+            selectApp(app) {
+                menu.selectMenu(app);
+            },
+        };
+    },
+};
+
+registry.category("services").add("app_menu", appMenuService);

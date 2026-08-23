@@ -23,6 +23,9 @@ class ResCompany(models.Model):
     background_image = fields.Binary(
         string="Apps Menu Background Image", attachment=True
     )
+    appbar_image = fields.Binary(
+        string="Apps Menu Footer Image", attachment=True
+    )
 
     theme_font_family = fields.Selection(
         selection=[

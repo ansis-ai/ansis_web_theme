@@ -13,5 +13,12 @@
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Outfit:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet" />
         </xpath>
     </template>
+
+    <template id="webclient_bootstrap" name="Web Client Layout" inherit_id="web.webclient_bootstrap">
+        <xpath expr="//t[@t-set='body_classname']" position="after">
+            <t t-set="body_sidebar_classname" t-value="'mk_sidebar_type_' + (request.env.user.sidebar_type or 'large') + ' ansis_sidebar_type_' + (request.env.user.sidebar_type or 'large')"/>
+            <t t-set="body_classname" t-value="'%s %s' % (body_classname, body_sidebar_classname)"/>
+        </xpath>
+    </template>
     
 </odoo>

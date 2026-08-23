@@ -1,48 +1,45 @@
-/* --------------------------------------------------------------------------
-   Full-Width Clean Layout (Persistent Sidebar Disabled for Maximum Workspace)
-   -------------------------------------------------------------------------- */
-
-:root {
-    --mk-sidebar-width: 0px !important;
-}
-
-.mk_apps_sidebar_panel,
-.mk_apps_sidebar {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    min-width: 0 !important;
-    max-width: 0 !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    overflow: hidden !important;
-}
+// ==========================================================================
+// ANSIS Modern Responsive Web Client Grid Layout
+// ==========================================================================
 
 .o_web_client {
     display: grid !important;
     grid-template-areas:
-        "banner"
-        "navbar"
-        "content"
-        "components" !important;
+        "banner banner"
+        "navbar navbar"
+        "sidebar content"
+        "components components" !important;
     grid-template-rows: auto auto 1fr auto !important;
-    grid-template-columns: 100% !important;
+    grid-template-columns: auto 1fr !important;
     width: 100% !important;
 
-    > .mk_apps_sidebar_panel {
-        display: none !important;
-        width: 0 !important;
-    }
-
-    > .o_action_manager {
-        grid-area: content !important;
-        width: 100% !important;
-        max-width: 100% !important;
+    > div:has(#oe_neutralize_banner) {
+        grid-area: banner;
     }
 
     > .o_navbar {
-        grid-area: navbar !important;
-        width: 100% !important;
+        grid-area: navbar;
+        width: 100%;
+    }
+
+    > .mk_apps_sidebar_panel,
+    > .ansis_apps_sidebar_panel {
+        grid-area: sidebar;
+    }
+
+    > .o_action_manager {
+        grid-area: content;
+        width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    > .o-main-components-container {
+        grid-area: components;
+    }
+
+    > iframe {
+        grid-column: 1 / -1;
+        width: 100%;
     }
 }

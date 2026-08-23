@@ -1,0 +1,163 @@
+// ==========================================================================
+// ANSIS Modern Sidebar Navigation (AppsBar)
+// ==========================================================================
+
+:root {
+    --ansis-sidebar-large-width: 180px;
+    --ansis-sidebar-small-width: 52px;
+    --ansis-sidebar-width: var(--ansis-sidebar-large-width);
+    --mk-sidebar-large-width: 180px;
+    --mk-sidebar-small-width: 52px;
+    --mk-sidebar-width: var(--ansis-sidebar-large-width);
+}
+
+.ansis_apps_sidebar_panel,
+.mk_apps_sidebar_panel {
+    background-color: #ffffff;
+    border-right: 1px solid var(--ansis-border, #e2e8f0);
+    width: var(--ansis-sidebar-width, var(--mk-sidebar-width, 0));
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: transparent;
+        border-radius: 4px;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.4);
+    }
+
+    .ansis_apps_sidebar,
+    .mk_apps_sidebar {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        white-space: nowrap;
+
+        .ansis_apps_sidebar_menu,
+        .mk_apps_sidebar_menu {
+            padding: 8px 6px;
+            margin: 0;
+            list-style: none;
+
+            > li {
+                margin-bottom: 2px;
+
+                > a {
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    font-size: calc(var(--ansis-font-size-base, 14px) * 0.92);
+                    font-weight: 500;
+                    overflow: hidden;
+                    padding: 8px 10px;
+                    text-decoration: none;
+                    color: var(--ansis-text-muted, #64748b);
+                    text-overflow: ellipsis;
+                    border-radius: 8px;
+                    transition: all 0.15s ease;
+
+                    .ansis_apps_sidebar_icon,
+                    .mk_apps_sidebar_icon {
+                        width: 22px;
+                        height: 22px;
+                        margin-right: 10px;
+                        flex-shrink: 0;
+                        object-fit: contain;
+                    }
+
+                    .ansis_apps_sidebar_name,
+                    .mk_apps_sidebar_name {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    &:hover {
+                        background-color: var(--ansis-canvas-alt, #f1f5f9);
+                        color: var(--ansis-text-main, #0f172a);
+                    }
+                }
+
+                &.active > a {
+                    background-color: var(--ansis-primary-light, rgba(2, 132, 199, 0.08));
+                    color: var(--ansis-primary, #0284c7);
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .ansis_apps_sidebar_logo,
+        .mk_apps_sidebar_logo {
+            text-align: center;
+            border-top: 1px solid var(--ansis-border, #e2e8f0);
+            background-color: #fafbfc;
+            img {
+                max-height: 40px;
+                object-fit: contain;
+            }
+        }
+    }
+}
+
+// Sidebar Sizes
+.ansis_sidebar_type_large,
+.mk_sidebar_type_large {
+    --ansis-sidebar-width: var(--ansis-sidebar-large-width);
+    --mk-sidebar-width: var(--ansis-sidebar-large-width);
+}
+
+.ansis_sidebar_type_small,
+.mk_sidebar_type_small {
+    --ansis-sidebar-width: var(--ansis-sidebar-small-width);
+    --mk-sidebar-width: var(--ansis-sidebar-small-width);
+
+    .ansis_apps_sidebar_name,
+    .mk_apps_sidebar_name {
+        display: none !important;
+    }
+    .ansis_apps_sidebar_icon,
+    .mk_apps_sidebar_icon {
+        margin-right: 0 !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .ansis_apps_sidebar_logo,
+    .mk_apps_sidebar_logo {
+        display: none !important;
+    }
+    .ansis_apps_sidebar_menu > li > a,
+    .mk_apps_sidebar_menu > li > a {
+        justify-content: center;
+        padding: 8px 4px;
+    }
+}
+
+.ansis_sidebar_type_invisible,
+.mk_sidebar_type_invisible {
+    --ansis-sidebar-width: 0 !important;
+    --mk-sidebar-width: 0 !important;
+}
+
+.editor_has_snippets_hide_backend_navbar,
+.o_home_menu_background,
+.o_fullscreen {
+    --ansis-sidebar-width: 0 !important;
+    --mk-sidebar-width: 0 !important;
+}
+
+@media (max-width: 991.98px) {
+    .ansis_sidebar_type_large,
+    .ansis_sidebar_type_small,
+    .mk_sidebar_type_large,
+    .mk_sidebar_type_small {
+        --ansis-sidebar-width: 0 !important;
+        --mk-sidebar-width: 0 !important;
+    }
+}
