@@ -16,6 +16,35 @@
     z-index: 1000 !important;
     overflow: visible !important;
 
+    /* Hide brand & submenus when Home Menu overlay is active */
+    body.o_custom_home_menu_shown & {
+        background: transparent !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 2001 !important;
+
+        .o_menu_brand,
+        .o_menu_sections,
+        .o_navbar_breadcrumbs,
+        .o_navbar_apps_menu,
+        .o_menu_toggle,
+        .mk_app_menu {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        .o_menu_systray {
+            display: flex !important;
+            z-index: 2002 !important;
+        }
+    }
+
     /* ----------------------------------------------------------------------
        DESKTOP VIEW (> 768px) - LEFT HAND SIDE
        ---------------------------------------------------------------------- */
@@ -277,12 +306,11 @@
             overflow: visible !important;
         }
 
-        // Icon action buttons (Messaging, Activities, Debug, Share, etc.)
-        button,
-        button.o_nav_entry,
-        .dropdown-toggle:not(.o_user_menu .dropdown-toggle):not(.o_switch_company_menu .dropdown-toggle),
-        .o_nav_entry > button,
-        .o_nav_entry > a {
+        // Standard Icon action buttons (Messaging, Activities, Profiling, Debug, Share, etc.)
+        > .o_nav_entry > button,
+        > .o_nav_entry > a,
+        > div:not(.o_user_menu):not(.o_switch_company_menu) button,
+        .dropdown-toggle:not(.o_user_menu button):not(.o_switch_company_menu button) {
             position: relative !important;
             display: inline-flex !important;
             align-items: center !important;
@@ -350,21 +378,40 @@
             pointer-events: none !important;
         }
 
-        // Company Switcher Pill
+        // Company Switcher Pill (Generous space for full company name)
         .o_switch_company_menu {
-            .dropdown-toggle {
+            display: inline-flex !important;
+            align-items: center !important;
+            height: 100% !important;
+
+            button {
                 display: inline-flex !important;
                 align-items: center !important;
                 gap: 6px !important;
                 height: 32px !important;
-                padding: 0 10px !important;
+                padding: 0 12px !important;
                 border-radius: 8px !important;
                 background-color: #f8fafc !important;
                 border: 1px solid #e2e8f0 !important;
                 color: #334155 !important;
                 font-size: 0.82rem !important;
                 font-weight: 600 !important;
+                max-width: 320px !important;
+                cursor: pointer !important;
+                pointer-events: auto !important;
                 transition: all 0.15s ease !important;
+
+                .oe_topbar_name {
+                    max-width: 240px !important;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis !important;
+                    white-space: nowrap !important;
+                    pointer-events: none !important;
+                }
+
+                i {
+                    pointer-events: none !important;
+                }
 
                 &:hover {
                     background-color: #f1f5f9 !important;
@@ -380,35 +427,46 @@
             }
         }
 
-        // User Profile Menu Button
+        // User Profile Menu Button (Responsive & Clickable)
         .o_user_menu {
-            .dropdown-toggle {
+            display: inline-flex !important;
+            align-items: center !important;
+            height: 100% !important;
+
+            button {
                 display: inline-flex !important;
                 align-items: center !important;
                 gap: 8px !important;
                 height: 36px !important;
-                padding: 2px 10px 2px 4px !important;
+                width: auto !important;
+                min-width: 0 !important;
+                padding: 2px 8px 2px 2px !important;
                 border-radius: 20px !important;
                 border: 1px solid transparent !important;
                 background: transparent !important;
                 color: #334155 !important;
                 font-size: 0.85rem !important;
                 font-weight: 600 !important;
+                cursor: pointer !important;
+                pointer-events: auto !important;
                 transition: all 0.15s ease !important;
 
-                .o_user_avatar {
+                .o_user_avatar,
+                .o_avatar {
                     width: 28px !important;
                     height: 28px !important;
                     border-radius: 50% !important;
                     object-fit: cover !important;
                     border: 1.5px solid #cbd5e1 !important;
+                    pointer-events: none !important;
                 }
 
                 .oe_topbar_name {
-                    max-width: 140px !important;
+                    max-width: 160px !important;
                     overflow: hidden !important;
                     text-overflow: ellipsis !important;
                     white-space: nowrap !important;
+                    pointer-events: none !important;
                 }
 
                 &:hover {
@@ -492,6 +550,7 @@ body.o_custom_home_menu_shown {
         pointer-events: none !important;
     }
 
+    .o_web_client .o_main_navbar,
     .o_main_navbar {
         position: fixed !important;
         top: 0 !important;
@@ -508,19 +567,22 @@ body.o_custom_home_menu_shown {
             box-shadow: none !important;
         }
 
+        .o_menu_brand,
+        .o_menu_sections,
+        .o_navbar_breadcrumbs,
+        .o_navbar_apps_menu,
+        .o_menu_toggle,
+        .mk_app_menu {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
         .o_menu_systray {
             display: flex !important;
             z-index: 2002 !important;
         }
-    }
-
-    .o_menu_sections,
-    .o_menu_brand,
-    .o_navbar_breadcrumbs,
-    .o_navbar_apps_menu,
-    .o_menu_toggle,
-    .mk_app_menu {
-        display: none !important;
     }
 }
 
