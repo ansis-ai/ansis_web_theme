@@ -22,7 +22,6 @@ patch(NavBar.prototype, {
 
         this.focusedAppIndex = 0;
         this._onCustomHomeMenuKeydown = this.onCustomHomeMenuKeydown.bind(this);
-        this._onGlobalClick = this.onGlobalClick.bind(this);
         this._onPopState = this.onPopState.bind(this);
         this._onRouteChange = this.onRouteChange.bind(this);
 
@@ -30,7 +29,6 @@ patch(NavBar.prototype, {
             this.renderCustomOverlay();
             this.bindBrandClick();
             document.addEventListener("keydown", this._onCustomHomeMenuKeydown);
-            document.addEventListener("click", this._onGlobalClick, true);
             window.addEventListener("popstate", this._onPopState);
             this.env.bus?.addEventListener("ROUTE_CHANGE", this._onRouteChange);
             this.restoreCustomHomeMenuOnRefresh();
@@ -42,7 +40,6 @@ patch(NavBar.prototype, {
 
         onWillUnmount(() => {
             document.removeEventListener("keydown", this._onCustomHomeMenuKeydown);
-            document.removeEventListener("click", this._onGlobalClick, true);
             window.removeEventListener("popstate", this._onPopState);
             this.env.bus?.removeEventListener("ROUTE_CHANGE", this._onRouteChange);
         });
@@ -119,7 +116,6 @@ patch(NavBar.prototype, {
         const allCards = Array.from(overlayContainer.querySelectorAll(".custom_home_menu_app_card, .ansis_home_menu_app_card"));
         const visibleCards = allCards.filter((card) => card.style.display !== "none");
 
-        // Dynamic Column Calculation for current screen width
         const getColumnsPerRow = () => {
             if (visibleCards.length <= 1) return 1;
             const firstTop = visibleCards[0].offsetTop;
@@ -145,7 +141,7 @@ patch(NavBar.prototype, {
             }
         };
 
-        // 1. ESCAPE - Clear Search or Close Overlay
+        // 1. ESCAPE
         if (ev.key === "Escape") {
             ev.preventDefault();
             if (searchInput && searchInput.value) {
@@ -158,7 +154,7 @@ patch(NavBar.prototype, {
             return;
         }
 
-        // 2. ENTER - Launch Currently Focused App
+        // 2. ENTER
         if (ev.key === "Enter") {
             ev.preventDefault();
             if (visibleCards.length && visibleCards[this.focusedAppIndex]) {
@@ -167,7 +163,7 @@ patch(NavBar.prototype, {
             return;
         }
 
-        // 3. ARROW KEYS & NAVIGATION
+        // 3. ARROW KEYS
         if (ev.key === "ArrowRight") {
             ev.preventDefault();
             setFocus((this.focusedAppIndex + 1) % visibleCards.length);
@@ -227,46 +223,18 @@ patch(NavBar.prototype, {
         }
     },
 
-    onGlobalClick(ev) {
-        /* Intercept Brand Click (< Chevron) on Desktop */
-        const brand = ev.target.closest('.o_menu_brand');
-        if (brand) {
-            ev.preventDefault();
-            ev.stopPropagation();
-            this.openCustomHomeMenu();
-            return;
-        }
-
-        /* Intercept 'All Apps' inside mobile sidebar drawer */
-        const allAppsBtn = ev.target.closest('.o_navbar_apps_menu button, [data-menu-xmlid], .o_apps_menu_button, .o_all_apps_btn, .o_menu_sections_toggle, .dropdown-item');
-        
-        if (allAppsBtn && (allAppsBtn.innerText.includes("All Apps") || allAppsBtn.querySelector('.fa-th, .oi-apps') || ev.target.classList.contains('oi-apps'))) {
-            ev.preventDefault();
-            ev.stopPropagation();
-
-            /* Properly close Odoo 18 Bootstrap Offcanvas drawer */
-            const offcanvasCloseBtn = document.querySelector('.offcanvas.show .btn-close');
-            if (offcanvasCloseBtn) {
-                offcanvasCloseBtn.click(); 
-            } else {
-                const activeDrawer = document.querySelector('.offcanvas.show, .o_navbar_mobile_sidebar.show, .o_burger_menu.show');
-                if (activeDrawer) {
-                    activeDrawer.classList.remove('show');
-                }
-                const backdrop = document.querySelector('.offcanvas-backdrop');
-                if (backdrop) {
-                    backdrop.remove();
-                }
-                document.body.style.overflow = '';
-            }
-
-            this.openCustomHomeMenu();
-        }
-    },
-
     bindBrandClick() {
         const brand = document.querySelector(".o_menu_brand");
         if (brand) {
+            if (!brand._hasAnsisBrandHandler) {
+                brand._hasAnsisBrandHandler = true;
+                brand.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.openCustomHomeMenu();
+                });
+            }
+
             const currentApp = this.menuService?.getCurrentApp();
 
             if (currentApp) {
@@ -358,7 +326,7 @@ patch(NavBar.prototype, {
             console.warn("Could not sync app order to server", e);
         }
 
-        // 3. Immediately trigger bus event
+        // 3. Trigger bus event
         this.env.bus?.trigger("MENUS:APP-CHANGED");
         this.env.bus?.trigger("HOMEMENU:REORDERED");
     },
@@ -526,7 +494,7 @@ patch(NavBar.prototype, {
         }
 
         // Mouse hover synchronizes keyboard focus
-        appCards.forEach((card, idx) => {
+        appCards.forEach((card) => {
             card.addEventListener("mouseenter", () => {
                 const visible = appCards.filter((c) => c.style.display !== "none");
                 const vIdx = visible.indexOf(card);
@@ -544,7 +512,6 @@ patch(NavBar.prototype, {
 
         appCards.forEach((card) => {
             card.addEventListener("dragstart", (e) => {
-                // Do not drag if filtering
                 if (searchInput && searchInput.value.trim().length > 0) {
                     e.preventDefault();
                     return;
@@ -587,7 +554,6 @@ patch(NavBar.prototype, {
                         parent.insertBefore(draggedCard, card);
                     }
 
-                    // Compute new app order array
                     const newOrder = Array.from(parent.querySelectorAll(".ansis_home_menu_app_card"))
                         .map((c) => c.dataset.appXmlid || parseInt(c.dataset.appId));
 
@@ -604,7 +570,6 @@ patch(NavBar.prototype, {
                 container.querySelectorAll(".ansis_drag_over").forEach((c) => c.classList.remove("ansis_drag_over"));
             });
 
-            // Normal click handler
             card.addEventListener("click", (e) => {
                 if (isDragging) {
                     e.preventDefault();

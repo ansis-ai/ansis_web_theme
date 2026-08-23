@@ -14,6 +14,7 @@
     align-items: center !important;
     padding: 0 12px !important;
     z-index: 1000 !important;
+    overflow: visible !important;
 
     /* ----------------------------------------------------------------------
        DESKTOP VIEW (> 768px) - LEFT HAND SIDE
@@ -233,10 +234,31 @@
         gap: 4px !important;
         height: 100% !important;
         padding-right: 4px !important;
+        overflow: visible !important;
 
         // Hide third-party support clutter
         .o_auto_database_backup_systray {
             display: none !important;
+        }
+
+        // DESKTOP: Explicitly hide mobile burger toggle in systray so NO duplicate user avatar renders!
+        @media (min-width: 769px) {
+            .o_mobile_menu_toggle,
+            .o_burger_menu_avatar,
+            .d-md-none,
+            div:has(> .o_mobile_menu_toggle) {
+                display: none !important;
+            }
+        }
+
+        // MOBILE: Hide full desktop user menu in favor of mobile offcanvas drawer
+        @media (max-width: 768px) {
+            .o_user_menu {
+                display: none !important;
+            }
+            .o_mobile_menu_toggle {
+                display: inline-flex !important;
+            }
         }
 
         // Generic systray item containers
@@ -251,9 +273,12 @@
             padding: 0 !important;
             border: none !important;
             background: transparent !important;
+            position: relative !important;
+            overflow: visible !important;
         }
 
         // Icon action buttons (Messaging, Activities, Debug, Share, etc.)
+        button,
         button.o_nav_entry,
         .dropdown-toggle:not(.o_user_menu .dropdown-toggle):not(.o_switch_company_menu .dropdown-toggle),
         .o_nav_entry > button,
@@ -274,14 +299,17 @@
             font-size: 1rem !important;
             line-height: 1 !important;
             cursor: pointer !important;
+            pointer-events: auto !important;
             transition: color 0.15s ease, background-color 0.15s ease !important;
 
             i.fa,
-            i.oi {
+            i.oi,
+            i {
                 color: inherit !important;
                 font-size: 1rem !important;
                 line-height: 1 !important;
                 background: transparent !important;
+                pointer-events: none !important;
             }
 
             &:hover {
@@ -319,6 +347,7 @@
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
+            pointer-events: none !important;
         }
 
         // Company Switcher Pill
@@ -407,6 +436,7 @@
         padding: 6px !important;
         min-width: 180px !important;
         margin-top: 4px !important;
+        z-index: 1050 !important;
 
         .dropdown-item {
             border-radius: 6px !important;
@@ -549,9 +579,12 @@ body.o_custom_home_menu_shown {
             backdrop-filter: blur(8px);
             box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
 
-            &:hover:not(.ansis_dragging):not(.ansis_drag_over) {
+            &:hover:not(.ansis_dragging):not(.ansis_drag_over),
+            &.ansis_focused,
+            &:focus-visible {
                 background: #ffffff !important;
-                box-shadow: 0 14px 28px rgba(2, 132, 199, 0.16), 0 4px 10px rgba(15, 23, 42, 0.08) !important;
+                box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.22), 0 14px 28px rgba(2, 132, 199, 0.16), 0 4px 8px rgba(15, 23, 42, 0.06) !important;
+                border-color: #0284c7 !important;
             }
         }
     }
