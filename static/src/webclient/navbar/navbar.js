@@ -20,6 +20,7 @@ patch(NavBar.prototype, {
             this.state.isCustomHomeMenuOpen = false;
         }
 
+        this.focusedAppIndex = 0;
         this._onCustomHomeMenuKeydown = this.onCustomHomeMenuKeydown.bind(this);
         this._onGlobalClick = this.onGlobalClick.bind(this);
         this._onPopState = this.onPopState.bind(this);
@@ -95,6 +96,7 @@ patch(NavBar.prototype, {
 
     openCustomHomeMenu() {
         this.state.isCustomHomeMenuOpen = true;
+        this.focusedAppIndex = 0;
         document.body.classList.add("o_custom_home_menu_shown");
         this.renderCustomOverlay();
     },
@@ -110,21 +112,109 @@ patch(NavBar.prototype, {
             return;
         }
 
+        const overlayContainer = document.getElementById("ansis_home_menu_overlay_container");
+        if (!overlayContainer) return;
+
+        const searchInput = overlayContainer.querySelector("#ansis_home_menu_search_input");
+        const allCards = Array.from(overlayContainer.querySelectorAll(".custom_home_menu_app_card, .ansis_home_menu_app_card"));
+        const visibleCards = allCards.filter((card) => card.style.display !== "none");
+
+        // Dynamic Column Calculation for current screen width
+        const getColumnsPerRow = () => {
+            if (visibleCards.length <= 1) return 1;
+            const firstTop = visibleCards[0].offsetTop;
+            let cols = 0;
+            for (let i = 0; i < visibleCards.length; i++) {
+                if (Math.abs(visibleCards[i].offsetTop - firstTop) < 10) {
+                    cols++;
+                } else {
+                    break;
+                }
+            }
+            return cols || 1;
+        };
+
+        const setFocus = (idx) => {
+            if (!visibleCards.length) return;
+            this.focusedAppIndex = Math.max(0, Math.min(idx, visibleCards.length - 1));
+            allCards.forEach((c) => c.classList.remove("ansis_focused"));
+            const target = visibleCards[this.focusedAppIndex];
+            if (target) {
+                target.classList.add("ansis_focused");
+                target.scrollIntoView({ block: "nearest", behavior: "smooth" });
+            }
+        };
+
+        // 1. ESCAPE - Clear Search or Close Overlay
         if (ev.key === "Escape") {
             ev.preventDefault();
-            const input = document.getElementById("ansis_home_menu_search_input");
-            if (input && input.value) {
-                input.value = "";
+            if (searchInput && searchInput.value) {
+                searchInput.value = "";
                 const event = new Event("input", { bubbles: true });
-                input.dispatchEvent(event);
+                searchInput.dispatchEvent(event);
             } else {
                 this.closeCustomHomeMenu(false);
             }
             return;
         }
 
-        // Auto-focus search input when user starts typing alphanumeric characters
-        const searchInput = document.getElementById("ansis_home_menu_search_input");
+        // 2. ENTER - Launch Currently Focused App
+        if (ev.key === "Enter") {
+            ev.preventDefault();
+            if (visibleCards.length && visibleCards[this.focusedAppIndex]) {
+                visibleCards[this.focusedAppIndex].click();
+            }
+            return;
+        }
+
+        // 3. ARROW KEYS & NAVIGATION
+        if (ev.key === "ArrowRight") {
+            ev.preventDefault();
+            setFocus((this.focusedAppIndex + 1) % visibleCards.length);
+            return;
+        }
+
+        if (ev.key === "ArrowLeft") {
+            ev.preventDefault();
+            setFocus((this.focusedAppIndex - 1 + visibleCards.length) % visibleCards.length);
+            return;
+        }
+
+        if (ev.key === "ArrowDown") {
+            ev.preventDefault();
+            const cols = getColumnsPerRow();
+            const nextIdx = this.focusedAppIndex + cols;
+            if (nextIdx < visibleCards.length) {
+                setFocus(nextIdx);
+            }
+            return;
+        }
+
+        if (ev.key === "ArrowUp") {
+            ev.preventDefault();
+            const cols = getColumnsPerRow();
+            const prevIdx = this.focusedAppIndex - cols;
+            if (prevIdx >= 0) {
+                setFocus(prevIdx);
+            } else if (searchInput) {
+                searchInput.focus();
+            }
+            return;
+        }
+
+        if (ev.key === "Home") {
+            ev.preventDefault();
+            setFocus(0);
+            return;
+        }
+
+        if (ev.key === "End") {
+            ev.preventDefault();
+            setFocus(visibleCards.length - 1);
+            return;
+        }
+
+        // Auto-focus search input when user starts typing regular characters
         if (
             searchInput &&
             document.activeElement !== searchInput &&
@@ -268,7 +358,7 @@ patch(NavBar.prototype, {
             console.warn("Could not sync app order to server", e);
         }
 
-        // 3. Immediately trigger bus event so Sidebar (AppsBar) re-renders in sync
+        // 3. Immediately trigger bus event
         this.env.bus?.trigger("MENUS:APP-CHANGED");
         this.env.bus?.trigger("HOMEMENU:REORDERED");
     },
@@ -297,7 +387,7 @@ patch(NavBar.prototype, {
     renderOverlayHTML() {
         const apps = this.getOrderedApps();
         const appCards = apps
-            .map((app) => {
+            .map((app, index) => {
                 const iconUrl = app.webIconData
                     ? (app.webIconData.startsWith('data:') || app.webIconData.startsWith('/')
                         ? app.webIconData
@@ -308,12 +398,16 @@ patch(NavBar.prototype, {
                     ? `<img src="${iconUrl}" alt="${app.name}"/>`
                     : `<i class="oi oi-apps"></i>`;
 
+                const isFirst = index === 0 ? "ansis_focused" : "";
+
                 return `
                 <a href="${this.getMenuItemHref(app)}"
-                   class="ansis_home_menu_app_card custom_home_menu_app_card"
+                   class="ansis_home_menu_app_card custom_home_menu_app_card ${isFirst}"
                    data-app-id="${app.id}"
                    data-app-xmlid="${app.xmlid || ''}"
                    data-app-name="${app.name.toLowerCase()}"
+                   data-index="${index}"
+                   tabindex="0"
                    draggable="true">
                   <div class="ansis_home_menu_app_icon custom_home_menu_app_icon">
                     ${iconHtml}
@@ -342,7 +436,7 @@ patch(NavBar.prototype, {
                     <input type="text"
                            class="ansis_home_menu_search_input"
                            id="ansis_home_menu_search_input"
-                           placeholder="Search apps..."
+                           placeholder="Search apps or navigate with arrow keys..."
                            autocomplete="off"
                            spellcheck="false" />
                     <button type="button" class="ansis_search_clear_btn" id="ansis_search_clear_btn" style="display: none;">
@@ -373,7 +467,7 @@ patch(NavBar.prototype, {
         const clearBtn = container.querySelector("#ansis_search_clear_btn");
         const grid = container.querySelector("#ansis_home_menu_grid");
         const noResults = container.querySelector("#ansis_search_no_results");
-        const appCards = container.querySelectorAll(".custom_home_menu_app_card, .ansis_home_menu_app_card");
+        const appCards = Array.from(container.querySelectorAll(".custom_home_menu_app_card, .ansis_home_menu_app_card"));
 
         const filterApps = (query) => {
             const q = query.trim().toLowerCase();
@@ -384,6 +478,8 @@ patch(NavBar.prototype, {
                 const name = card.dataset.appName || (card.querySelector(".ansis_home_menu_app_name")?.innerText || "").toLowerCase();
                 const matches = !q || name.includes(q);
                 card.style.display = matches ? "flex" : "none";
+                card.classList.remove("ansis_focused");
+
                 if (matches) {
                     matchCount++;
                     if (!firstMatch) {
@@ -391,6 +487,11 @@ patch(NavBar.prototype, {
                     }
                 }
             });
+
+            this.focusedAppIndex = 0;
+            if (firstMatch) {
+                firstMatch.classList.add("ansis_focused");
+            }
 
             if (clearBtn) {
                 clearBtn.style.display = q ? "block" : "none";
@@ -413,16 +514,6 @@ patch(NavBar.prototype, {
             searchInput.addEventListener("input", (e) => {
                 filterApps(e.target.value);
             });
-
-            searchInput.addEventListener("keydown", (e) => {
-                if (e.key === "Enter") {
-                    e.preventDefault();
-                    const first = filterApps(searchInput.value);
-                    if (first) {
-                        first.click();
-                    }
-                }
-            });
         }
 
         if (clearBtn && searchInput) {
@@ -433,6 +524,19 @@ patch(NavBar.prototype, {
                 filterApps("");
             });
         }
+
+        // Mouse hover synchronizes keyboard focus
+        appCards.forEach((card, idx) => {
+            card.addEventListener("mouseenter", () => {
+                const visible = appCards.filter((c) => c.style.display !== "none");
+                const vIdx = visible.indexOf(card);
+                if (vIdx !== -1) {
+                    this.focusedAppIndex = vIdx;
+                    appCards.forEach((c) => c.classList.remove("ansis_focused"));
+                    card.classList.add("ansis_focused");
+                }
+            });
+        });
 
         // --- Drag and Drop Logic (Option C: Hybrid Persistence) ---
         let draggedCard = null;
@@ -473,9 +577,9 @@ patch(NavBar.prototype, {
 
                 if (draggedCard && card !== draggedCard) {
                     const parent = grid;
-                    const allCards = Array.from(parent.querySelectorAll(".ansis_home_menu_app_card"));
-                    const fromIdx = allCards.indexOf(draggedCard);
-                    const toIdx = allCards.indexOf(card);
+                    const allCurrent = Array.from(parent.querySelectorAll(".ansis_home_menu_app_card"));
+                    const fromIdx = allCurrent.indexOf(draggedCard);
+                    const toIdx = allCurrent.indexOf(card);
 
                     if (fromIdx < toIdx) {
                         parent.insertBefore(draggedCard, card.nextSibling);

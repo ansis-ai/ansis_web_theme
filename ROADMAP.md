@@ -30,13 +30,15 @@ This roadmap documents the implementation progress, UX architecture, and planned
   - **Status**: `✅ Completed`
   - **Details**: Floating search pill, autofocus on open, real-time client-side filter, clear button, and "No matching apps found" empty state.
 
-- [ ] **1.2 Keyboard Navigation**
+- [x] **1.2 Keyboard Navigation**
   - **Goal**: Full keyboard usability in the Home Menu overlay.
-  - **Status**: `⏳ Planned`
-  - **Keys**:
-    - Arrow Keys (<kbd>←</kbd>, <kbd>→</kbd>, <kbd>↑</kbd>, <kbd>↓</kbd>) to highlight app cards with sapphire focus ring.
-    - <kbd>Enter</kbd> to launch the selected app.
-    - <kbd>Escape</kbd> to close overlay and return to the previous view.
+  - **Status**: `✅ Completed`
+  - **Features**:
+    - Arrow Keys (<kbd>←</kbd>, <kbd>→</kbd>, <kbd>↑</kbd>, <kbd>↓</kbd>) dynamically calculate columns per row and move focus with a glowing sapphire outline (`.ansis_focused`).
+    - <kbd>Home</kbd> / <kbd>End</kbd> to jump to the first / last app card.
+    - <kbd>Enter</kbd> to launch the currently highlighted app card.
+    - <kbd>Escape</kbd> to clear search or close overlay.
+    - Type-ahead alphanumeric focus redirect with instant live filtering.
 
 - [x] **1.3 Drag-and-Drop App Tile Reordering**
   - **Goal**: Allow users to customize their dashboard layout by dragging and dropping app tiles.

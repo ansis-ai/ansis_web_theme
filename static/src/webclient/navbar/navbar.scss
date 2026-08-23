@@ -716,14 +716,19 @@ body.o_custom_home_menu_shown {
         cursor: grabbing;
     }
 
-    &:hover:not(.ansis_dragging):not(.ansis_drag_over) {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(2, 132, 199, 0.12), 0 4px 8px rgba(15, 23, 42, 0.06);
-        border-color: #bae6fd;
+    &:hover:not(.ansis_dragging):not(.ansis_drag_over),
+    &.ansis_focused,
+    &:focus-visible {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.22), 0 14px 28px rgba(2, 132, 199, 0.16), 0 4px 8px rgba(15, 23, 42, 0.06) !important;
+        border-color: #0284c7 !important;
+        background: #ffffff !important;
+        outline: none !important;
 
         .custom_home_menu_app_name,
         .ansis_home_menu_app_name {
-            color: #0284c7;
+            color: #0284c7 !important;
+            font-weight: 700 !important;
         }
     }
 
