@@ -69,45 +69,20 @@
 
                     <!-- Brand Colors & Accents Block -->
                     <block title="Brand Palette &amp; Colors" id="ansis_theme_brand_colors_block">
-                        <setting id="ansis_theme_brand_color_setting"
-                                 string="Primary Brand Accent"
-                                 help="Main accent color for active navigation tabs, action buttons, and focus glow rings.">
+                        <setting id="ansis_theme_brand_palette_setting"
+                                 string="Brand Theme Color Switcher"
+                                 help="Switch between curated modern brand color palettes or enter a custom hex color code.">
                             <div class="content-group">
-                                <div class="row mt16 align-items-center">
-                                    <label for="theme_brand_color" string="Accent Color" class="col-lg-4 o_light_label"/>
+                                <div class="row mt16">
+                                    <label for="theme_color_palette" string="Color Palette" class="col-lg-4 o_light_label"/>
+                                    <field name="theme_color_palette" class="col-lg-8"/>
+                                </div>
+                                <div class="row mt12 align-items-center">
+                                    <label for="theme_brand_color" string="Hex Accent Code" class="col-lg-4 o_light_label"/>
                                     <div class="col-lg-8 d-flex align-items-center gap-2">
                                         <field name="theme_brand_color" widget="color" class="flex-grow-1"/>
                                     </div>
                                 </div>
-                            </div>
-                        </setting>
-                        <setting id="ansis_theme_colors_advanced_setting"
-                                 string="Theme Palette Variables"
-                                 help="Fine-tune individual UI element colors and menu text.">
-                            <div class="w-100 row mt8">
-                                <div class="col-lg-6 mb-2">
-                                    <label for="theme_color_appsmenu_text" string="Apps Menu Text" class="d-block text-muted small"/>
-                                    <field name="theme_color_appsmenu_text" widget="color"/>
-                                </div>
-                                <div class="col-lg-6 mb-2">
-                                    <label for="theme_color_appbar_text" string="Navbar Text" class="d-block text-muted small"/>
-                                    <field name="theme_color_appbar_text" widget="color"/>
-                                </div>
-                                <div class="col-lg-6 mb-2">
-                                    <label for="theme_color_appbar_active" string="Active Element" class="d-block text-muted small"/>
-                                    <field name="theme_color_appbar_active" widget="color"/>
-                                </div>
-                                <div class="col-lg-6 mb-2">
-                                    <label for="theme_color_appbar_background" string="Canvas Tint" class="d-block text-muted small"/>
-                                    <field name="theme_color_appbar_background" widget="color"/>
-                                </div>
-                            </div>
-                            <div class="mt8">
-                                <button name="action_reset_theme_color_assets"
-                                        icon="fa-refresh"
-                                        type="object"
-                                        string="Reset Theme Colors to Default"
-                                        class="btn-link"/>
                             </div>
                         </setting>
                     </block>

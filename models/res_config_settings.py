@@ -2,28 +2,22 @@
 # Copyright 2024-2026 ANSIS Pte Ltd
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.html).
 
-from odoo import fields, models
+from odoo import api, fields, models
+
+PALETTES = {
+    "sapphire": "#0284c7",
+    "violet": "#7c3aed",
+    "emerald": "#059669",
+    "amber": "#ea580c",
+    "crimson": "#e11d48",
+    "teal": "#0d9488",
+    "slate": "#334155",
+    "rose": "#db2777",
+}
 
 
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
-
-    @property
-    def THEME_COLOR_FIELDS(self):
-        return [
-            "color_appsmenu_text",
-            "color_appbar_text",
-            "color_appbar_active",
-            "color_appbar_background",
-        ]
-
-    @property
-    def COLOR_ASSET_THEME_URL(self):
-        return "/ansis_web_theme/static/src/scss/colors.scss"
-
-    @property
-    def COLOR_BUNDLE_THEME_NAME(self):
-        return "web._assets_primary_variables"
 
     # ----------------------------------------------------------
     # Company Theme Fields
@@ -47,6 +41,10 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.theme_ui_density", readonly=False
     )
 
+    theme_color_palette = fields.Selection(
+        related="company_id.theme_color_palette", readonly=False
+    )
+
     theme_brand_color = fields.Char(
         related="company_id.theme_brand_color", readonly=False
     )
@@ -56,73 +54,13 @@ class ResConfigSettings(models.TransientModel):
     theme_color_appbar_active = fields.Char(string="AppsBar Active Color")
     theme_color_appbar_background = fields.Char(string="AppsBar Background Color")
 
-    # ----------------------------------------------------------
-    # Helper
-    # ----------------------------------------------------------
-
-    def _get_theme_color_values(self):
-        return self.env["web_editor.assets"].get_color_variables_values(
-            self.COLOR_ASSET_THEME_URL,
-            self.COLOR_BUNDLE_THEME_NAME,
-            self.THEME_COLOR_FIELDS,
-        )
-
-    def _set_theme_color_values(self, values):
-        colors = self._get_theme_color_values()
-        for var, value in colors.items():
-            values[f"theme_{var}"] = value
-        return values
-
-    def _detect_theme_color_change(self):
-        colors = self._get_theme_color_values()
-        return any(
-            self[f"theme_{var}"] != val for var, val in colors.items()
-        )
-
-    def _replace_theme_color_values(self):
-        variables = [
-            {"name": field, "value": self[f"theme_{field}"]}
-            for field in self.THEME_COLOR_FIELDS
-            if self[f"theme_{field}"]
-            and not str(self[f"theme_{field}"]).startswith("$")
-        ]
-        if variables:
-            return (
-                self.env["web_editor.assets"].replace_color_variables_values(
-                    self.COLOR_ASSET_THEME_URL,
-                    self.COLOR_BUNDLE_THEME_NAME,
-                    variables,
-                )
-            )
-
-    def _reset_theme_color_assets(self):
-        self.env["web_editor.assets"].reset_asset(
-            self.COLOR_ASSET_THEME_URL,
-            self.COLOR_BUNDLE_THEME_NAME,
-        )
-
-    # ----------------------------------------------------------
-    # Actions
-    # ----------------------------------------------------------
+    @api.onchange("theme_color_palette")
+    def _onchange_theme_color_palette(self):
+        if self.theme_color_palette and self.theme_color_palette != "custom":
+            self.theme_brand_color = PALETTES.get(self.theme_color_palette, "#0284c7")
 
     def action_reset_theme_color_assets(self):
-        self._reset_theme_color_assets()
         return {
             "type": "ir.actions.client",
             "tag": "reload",
         }
-
-    # ----------------------------------------------------------
-    # Functions
-    # ----------------------------------------------------------
-
-    def get_values(self):
-        res = super().get_values()
-        res = self._set_theme_color_values(res)
-        return res
-
-    def set_values(self):
-        res = super().set_values()
-        if self._detect_theme_color_change():
-            self._replace_theme_color_values()
-        return res

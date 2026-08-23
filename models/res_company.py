@@ -2,7 +2,18 @@
 # Copyright 2024-2026 ANSIS Pte Ltd
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.html).
 
-from odoo import fields, models
+from odoo import api, fields, models
+
+PALETTES = {
+    "sapphire": "#0284c7",
+    "violet": "#7c3aed",
+    "emerald": "#059669",
+    "amber": "#ea580c",
+    "crimson": "#e11d48",
+    "teal": "#0d9488",
+    "slate": "#334155",
+    "rose": "#db2777",
+}
 
 
 class ResCompany(models.Model):
@@ -48,8 +59,30 @@ class ResCompany(models.Model):
         help="Controls row height in tables, form field padding, and layout density.",
     )
 
+    theme_color_palette = fields.Selection(
+        selection=[
+            ("sapphire", "Sapphire Blue (#0284c7)"),
+            ("violet", "Royal Violet (#7c3aed)"),
+            ("emerald", "Emerald Green (#059669)"),
+            ("amber", "Sunset Amber (#ea580c)"),
+            ("crimson", "Crimson Red (#e11d48)"),
+            ("teal", "Ocean Teal (#0d9488)"),
+            ("slate", "Modern Slate (#334155)"),
+            ("rose", "Berry Rose (#db2777)"),
+            ("custom", "Custom Hex Color"),
+        ],
+        default="sapphire",
+        string="Brand Color Palette",
+        help="Select a curated theme color preset or enter a custom hex color.",
+    )
+
     theme_brand_color = fields.Char(
         string="Primary Brand Accent",
         default="#0284c7",
         help="Accent color for active buttons, tabs, links, and focus rings.",
     )
+
+    @api.onchange("theme_color_palette")
+    def _onchange_theme_color_palette(self):
+        if self.theme_color_palette and self.theme_color_palette != "custom":
+            self.theme_brand_color = PALETTES.get(self.theme_color_palette, "#0284c7")
