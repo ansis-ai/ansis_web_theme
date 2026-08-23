@@ -1,97 +1,227 @@
 /* ==========================================================================
-   ANSIS Web Theme - Modern Light Navbar & Chevron Navigation
+   ANSIS Web Theme - Modern Light Navbar & Navigation
    ========================================================================== */
 
 .o_web_client .o_main_navbar {
     --o-navbar-height: 48px;
-    height: var(--o-navbar-height);
+    height: var(--o-navbar-height) !important;
+    min-height: var(--o-navbar-height) !important;
+    max-height: var(--o-navbar-height) !important;
     background-color: #ffffff !important;
     border-bottom: 1px solid #e2e8f0 !important;
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
-    z-index: 1000;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 12px !important;
+    z-index: 1000 !important;
 
-    /* DESKTOP VIEW (> 768px) */
+    /* ----------------------------------------------------------------------
+       DESKTOP VIEW (> 768px) - LEFT HAND SIDE
+       ---------------------------------------------------------------------- */
     @media (min-width: 769px) {
+        // Hide duplicate/third-party apps menu buttons on desktop in favor of brand chevron
         .o_navbar_apps_menu,
-        .custom_home_menu_button {
+        .custom_home_menu_button,
+        .mk_app_menu,
+        > .dropdown:first-child:has(> button[data-hotkey="h"]),
+        > .dropdown:first-child:has(> button[title="Home Menu"]),
+        > .dropdown:first-child:has(> button .oi-apps) {
             display: none !important;
         }
 
+        // Active App Brand (Clickable Tile with Icon & '<' Back Chevron on Hover)
         .o_menu_brand {
-            position: relative;
+            position: relative !important;
             display: inline-flex !important;
-            align-items: center;
-            font-weight: 600;
-            font-size: 0.95rem;
+            align-items: center !important;
+            height: 34px !important;
+            font-weight: 700 !important;
+            font-size: 0.95rem !important;
             color: #0f172a !important;
-            cursor: pointer;
-            padding-left: 30px !important;
-            padding-right: 8px;
-            margin-right: 12px;
-            border-radius: 6px;
-            transition: color 0.15s ease, background-color 0.15s ease;
+            cursor: pointer !important;
+            padding: 0 12px 0 36px !important;
+            margin-right: 12px !important;
+            border-radius: 8px !important;
+            border: 1px solid transparent !important;
+            text-decoration: none !important;
+            white-space: nowrap !important;
+            background: transparent !important;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1) !important;
 
+            // App Icon Placeholder in Brand
             &::before {
                 content: "";
                 position: absolute;
-                left: 6px;
+                left: 8px;
                 top: 50%;
                 transform: translateY(-50%);
-                width: 18px;
-                height: 18px;
+                width: 20px;
+                height: 20px;
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: contain;
+                border-radius: 4px;
                 opacity: 1;
                 transition: opacity 0.10s ease;
             }
 
+            // Hover state: Transforms icon into back chevron '<'
             &:hover {
                 color: #0284c7 !important;
-                background-color: #f1f5f9;
+                background-color: #f1f5f9 !important;
+                border-color: #e2e8f0 !important;
 
                 &::before {
-                    content: "\276E"; /* '<' Back chevron */
-                    font-family: inherit;
-                    font-size: 15px;
-                    font-weight: bold;
-                    color: #0284c7;
-                    line-height: 18px;
-                    text-align: center;
+                    content: "\276E" !important; /* '<' Back chevron */
+                    font-family: inherit !important;
+                    font-size: 16px !important;
+                    font-weight: 800 !important;
+                    color: #0284c7 !important;
+                    line-height: 20px !important;
+                    text-align: center !important;
                     background-image: none !important;
-                    transform: translateY(-50%);
+                    transform: translateY(-50%) !important;
                 }
             }
         }
 
+        // App Submenu Sections Container
         .o_menu_sections {
+            display: flex !important;
+            align-items: center !important;
+            gap: 3px !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+
+            // Target all buttons, links, and dropdown triggers inside sections
+            .o_nav_entry,
+            .dropdown,
+            button,
             a,
-            .dropdown-toggle,
-            .dropdown > a {
-                color: #475569 !important;
-                font-size: 0.875rem;
-                font-weight: 500;
-                padding: 0.35rem 0.65rem;
-                border-radius: 6px;
-                background: transparent !important;
+            .dropdown-toggle {
+                display: inline-flex !important;
+                align-items: center !important;
+                height: 32px !important;
+                padding: 0 10px !important;
+                margin: 0 !important;
                 border: none !important;
-                transition: color 0.12s ease, background-color 0.12s ease;
+                outline: none !important;
+                background: transparent !important;
+                color: #475569 !important;
+                font-size: 0.85rem !important;
+                font-weight: 500 !important;
+                line-height: 32px !important;
+                border-radius: 6px !important;
+                text-decoration: none !important;
+                white-space: nowrap !important;
+                cursor: pointer !important;
+                box-shadow: none !important;
+                transition: color 0.12s ease, background-color 0.12s ease !important;
 
                 &:hover {
                     color: #0f172a !important;
                     background-color: #f1f5f9 !important;
                 }
 
-                &.active, &:active, &:focus {
+                &:active,
+                &.active,
+                &[aria-expanded="true"] {
                     color: #0284c7 !important;
-                    background-color: #e0f2fe !important;
-                    font-weight: 600;
+                    background-color: #f0f9ff !important;
+                    font-weight: 600 !important;
+                }
+            }
+
+            // Dropdown caret indicator
+            .dropdown-toggle::after {
+                margin-left: 6px !important;
+                vertical-align: middle !important;
+                border-top: 4px solid currentColor !important;
+                border-right: 3.5px solid transparent !important;
+                border-left: 3.5px solid transparent !important;
+                opacity: 0.7;
+            }
+
+            // Overflow "More" menu (+) button
+            .o_menu_sections_more {
+                display: inline-flex !important;
+                align-items: center !important;
+                height: 100% !important;
+
+                button {
+                    width: 32px !important;
+                    height: 32px !important;
+                    padding: 0 !important;
+                    justify-content: center !important;
+                    color: #64748b !important;
+
+                    i {
+                        font-size: 0.82rem !important;
+                    }
+
+                    &:hover {
+                        background-color: #f1f5f9 !important;
+                        color: #0284c7 !important;
+                    }
                 }
             }
         }
     }
 
-    /* Systray Items (Right Hand Side) */
+    /* ----------------------------------------------------------------------
+       MOBILE VIEW (< 768px) - LEFT HAND SIDE
+       ---------------------------------------------------------------------- */
+    @media (max-width: 768px) {
+        .o_menu_brand {
+            font-size: 0.9rem !important;
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            padding: 0 6px !important;
+            margin-left: 4px !important;
+            max-width: 160px !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+
+            &::before {
+                display: none !important;
+            }
+        }
+
+        // Mobile Burger Menu Toggle Button
+        .o_navbar_apps_menu,
+        .mk_app_menu,
+        .o_menu_toggle {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            button {
+                width: 36px !important;
+                height: 36px !important;
+                border-radius: 8px !important;
+                border: 1px solid #e2e8f0 !important;
+                background-color: #ffffff !important;
+                color: #334155 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-size: 1rem !important;
+                padding: 0 !important;
+                margin: 0 !important;
+
+                &:hover {
+                    background-color: #f8fafc !important;
+                    color: #0284c7 !important;
+                }
+            }
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       RIGHT HAND SIDE - SYSTRAY ITEMS
+       ---------------------------------------------------------------------- */
     .o_menu_systray {
         margin-left: auto !important;
         margin-right: 0 !important;
@@ -102,7 +232,7 @@
         justify-content: flex-end !important;
         gap: 4px !important;
         height: 100% !important;
-        padding-right: 8px !important;
+        padding-right: 4px !important;
 
         // Hide third-party support clutter
         .o_auto_database_backup_systray {
@@ -181,18 +311,17 @@
             font-weight: 700 !important;
             line-height: 15px !important;
             text-align: center !important;
+            border-radius: 9999px !important;
+            background-color: #ef4444 !important;
+            color: #ffffff !important;
+            border: 1.5px solid #ffffff !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            background-color: #ef4444 !important;
-            color: #ffffff !important;
-            border-radius: 9999px !important;
-            border: 1.5px solid #ffffff !important;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
-            z-index: 2 !important;
         }
 
-        // Multi-Company Switcher Pill
+        // Company Switcher Pill
         .o_switch_company_menu {
             .dropdown-toggle {
                 display: inline-flex !important;
@@ -266,6 +395,54 @@
             }
         }
     }
+
+    /* ----------------------------------------------------------------------
+       SUBMENU DROPDOWN MENUS (Dropdown Floating Panel)
+       ---------------------------------------------------------------------- */
+    .dropdown-menu {
+        background-color: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
+        padding: 6px !important;
+        min-width: 180px !important;
+        margin-top: 4px !important;
+
+        .dropdown-item {
+            border-radius: 6px !important;
+            padding: 6px 12px !important;
+            font-size: 0.85rem !important;
+            font-weight: 500 !important;
+            color: #334155 !important;
+            transition: all 0.12s ease !important;
+
+            &:hover,
+            &:focus {
+                background-color: #f0f9ff !important;
+                color: #0284c7 !important;
+                transform: none !important;
+            }
+
+            &.active {
+                background-color: #0284c7 !important;
+                color: #ffffff !important;
+            }
+        }
+
+        .dropdown-header {
+            font-size: 0.72rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            color: #94a3b8 !important;
+            padding: 8px 12px 4px 12px !important;
+        }
+
+        .dropdown-divider {
+            border-top: 1px solid #f1f5f9 !important;
+            margin: 4px 0 !important;
+        }
+    }
 }
 
 /* --------------------------------------------------------------------------
@@ -295,7 +472,8 @@ body.o_custom_home_menu_shown {
     .o_menu_brand,
     .o_navbar_breadcrumbs,
     .o_navbar_apps_menu,
-    .o_menu_toggle {
+    .o_menu_toggle,
+    .mk_app_menu {
         display: none !important;
     }
 }
@@ -522,7 +700,7 @@ body.o_custom_home_menu_shown {
 
     &:hover:not(.ansis_dragging):not(.ansis_drag_over) {
         transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(2, 132, 199, 0.12), 0 4px 8px rgba(15, 23, 42, 0.06);
+        box-shadow: 0 12px 24px rgba(2, 132, 199, 0.12), 0 4px 8px rgba(15, 23, 42, 0.08);
         border-color: #bae6fd;
 
         .custom_home_menu_app_name,
