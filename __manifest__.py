@@ -1,5 +1,4 @@
 # Copyright 2017-2024 MuK IT GmbH & Co. KG
-# Copyright 2017-2024 MuK IT GmbH & Co. KG
 # Copyright 2024-2026 ANSIS Pte Ltd
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.html).
 
@@ -23,7 +22,7 @@
         "MuK IT GmbH & Co. KG <support@mukit.at>",
     ],
     "depends": [
-        "muk_web_chatter",
+        "mail",
         "muk_web_dialog",
         "muk_web_appsbar",
         "muk_web_colors",
@@ -34,6 +33,7 @@
     "data": [
         "templates/web_layout.xml",
         "views/res_config_settings.xml",
+        "views/res_users.xml",
     ],
     "assets": {
         "web._assets_primary_variables": [
@@ -54,6 +54,19 @@
             "ansis_web_theme/static/src/webclient/**/*.scss",
             "ansis_web_theme/static/src/webclient/**/*.js",
             "ansis_web_theme/static/src/views/**/*.scss",
+            "ansis_web_theme/static/src/views/**/*.xml",
+            (
+                "after",
+                "mail/static/src/chatter/web_portal/chatter.js",
+                "ansis_web_theme/static/src/views/chatter/chatter.js",
+            ),
+            (
+                "after",
+                "mail/static/src/chatter/web/form_compiler.js",
+                "ansis_web_theme/static/src/views/form/form_compiler.js",
+            ),
+            "ansis_web_theme/static/src/views/form/form_renderer.js",
+            "ansis_web_theme/static/src/views/chatter/thread.js",
         ],
     },
     "images": [

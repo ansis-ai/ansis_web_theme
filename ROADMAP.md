@@ -177,9 +177,12 @@ This roadmap documents the implementation progress, UX architecture, and planned
 ## 📌 Phase 8: Consolidation of Muk Addon Dependencies into `ansis_web_theme`
 *Goal: Eliminate external dependencies by natively integrating Muk addon features directly inside `ansis_web_theme` for clean, single-module deployment.*
 
-- [ ] **8.1 Chatter Architecture Integration (`muk_web_chatter`)**
-  - Native split-screen side chatter and bottom chatter toggle with responsive layout.
-  - Sudo-safe mail attachments and styled log note feed.
+- [x] **8.1 Chatter Architecture Integration (`muk_web_chatter`)** `[Status: ✅ Completed]`
+  - **Models & Session**: Added `chatter_position` Selection field (`side` / `bottom`) to `res.users` and serialized into `session_info.chatter_position`.
+  - **User Preferences Form**: Added `views/res_users.xml` exposing Chatter Position settings under user profile.
+  - **Dynamic Compiler & Renderer**: Patched OWL `FormCompiler` and `FormRenderer` to handle split-screen side/bottom positioning, horizontal drag-to-resize, width persistence, and double-click reset.
+  - **Notification Filter Toggle**: Added eye icon toggle button in `Chatter` to filter out automated notification messages on demand.
+  - **Dependency Decoupling**: Replaced `muk_web_chatter` dependency with standard `mail` module.
 - [ ] **8.2 Draggable & Resizable Dialogs (`muk_web_dialog`)**
   - Native modal draggable headers and corner resizing handles with viewport clamping.
 - [ ] **8.3 Navigation & AppsBar Clean Architecture (`muk_web_appsbar`)**

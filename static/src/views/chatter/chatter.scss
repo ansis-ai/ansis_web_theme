@@ -144,3 +144,26 @@
         }
     }
 }
+
+// Split-Screen Side Chatter Column Resize Handle
+.o-mail-Form-chatter.o-aside {
+    position: relative;
+
+    .mk_chatter_resize,
+    .ansis_chatter_resize {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 10;
+        width: 6px;
+        height: 100%;
+        cursor: col-resize;
+        position: absolute;
+        transition: background-color 0.15s ease;
+
+        &:hover,
+        &:active {
+            background-color: var(--ansis-primary, #0284c7);
+        }
+    }
+}
