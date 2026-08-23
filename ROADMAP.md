@@ -144,12 +144,12 @@ This roadmap documents the implementation progress, UX architecture, and planned
 ## 📌 Phase 7: Dedicated Theme Application Settings & Font Customization
 *Reference: `res.config.settings` & `web.assets_backend`*
 
-- [ ] **7.1 Dedicated "Theme Settings" Application Section**
-  - **Goal**: Decouple theme settings from *General Settings* and promote them to a standalone top-level Application Settings tab (alongside *Accounting*, *Website*, *Sales*, *Inventory*).
-  - **Status**: `⏳ Planned`
+- [x] **7.1 Dedicated "Theme Settings" Application Section**
+  - **Goal**: Decouple theme settings from *General Settings* and promote them to a standalone top-level Application Settings tab (alongside *Accounting*, *Website*, *Sales*, *Inventory*, *Moneta Finance*).
+  - **Status**: `✅ Completed`
   - **Features**:
-    - Dedicated left navigation tab: **"Theme / Branding"** with custom icon and description.
-    - Organized setting blocks: **Typography & Fonts**, **Brand Colors**, **Wallpaper & Assets**, **View Density**.
+    - Dedicated left navigation tab: **"Theme & Branding"** (`<app name="ansis_web_theme">`) with official theme icon.
+    - Organized setting blocks: **Typography & Fonts**, **Brand Palette & Colors**, **Company Wallpaper & Assets**.
 
 - [ ] **7.2 Dynamic Typography & Font Selection**
   - **Goal**: Allow administrators to configure backend fonts dynamically without editing SCSS source files.

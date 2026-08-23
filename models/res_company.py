@@ -11,3 +11,33 @@ class ResCompany(models.Model):
     background_image = fields.Binary(
         string="Apps Menu Background Image", attachment=True
     )
+
+    theme_font_family = fields.Selection(
+        selection=[
+            ("inter", "Inter (Modern SaaS Default)"),
+            ("jakarta", "Plus Jakarta Sans (Geometric)"),
+            ("roboto", "Roboto (Clean Enterprise)"),
+            ("outfit", "Outfit (Modern Rounded)"),
+            ("system", "System Default (-apple-system / BlinkMacSystemFont)"),
+        ],
+        default="inter",
+        string="Theme Font Family",
+        help="Primary typography family applied across the backend interface.",
+    )
+
+    theme_font_size = fields.Selection(
+        selection=[
+            ("compact", "Compact (13px Base)"),
+            ("standard", "Standard (14px Base)"),
+            ("comfortable", "Comfortable (15px Base)"),
+        ],
+        default="standard",
+        string="Theme Font Scale",
+        help="Base font sizing and UI layout density.",
+    )
+
+    theme_brand_color = fields.Char(
+        string="Primary Brand Accent",
+        default="#0284c7",
+        help="Accent color for active buttons, tabs, links, and focus rings.",
+    )

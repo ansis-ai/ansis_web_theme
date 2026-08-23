@@ -25,7 +25,7 @@ class ResConfigSettings(models.TransientModel):
         return "web._assets_primary_variables"
 
     # ----------------------------------------------------------
-    # Fields
+    # Company Theme Fields
     # ----------------------------------------------------------
 
     theme_favicon = fields.Binary(related="company_id.favicon", readonly=False)
@@ -34,15 +34,22 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.background_image", readonly=False
     )
 
-    theme_color_appsmenu_text = fields.Char(string="Apps Menu Text Color")
-
-    theme_color_appbar_text = fields.Char(string="AppsBar Text Color")
-
-    theme_color_appbar_active = fields.Char(string="AppsBar Active Color")
-
-    theme_color_appbar_background = fields.Char(
-        string="AppsBar Background Color"
+    theme_font_family = fields.Selection(
+        related="company_id.theme_font_family", readonly=False
     )
+
+    theme_font_size = fields.Selection(
+        related="company_id.theme_font_size", readonly=False
+    )
+
+    theme_brand_color = fields.Char(
+        related="company_id.theme_brand_color", readonly=False
+    )
+
+    theme_color_appsmenu_text = fields.Char(string="Apps Menu Text Color")
+    theme_color_appbar_text = fields.Char(string="AppsBar Text Color")
+    theme_color_appbar_active = fields.Char(string="AppsBar Active Color")
+    theme_color_appbar_background = fields.Char(string="AppsBar Background Color")
 
     # ----------------------------------------------------------
     # Helper
@@ -90,7 +97,7 @@ class ResConfigSettings(models.TransientModel):
         )
 
     # ----------------------------------------------------------
-    # Action
+    # Actions
     # ----------------------------------------------------------
 
     def action_reset_theme_color_assets(self):
