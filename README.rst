@@ -2,11 +2,6 @@
 ANSIS Web Theme
 ===============
 
-.. 
-   .. image:: https://img.shields.io/badge/license-LGPL--3-blue.png
-      :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
-      :alt: License: LGPL-3
-
 .. image:: https://img.shields.io/badge/license-LGPL--3-blue.svg
    :target: https://www.gnu.org/licenses/lgpl-3.0-standalone.html
    :alt: License: LGPL-3
@@ -19,7 +14,7 @@ ANSIS Web Theme
 
 **ANSIS Web Theme** is a modern, light SaaS backend theme for **Odoo 18.0 Community Edition**.
 
-It delivers enterprise-grade UX ergonomics, sleek modern typography, unified app cards, drag-and-drop dashboard reordering, sticky list headers, and responsive mobile offcanvas navigation without any proprietary enterprise dependencies.
+It delivers enterprise-grade UX ergonomics, dynamic typography, brand color generation, minimalist 1-line inputs, unified app cards, drag-and-drop dashboard reordering, sticky list headers, and responsive mobile offcanvas navigation without any proprietary enterprise dependencies.
 
 .. contents:: Table of contents
    :depth: 2
@@ -28,23 +23,33 @@ It delivers enterprise-grade UX ergonomics, sleek modern typography, unified app
 Features
 ========
 
-* **Modern Light SaaS Palette**: Sapphire blue primary accents (``#0284c7``), clean slate typography, and elevated card shadows.
+* **Modern Light SaaS Palette & Tokens**: Sapphire blue primary accents (``#0284c7``), clean slate typography, and elevated card shadows.
 * **Smart Navigation**:
   - Interactive top-left brand chevron (``<``) returning to the Home Menu overlay.
   - Automatic ``+`` dropdown for overflowing navbar submenus.
+  - 100% full-width screen layout (neutralizes redundant left sidebars).
   - Systray items pinned to the far right with floating pill notification badges.
 * **Instant App Dashboard**:
   - Fullscreen app card overlay with standardized ``104×124px`` tiles.
   - Instant client-side search filter with autofocus and ``ESC`` clear.
-  - HTML5 drag-and-drop dashboard tile reordering with hybrid persistence (``localStorage`` + ``res.users.settings``).
-  - Multi-company custom wallpaper with frosted-glass backdrop blur.
+  - Full keyboard navigation (Arrow keys, Home/End, Enter).
+  - HTML5 drag-and-drop dashboard tile reordering with hybrid persistence.
+  - Multi-company custom wallpaper with sudo-safe asset streaming.
 * **Enhanced Data & List Views**:
   - Sticky table headers (``thead``) with drop elevation shadow during vertical scrolling.
   - Frozen selection checkbox column on the left during horizontal scrolling.
   - Sticky footer aggregates (``tfoot``) pinned to the bottom.
-* **Modern Form Views**:
+  - Column resizing and optional columns selector.
+* **Modern Minimalist Form Views**:
+  - 1-line underline input fields (``border-bottom: 1px solid #cbd5e1``) replacing bulky rounded boxes.
   - Underline notebook tabs with badge pill counters.
   - Elevated metric stat buttons with hover lift animations.
+  - Statusbar pipeline with pill-style chevrons.
+* **Dedicated Application Settings**:
+  - Standalone **"Theme & Branding"** tab in Settings.
+  - Dynamic typography font selector (*Inter, Plus Jakarta Sans, Roboto, Outfit, System Default*).
+  - UI Layout Density controls (Compact / 32px rows, Standard / 40px rows, Comfortable / 48px rows).
+  - Primary brand color picker with automated light tint and hover calculation.
 * **Mobile Offcanvas Drawer (< 768px)**:
   - User profile tile with avatar, name, and active company badge.
   - Primary 1-tap **"All Apps / Dashboard"** jump button.
@@ -53,12 +58,13 @@ Features
 Configuration
 =============
 
-To customize company branding and wallpaper:
+To customize company typography, colors, and branding:
 
-1. Navigate to **Settings > General Settings**.
-2. Scroll to the **ANSIS Theme** section.
-3. Upload custom company wallpaper or background images.
-4. Save settings. Changes take effect across all active users in the company immediately.
+1. Navigate to **Settings > Theme & Branding**.
+2. Select your preferred **Font Family**, **Base Font Scale**, and **UI Layout Density**.
+3. Choose your **Primary Brand Accent** color.
+4. Upload custom **Home Menu Wallpaper** and **Browser Tab Favicon**.
+5. Save settings. Changes apply across all active users in the company immediately.
 
 Usage
 =====
@@ -71,10 +77,7 @@ Usage
 Known issues / Roadmap
 ======================
 
-* Keyboard navigation (Arrow keys + Enter) in the Home Menu overlay.
-* Deep-link URL sharing button in the navbar/systray with native Web Share API support.
-* Collapsible kanban columns with compact vertical pill summaries.
-* Stage header progress and distribution bars in kanban views.
+* Phase 8: Native consolidation of Muk dependencies (``muk_web_chatter``, ``muk_web_dialog``, ``muk_web_appsbar``, ``muk_web_colors``) into a single standalone module.
 
 Bug Tracker
 ===========
@@ -89,12 +92,15 @@ Authors
 ~~~~~~~
 
 * ANSIS Pte Ltd
+* MuK IT
 
 Contributors
 ~~~~~~~~~~~~
 
 * Wilson Loh <wilson@ansis.com.sg>
 * ANSIS Pte Ltd <https://ansis.com.sg>
+* Mathias Markl <mathias.markl@mukit.at>
+* MuK IT GmbH & Co. KG <https://www.mukit.at>
 
 Maintainers
 ~~~~~~~~~~~

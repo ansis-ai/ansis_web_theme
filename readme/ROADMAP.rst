@@ -1,4 +1,4 @@
-- **1.2 Keyboard Navigation**: Arrow keys (<kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>) and Enter to navigate and launch apps directly in Home Menu overlay.
-- **3.2 Deep-Link URL Share Action**: Systray button to copy clean direct URL to clipboard with native Web Share API support on mobile.
-- **5.1 Collapsible Kanban Columns**: Fold kanban stages into compact vertical pills with item counts to reclaim horizontal space.
-- **5.2 Stage Header Progress Bars**: Visual progress and distribution bars on stage headers.
+- **8.1 Chatter Architecture Integration**: Native split-screen side chatter and bottom chatter toggle with responsive layout.
+- **8.2 Draggable & Resizable Dialogs**: Native modal draggable headers and corner resizing handles with viewport clamping.
+- **8.3 Navigation & AppsBar Clean Architecture**: Standalone navigation, app switcher, and navbar brand hooks without external dependency.
+- **8.4 Theme Color Engine & Asset Utilities**: Native SCSS color asset compiler and web editor asset reset tools.
