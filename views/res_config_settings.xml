@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- 1. Neutralize legacy Muk settings in General Settings if present -->
-    <record id="view_res_config_settings_colors_form" model="ir.ui.view">
-        <field name="name">res.config.settings.form.colors.hide</field>
-        <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="muk_web_colors.view_res_config_settings_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//block[@id='branding_settings']" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-        </field>
-    </record>
-
-    <!-- 2. Dedicated Top-Level Theme Application Settings Tab -->
+    <!-- Dedicated Top-Level Theme Application Settings Tab -->
     <record id="view_res_config_settings_theme_form" model="ir.ui.view">
         <field name="name">res.config.settings.view.form.inherit.ansis.theme</field>
         <field name="model">res.config.settings</field>
@@ -86,14 +74,6 @@
                                 <field name="theme_background_image" widget="image" class="w-75"/>
                             </div>
                         </setting>
-                        <setting id="ansis_theme_appbar_image_setting"
-                                 string="Apps Sidebar Footer Logo"
-                                 company_dependent="1"
-                                 help="Custom brand logo displayed at the bottom of the apps sidebar navigation.">
-                            <div class="content-group">
-                                <field name="appbar_image" widget="image" class="oe_avatar"/>
-                            </div>
-                        </setting>
                         <setting id="ansis_theme_favicon_setting"
                                  string="Browser Tab Favicon"
                                  company_dependent="1"
@@ -108,7 +88,7 @@
         </field>
     </record>
 
-    <!-- 3. Direct Window Action for Theme Application Settings -->
+    <!-- Direct Window Action for Theme Application Settings -->
     <record id="action_ansis_theme_config_settings" model="ir.actions.act_window">
         <field name="name">Theme &amp; Branding Settings</field>
         <field name="res_model">res.config.settings</field>

@@ -1,16 +1,36 @@
 // ==========================================================================
-// ANSIS Modern Responsive Web Client Grid Layout
+// ANSIS Full-Width Clean Modern Web Client Layout (No Sidebar)
 // ==========================================================================
+
+:root {
+    --mk-sidebar-width: 0px !important;
+    --ansis-sidebar-width: 0px !important;
+}
+
+.mk_apps_sidebar_panel,
+.mk_apps_sidebar,
+.ansis_apps_sidebar_panel,
+.ansis_apps_sidebar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+}
 
 .o_web_client {
     display: grid !important;
     grid-template-areas:
-        "banner banner"
-        "navbar navbar"
-        "sidebar content"
-        "components components" !important;
+        "banner"
+        "navbar"
+        "content"
+        "components" !important;
     grid-template-rows: auto auto 1fr auto !important;
-    grid-template-columns: auto 1fr !important;
+    grid-template-columns: 100% !important;
     width: 100% !important;
 
     > div:has(#oe_neutralize_banner) {
@@ -18,24 +38,26 @@
     }
 
     > .o_navbar {
-        grid-area: navbar;
-        width: 100%;
+        grid-area: navbar !important;
+        width: 100% !important;
     }
 
     > .mk_apps_sidebar_panel,
     > .ansis_apps_sidebar_panel {
-        grid-area: sidebar;
+        display: none !important;
+        width: 0 !important;
     }
 
     > .o_action_manager {
-        grid-area: content;
-        width: 100%;
-        min-width: 0;
+        grid-area: content !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
         overflow-x: hidden;
     }
 
     > .o-main-components-container {
-        grid-area: components;
+        grid-area: components !important;
     }
 
     > iframe {

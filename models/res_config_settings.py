@@ -29,10 +29,6 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.background_image", readonly=False
     )
 
-    appbar_image = fields.Binary(
-        related="company_id.appbar_image", readonly=False
-    )
-
     theme_font_family = fields.Selection(
         related="company_id.theme_font_family", readonly=False
     )
@@ -52,11 +48,6 @@ class ResConfigSettings(models.TransientModel):
     theme_brand_color = fields.Char(
         related="company_id.theme_brand_color", readonly=False
     )
-
-    theme_color_appsmenu_text = fields.Char(string="Apps Menu Text Color")
-    theme_color_appbar_text = fields.Char(string="AppsBar Text Color")
-    theme_color_appbar_active = fields.Char(string="AppsBar Active Color")
-    theme_color_appbar_background = fields.Char(string="AppsBar Background Color")
 
     @api.onchange("theme_color_palette")
     def _onchange_theme_color_palette(self):
