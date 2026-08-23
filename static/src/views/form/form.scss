@@ -84,47 +84,61 @@
         }
     }
 
-    // Input Fields & Widgets
-    .o_field_widget {
+    // Clean Minimalist Underline Input Styling (1-Line slight grey border-bottom)
+    .o_field_widget:not(.o_field_boolean):not(.o_field_radio) {
         .o_input,
-        &.o_field_char input,
-        &.o_field_number input,
-        &.o_field_date input,
-        &.o_field_datetime input,
-        &.o_field_monetary input,
-        &.o_field_many2one input {
-            border-radius: var(--ansis-radius-sm, 6px);
-            border: 1px solid var(--ansis-border, #e2e8f0);
-            background-color: #ffffff;
-            color: var(--ansis-text-main, #0f172a);
+        input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="range"]),
+        select.o_input,
+        textarea.o_input {
+            border-top: none !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-bottom: 1px solid #cbd5e1 !important; // Slight grey 1-line
+            border-radius: 0 !important;
+            background-color: transparent !important;
+            color: var(--ansis-text-main, #0f172a) !important;
             font-size: 0.875rem;
-            padding: var(--ansis-control-padding-y, 0.35rem) 0.65rem;
-            min-height: 32px;
-            transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+            padding: var(--ansis-control-padding-y, 4px) 2px !important;
+            min-height: 30px;
+            box-shadow: none !important;
+            outline: none !important;
+            transition: border-bottom-color 0.15s ease, background-color 0.15s ease !important;
 
             &:hover:not(:focus):not([disabled]):not([readonly]) {
-                border-color: #cbd5e1;
+                border-bottom-color: #94a3b8 !important; // Slightly darker grey on hover
             }
 
-            &:focus {
-                border-color: var(--ansis-primary, #0284c7) !important;
-                box-shadow: 0 0 0 3px var(--ansis-focus-ring, rgba(2, 132, 199, 0.14)) !important;
+            &:focus,
+            &:focus-within {
+                border-top: none !important;
+                border-left: none !important;
+                border-right: none !important;
+                border-bottom: 2px solid var(--ansis-primary, #0284c7) !important; // Brand accent underline
                 outline: none !important;
-                background-color: #ffffff !important;
+                box-shadow: none !important;
+                background-color: transparent !important;
+            }
+
+            &[readonly],
+            &[disabled] {
+                border-bottom: 1px dashed #e2e8f0 !important;
+                background-color: transparent !important;
+                color: var(--ansis-text-muted, #64748b) !important;
             }
         }
 
         // Textareas
         textarea.o_input {
-            min-height: 68px;
-            padding: 0.5rem 0.65rem;
+            min-height: 56px;
+            padding: 4px 2px !important;
             line-height: 1.4;
+            resize: vertical;
         }
 
         // Select Dropdowns
         select.o_input {
             padding-right: 1.5rem;
-            background-position: right 0.5rem center;
+            background-position: right 0.2rem center;
         }
 
         // Many2Many Tags Pill Badges
@@ -148,14 +162,40 @@
                 }
             }
         }
+
+        // Many2One Dropdown Toggle and External Buttons
+        .o_dropdown_button,
+        .o_external_button {
+            color: #94a3b8;
+            background: transparent;
+            border: none;
+            padding: 0 4px;
+            margin-right: 0;
+
+            &:hover {
+                color: var(--ansis-primary, #0284c7);
+                background: transparent;
+            }
+        }
     }
 
-    &:not(.o_field_highlight) .o_field_widget:not(.o_field_invalid):not(.o_field_highlight) .o_input:not(:hover):not(:focus) {
-        --o-input-border-color: #e2e8f0;
+    .o_field_widget.o_required_modifier {
+        .o_input,
+        input:not([type="checkbox"]):not([type="radio"]) {
+            border-bottom: 1px solid #94a3b8 !important;
+            font-weight: 500;
+
+            &:focus {
+                border-bottom: 2px solid var(--ansis-primary, #0284c7) !important;
+            }
+        }
     }
 
-    &:not(.o_field_highlight) .o_required_modifier.o_field_widget:not(.o_field_invalid):not(.o_field_highlight) .o_input:not(:hover):not(:focus) {
-        --o-input-border-color: #cbd5e1;
+    .o_field_widget.o_field_invalid {
+        .o_input,
+        input {
+            border-bottom: 2px solid #ef4444 !important;
+        }
     }
 
     // Phase 6.2: Elevated Stat Buttons Box
@@ -371,6 +411,96 @@
                 justify-content: flex-start;
                 padding-top: 4px;
             }
+        }
+    }
+}
+
+// Dialogs & Modals 1-Line Input Fields
+.modal-content,
+.o_dialog {
+    .o_field_widget:not(.o_field_boolean):not(.o_field_radio) {
+        .o_input,
+        input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="range"]),
+        select.o_input,
+        textarea.o_input {
+            border-top: none !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-bottom: 1px solid #cbd5e1 !important;
+            border-radius: 0 !important;
+            background-color: transparent !important;
+            color: var(--ansis-text-main, #0f172a) !important;
+            font-size: 0.875rem;
+            padding: var(--ansis-control-padding-y, 4px) 2px !important;
+            min-height: 30px;
+            box-shadow: none !important;
+            outline: none !important;
+            transition: border-bottom-color 0.15s ease, background-color 0.15s ease !important;
+
+            &:hover:not(:focus):not([disabled]):not([readonly]) {
+                border-bottom-color: #94a3b8 !important;
+            }
+
+            &:focus,
+            &:focus-within {
+                border-top: none !important;
+                border-left: none !important;
+                border-right: none !important;
+                border-bottom: 2px solid var(--ansis-primary, #0284c7) !important;
+                outline: none !important;
+                box-shadow: none !important;
+                background-color: transparent !important;
+            }
+
+            &[readonly],
+            &[disabled] {
+                border-bottom: 1px dashed #e2e8f0 !important;
+                background-color: transparent !important;
+                color: var(--ansis-text-muted, #64748b) !important;
+            }
+        }
+
+        textarea.o_input {
+            min-height: 56px;
+            padding: 4px 2px !important;
+            line-height: 1.4;
+            resize: vertical;
+        }
+
+        select.o_input {
+            padding-right: 1.5rem;
+            background-position: right 0.2rem center;
+        }
+
+        .o_dropdown_button,
+        .o_external_button {
+            color: #94a3b8;
+            background: transparent;
+            border: none;
+            padding: 0 4px;
+
+            &:hover {
+                color: var(--ansis-primary, #0284c7);
+            }
+        }
+    }
+
+    .o_field_widget.o_required_modifier {
+        .o_input,
+        input:not([type="checkbox"]):not([type="radio"]) {
+            border-bottom: 1px solid #94a3b8 !important;
+            font-weight: 500;
+
+            &:focus {
+                border-bottom: 2px solid var(--ansis-primary, #0284c7) !important;
+            }
+        }
+    }
+
+    .o_field_widget.o_field_invalid {
+        .o_input,
+        input {
+            border-bottom: 2px solid #ef4444 !important;
         }
     }
 }

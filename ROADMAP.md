@@ -174,6 +174,21 @@ This roadmap documents the implementation progress, UX architecture, and planned
 
 ---
 
+## 📌 Phase 8: Consolidation of Muk Addon Dependencies into `ansis_web_theme`
+*Goal: Eliminate external dependencies by natively integrating Muk addon features directly inside `ansis_web_theme` for clean, single-module deployment.*
+
+- [ ] **8.1 Chatter Architecture Integration (`muk_web_chatter`)**
+  - Native split-screen side chatter and bottom chatter toggle with responsive layout.
+  - Sudo-safe mail attachments and styled log note feed.
+- [ ] **8.2 Draggable & Resizable Dialogs (`muk_web_dialog`)**
+  - Native modal draggable headers and corner resizing handles with viewport clamping.
+- [ ] **8.3 Navigation & AppsBar Clean Architecture (`muk_web_appsbar`)**
+  - Self-contained navigation, app switcher, and navbar brand hooks without external dependency.
+- [ ] **8.4 Theme Color Engine & Asset Utilities (`muk_web_colors` / `muk_web_utils`)**
+  - Native SCSS color asset compiler and web editor asset reset tools.
+
+---
+
 ## 🛠️ Architecture & Compatibility Guidelines
 
 1. **Avoid Strict OWL Component Overrides**:
