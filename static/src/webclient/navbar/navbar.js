@@ -179,11 +179,6 @@ patch(NavBar.prototype, {
         if (brand) {
             const currentApp = this.menuService?.getCurrentApp();
 
-            /* Ensure app name is present if DOM cleared it */
-            if (currentApp && (!brand.innerText || brand.innerText.trim() === "")) {
-                brand.innerText = currentApp.name;
-            }
-
             if (currentApp) {
                 const iconUrl = currentApp.webIconData
                     ? (currentApp.webIconData.startsWith('data:') || currentApp.webIconData.startsWith('/')
