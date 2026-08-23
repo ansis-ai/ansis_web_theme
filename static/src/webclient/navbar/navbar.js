@@ -8,6 +8,7 @@ import { NavBar } from "@web/webclient/navbar/navbar";
 import { patch } from "@web/core/utils/patch";
 import { onMounted, onPatched, onWillUnmount } from "@odoo/owl";
 import { user } from "@web/core/user";
+import { session } from "@web/session";
 import { useService } from "@web/core/utils/hooks";
 
 patch(NavBar.prototype, {
@@ -403,9 +404,13 @@ patch(NavBar.prototype, {
             .join("");
 
         const currentCompany = this.companyService?.currentCompany || this.env?.services?.company?.currentCompany;
-        const hasWallpaper = Boolean(currentCompany?.has_background_image);
+        const currentCompanyId = currentCompany?.id || session.user_companies?.current_company;
+        const allowedCompanies = session.user_companies?.allowed_companies || {};
+        const companyData = allowedCompanies[currentCompanyId] || currentCompany || {};
+
+        const hasWallpaper = Boolean(companyData?.has_background_image);
         const wallpaperUrl = hasWallpaper
-            ? `/web/image/res.company/${currentCompany.id}/background_image`
+            ? `/web/image/res.company/${currentCompanyId}/background_image`
             : "";
 
         return `
