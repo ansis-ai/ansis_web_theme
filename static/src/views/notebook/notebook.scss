@@ -1,0 +1,118 @@
+// Modern Light Notebook Underline Tabs (Phase 6.1)
+
+.o_notebook {
+    --notebook-link-border-color: #e2e8f0;
+    --notebook-link-border-color-hover: #cbd5e1;
+    --notebook-link-border-color-active-accent: #0284c7;
+
+    .o_notebook_headers {
+        border-bottom: 1px solid #e2e8f0;
+        margin-bottom: 16px;
+    }
+
+    // Horizontal Tabs
+    .nav-tabs {
+        border-bottom: none !important;
+        gap: 8px;
+        padding: 0 4px;
+        background-color: transparent !important;
+
+        .nav-item {
+            margin-bottom: -1px;
+        }
+
+        .nav-link {
+            border: none !important;
+            border-bottom: 2px solid transparent !important;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #64748b;
+            padding: 0.65rem 1rem;
+            background: transparent !important;
+            border-radius: 0 !important;
+            transition: color 0.15s ease, border-color 0.15s ease;
+
+            // Badges inside tabs
+            .badge {
+                font-size: 0.72rem;
+                font-weight: 600;
+                padding: 2px 7px;
+                border-radius: 9999px;
+                background-color: #f1f5f9;
+                color: #475569;
+                vertical-align: middle;
+                margin-left: 6px;
+                transition: all 0.15s ease;
+            }
+
+            &:hover {
+                color: #0f172a;
+                border-bottom-color: #cbd5e1 !important;
+
+                .badge {
+                    background-color: #e2e8f0;
+                    color: #0f172a;
+                }
+            }
+
+            &.active {
+                color: #0284c7 !important;
+                border-bottom-color: #0284c7 !important;
+                background-color: transparent !important;
+                font-weight: 600;
+
+                .badge {
+                    background-color: #e0f2fe;
+                    color: #0284c7;
+                }
+            }
+
+            &.disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+                border-bottom-color: transparent !important;
+            }
+        }
+    }
+
+    // Vertical Tabs Layout
+    &.vertical {
+        .o_notebook_headers {
+            border-bottom: none !important;
+            border-right: 1px solid #e2e8f0;
+            margin-bottom: 0;
+            padding-right: 8px;
+        }
+
+        .nav-tabs {
+            flex-direction: column;
+            gap: 4px;
+
+            .nav-link {
+                border-bottom: none !important;
+                border-left: 3px solid transparent !important;
+                border-radius: 0 8px 8px 0 !important;
+                padding: 0.6rem 1rem;
+                text-align: left;
+
+                &:hover {
+                    background-color: #f8fafc !important;
+                    border-left-color: #cbd5e1 !important;
+                    color: #0f172a;
+                }
+
+                &.active {
+                    background-color: #f0f9ff !important;
+                    border-left-color: #0284c7 !important;
+                    color: #0284c7 !important;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .modal & {
+        --notebook-padding-x: 1rem;
+        --notebook-margin-x: -1rem;
+    }
+}

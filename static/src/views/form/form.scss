@@ -1,0 +1,285 @@
+// Modern Light Form View & Mobile Interactions (Phase 6)
+
+.o_form_view {
+    // Background canvas & sheet elevation
+    .o_form_sheet_bg {
+        background-color: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 32px;
+
+        .o_form_sheet {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+            padding: 24px 32px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+
+            @media (max-width: 768px) {
+                padding: 16px 12px;
+                border-radius: 8px;
+                margin-top: 8px;
+                margin-bottom: 8px;
+            }
+        }
+    }
+
+    // Title & Typography
+    .oe_title {
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.01em;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+    }
+
+    // Input fields & widgets
+    .o_field_widget {
+        .o_input {
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            color: #0f172a;
+            font-size: 0.875rem;
+            padding: 0.35rem 0.65rem;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+            &:focus {
+                border-color: #0284c7;
+                box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+                outline: none;
+            }
+        }
+    }
+
+    &:not(.o_field_highlight) .o_field_widget:not(.o_field_invalid):not(.o_field_highlight) .o_input:not(:hover):not(:focus) {
+        --o-input-border-color: #e2e8f0;
+    }
+
+    &:not(.o_field_highlight) .o_required_modifier.o_field_widget:not(.o_field_invalid):not(.o_field_highlight) .o_input:not(:hover):not(:focus) {
+        --o-input-border-color: #cbd5e1;
+    }
+
+    // Phase 6.2: Elevated Stat Buttons Box
+    .oe_button_box {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 16px;
+
+        .oe_stat_button {
+            display: inline-flex !important;
+            align-items: center !important;
+            height: auto !important;
+            min-height: 46px !important;
+            padding: 6px 12px !important;
+            border-radius: 8px !important;
+            border: 1px solid #e2e8f0 !important;
+            background-color: #ffffff !important;
+            color: #334155 !important;
+            text-decoration: none !important;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03) !important;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease !important;
+
+            // Stat Icon Box
+            .o_button_icon {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 32px !important;
+                height: 32px !important;
+                min-width: 32px !important;
+                border-radius: 6px !important;
+                background-color: #f0f9ff !important;
+                color: #0284c7 !important;
+                font-size: 1.1rem !important;
+                margin-right: 8px !important;
+                transition: background-color 0.15s ease, color 0.15s ease;
+            }
+
+            // Stat Metric Values & Labels
+            .o_stat_value,
+            .o_field_statinfo .o_stat_value {
+                font-weight: 700 !important;
+                font-size: 1rem !important;
+                color: #0f172a !important;
+                line-height: 1.2 !important;
+            }
+
+            .o_stat_text,
+            .o_field_statinfo .o_stat_text {
+                font-size: 0.72rem !important;
+                font-weight: 600 !important;
+                color: #64748b !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.02em !important;
+                line-height: 1.2 !important;
+            }
+
+            &:hover {
+                background-color: #ffffff !important;
+                border-color: #0284c7 !important;
+                box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.12), 0 2px 4px -2px rgba(2, 132, 199, 0.08) !important;
+                transform: translateY(-1px) !important;
+
+                .o_button_icon {
+                    background-color: #0284c7 !important;
+                    color: #ffffff !important;
+                }
+            }
+
+            &:active {
+                transform: translateY(0) !important;
+                box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05) !important;
+            }
+        }
+    }
+
+    // Phase 6.3: Statusbar Stage Pipeline & Action Controls
+    .o_form_statusbar {
+        background-color: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        border-radius: 12px 12px 0 0;
+        padding: 8px 16px;
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+
+        @media (max-width: 768px) {
+            border-radius: 8px 8px 0 0;
+            padding: 6px 10px;
+            flex-wrap: wrap;
+        }
+
+        // Statusbar Action Buttons
+        .o_statusbar_buttons {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+
+            .btn {
+                height: 34px;
+                border-radius: 6px;
+                font-weight: 600;
+                font-size: 0.85rem;
+                padding: 0 14px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                transition: all 0.15s ease;
+
+                &.btn-primary {
+                    background-color: #0284c7;
+                    border-color: #0284c7;
+                    color: #ffffff;
+                    box-shadow: 0 1px 2px rgba(2, 132, 199, 0.2);
+
+                    &:hover {
+                        background-color: #0369a1;
+                        border-color: #0369a1;
+                    }
+                }
+
+                &.btn-secondary {
+                    background-color: #ffffff;
+                    border-color: #e2e8f0;
+                    color: #334155;
+
+                    &:hover {
+                        background-color: #f1f5f9;
+                        border-color: #cbd5e1;
+                        color: #0f172a;
+                    }
+                }
+            }
+        }
+
+        // Statusbar Stage Pipeline Chevrons
+        .o_statusbar_status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            overflow-x: auto;
+
+            .btn.o_arrow_button {
+                position: relative;
+                padding: 5px 14px;
+                font-size: 0.82rem;
+                font-weight: 500;
+                color: #64748b;
+                background-color: #f1f5f9;
+                border: 1px solid #e2e8f0;
+                border-radius: 6px !important;
+                margin: 0 2px;
+                transition: all 0.15s ease;
+
+                &:before,
+                &:after {
+                    display: none !important; // Clean flat SaaS pills
+                }
+
+                &:hover:not(.disabled) {
+                    background-color: #e2e8f0;
+                    border-color: #cbd5e1;
+                    color: #0f172a;
+                }
+
+                &.o_arrow_button_current {
+                    background-color: #0284c7 !important;
+                    border-color: #0284c7 !important;
+                    color: #ffffff !important;
+                    font-weight: 600;
+                    box-shadow: 0 1px 3px rgba(2, 132, 199, 0.25);
+                }
+
+                &.disabled {
+                    opacity: 0.5;
+                    cursor: default;
+                }
+            }
+        }
+    }
+
+    // Mobile Responsive Ergonomics (< 768px)
+    @media (max-width: 768px) {
+        .oe_button_box {
+            width: 100%;
+            justify-content: stretch;
+
+            .oe_stat_button {
+                flex: 1 1 calc(50% - 6px);
+                min-width: 130px;
+            }
+        }
+
+        .o_form_statusbar {
+            .o_statusbar_buttons {
+                width: 100%;
+                justify-content: flex-start;
+
+                .btn {
+                    flex: 1 1 auto;
+                    min-height: 40px;
+                }
+            }
+
+            .o_statusbar_status {
+                width: 100%;
+                justify-content: flex-start;
+                padding-top: 4px;
+            }
+        }
+    }
+}

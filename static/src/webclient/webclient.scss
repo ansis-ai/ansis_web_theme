@@ -1,0 +1,48 @@
+/* --------------------------------------------------------------------------
+   Full-Width Clean Layout (Persistent Sidebar Disabled for Maximum Workspace)
+   -------------------------------------------------------------------------- */
+
+:root {
+    --mk-sidebar-width: 0px !important;
+}
+
+.mk_apps_sidebar_panel,
+.mk_apps_sidebar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+}
+
+.o_web_client {
+    display: grid !important;
+    grid-template-areas:
+        "banner"
+        "navbar"
+        "content"
+        "components" !important;
+    grid-template-rows: auto auto 1fr auto !important;
+    grid-template-columns: 100% !important;
+    width: 100% !important;
+
+    > .mk_apps_sidebar_panel {
+        display: none !important;
+        width: 0 !important;
+    }
+
+    > .o_action_manager {
+        grid-area: content !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    > .o_navbar {
+        grid-area: navbar !important;
+        width: 100% !important;
+    }
+}

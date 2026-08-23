@@ -1,0 +1,150 @@
+/* --------------------------------------------------------------------------
+   ANSIS Web Theme — Enhanced Mobile Offcanvas Sidebar
+   Scoped to: .o_burger_menu & Mobile Drawer (< 768px)
+   -------------------------------------------------------------------------- */
+
+.o_burger_menu {
+    width: Min(340px, 86vw) !important;
+    background-color: #ffffff !important;
+    box-shadow: -6px 0 25px rgba(15, 23, 42, 0.12) !important;
+    z-index: 10050 !important;
+
+    // Top Profile Header
+    .o_sidebar_topbar {
+        min-height: 72px !important;
+        background-color: #f8fafc !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        box-shadow: none !important;
+
+        .o_burger_menu_avatar {
+            width: 40px !important;
+            height: 40px !important;
+            object-fit: cover !important;
+            border: 2px solid #e2e8f0 !important;
+        }
+
+        .o_burger_menu_username {
+            color: #0f172a !important;
+            font-size: 0.95rem !important;
+        }
+
+        .o_burger_menu_company {
+            color: #64748b !important;
+            font-size: 0.78rem !important;
+        }
+
+        .o_sidebar_close {
+            width: 36px !important;
+            height: 36px !important;
+            background-color: #f1f5f9 !important;
+            color: #475569 !important;
+            transition: all 0.15s ease !important;
+
+            &:hover,
+            &:active {
+                background-color: #e2e8f0 !important;
+                color: #0f172a !important;
+            }
+        }
+    }
+
+    // Main Drawer Content
+    .o_burger_menu_content {
+        background-color: #ffffff !important;
+
+        // All Apps Action Button
+        .ansis_burger_home_btn {
+            button {
+                background-image: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+                border: none !important;
+                padding: 10px 16px !important;
+                transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+
+                &:active {
+                    transform: scale(0.98);
+                }
+            }
+        }
+
+        // Multi-Company Switcher Card
+        .o_burger_menu_companies {
+            background-color: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            margin: 12px 16px !important;
+            padding: 12px 14px !important;
+
+            span {
+                font-weight: 600 !important;
+                color: #334155 !important;
+                font-size: 0.9rem !important;
+            }
+        }
+
+        // Navigation Submenus
+        ul {
+            padding: 8px 12px !important;
+
+            li {
+                padding: 0 !important;
+                margin-bottom: 2px !important;
+
+                a, div {
+                    display: flex !important;
+                    align-items: center !important;
+                    min-height: 42px !important;
+                    padding: 8px 12px !important;
+                    border-radius: 8px !important;
+                    color: #334155 !important;
+                    font-size: 0.9rem !important;
+                    font-weight: 500 !important;
+                    text-decoration: none !important;
+                    transition: background-color 0.15s ease, color 0.15s ease !important;
+
+                    &:hover,
+                    &:active {
+                        background-color: #f1f5f9 !important;
+                        color: #0284c7 !important;
+                    }
+                }
+
+                // Nested submenus
+                ul {
+                    padding-left: 14px !important;
+                    border-left: 2px solid #e2e8f0 !important;
+                    margin-left: 16px !important;
+                }
+            }
+        }
+
+        // User Menu Actions
+        .o_user_menu_mobile {
+            border-top: 1px solid #f1f5f9 !important;
+            padding-top: 12px !important;
+
+            a {
+                min-height: 42px !important;
+                display: flex !important;
+                align-items: center !important;
+                padding: 8px 12px !important;
+                border-radius: 8px !important;
+                color: #334155 !important;
+                font-size: 0.9rem !important;
+                font-weight: 500 !important;
+
+                &:hover,
+                &:active {
+                    background-color: #f1f5f9 !important;
+                    color: #0284c7 !important;
+                }
+            }
+        }
+    }
+}
+
+// Mobile Backdrop Blur
+.modal-backdrop.show.d-md-none {
+    background: rgba(15, 23, 42, 0.35) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+}

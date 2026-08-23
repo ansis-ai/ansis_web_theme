@@ -1,0 +1,151 @@
+/* --------------------------------------------------------------------------
+   ANSIS Web Theme — Modern List View Polish & Sticky Table Architecture
+   Features: Sticky thead, Sticky tfoot aggregates, Sticky selector column,
+             Sticky right actions column, Sticky group headers.
+   -------------------------------------------------------------------------- */
+
+.o_list_renderer {
+    --ListRenderer-thead-border-end-color: transparent;
+    --sticky-header-zindex: 10;
+
+    .table,
+    .o_list_table {
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+
+        // 1. Sticky Table Header
+        thead {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: var(--sticky-header-zindex) !important;
+            background-color: #f8fafc !important;
+
+            > tr > th {
+                font-size: 0.8125rem;
+                font-weight: 600;
+                color: #475569;
+                background-color: #f8fafc !important;
+                border-bottom: 2px solid #e2e8f0 !important;
+                padding: 0.625rem 0.6rem;
+                white-space: nowrap;
+
+                // Frozen Checkbox Selector (Top-Left)
+                &.o_list_record_selector {
+                    position: sticky !important;
+                    left: 0 !important;
+                    z-index: 15 !important;
+                    background-color: #f8fafc !important;
+                    box-shadow: 1px 0 0 #e2e8f0;
+                }
+
+                // Frozen Actions Column (Top-Right)
+                &.o_list_actions_header,
+                &.o_list_controller {
+                    position: sticky !important;
+                    right: 0 !important;
+                    z-index: 15 !important;
+                    background-color: #f8fafc !important;
+                    box-shadow: -1px 0 0 #e2e8f0;
+                }
+            }
+
+            // Header Drop Shadow Elevation
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 4px;
+                box-shadow: 0 4px 6px -2px rgba(15, 23, 42, 0.05);
+                pointer-events: none;
+            }
+        }
+
+        // 2. Data Rows & Frozen Columns
+        tbody > tr {
+            transition: background-color 0.1s ease;
+            background-color: #ffffff;
+
+            &:hover {
+                background-color: #f8fafc !important;
+
+                > td {
+                    background-color: #f8fafc !important;
+                }
+            }
+
+            &.o_data_row_selected {
+                background-color: #f0f9ff !important;
+
+                > td {
+                    background-color: #f0f9ff !important;
+                }
+            }
+
+            > td {
+                padding: 0.55rem 0.6rem;
+                vertical-align: middle;
+                border-bottom: 1px solid #f1f5f9;
+                color: #1e293b;
+                background-color: #ffffff;
+
+                // Frozen Checkbox Column (Body Left)
+                &.o_list_record_selector {
+                    position: sticky !important;
+                    left: 0 !important;
+                    z-index: 3 !important;
+                    box-shadow: 1px 0 0 #f1f5f9;
+                }
+
+                // Frozen Actions Column (Body Right)
+                &.o_list_controller,
+                &.o_list_button {
+                    position: sticky !important;
+                    right: 0 !important;
+                    z-index: 3 !important;
+                    box-shadow: -1px 0 0 #f1f5f9;
+                }
+            }
+        }
+
+        // 3. Sticky Grouped Rows Header
+        .o_group_header {
+            background-color: #f1f5f9 !important;
+            color: #0f172a !important;
+            font-weight: 600 !important;
+
+            > th,
+            > td {
+                background-color: #f1f5f9 !important;
+                border-bottom: 1px solid #e2e8f0 !important;
+                padding: 0.5rem 0.6rem !important;
+            }
+        }
+
+        // 4. Sticky Totals & Aggregates Footer
+        tfoot {
+            position: sticky !important;
+            bottom: 0 !important;
+            z-index: 9 !important;
+            background-color: #f8fafc !important;
+            box-shadow: 0 -4px 6px -2px rgba(15, 23, 42, 0.04);
+
+            > tr > td {
+                background-color: #f8fafc !important;
+                border-top: 2px solid #e2e8f0 !important;
+                color: #0f172a !important;
+                font-weight: 600 !important;
+                padding: 0.6rem !important;
+
+                &.o_list_record_selector {
+                    position: sticky !important;
+                    left: 0 !important;
+                    z-index: 12 !important;
+                    background-color: #f8fafc !important;
+                    box-shadow: 1px 0 0 #e2e8f0;
+                }
+            }
+        }
+    }
+}

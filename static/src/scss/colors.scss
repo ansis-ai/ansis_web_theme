@@ -1,0 +1,29 @@
+// ==========================================================================
+// ANSIS Modern Light Palette
+// ==========================================================================
+
+$color_brand: #0284c7;
+$color_primary: #0284c7;
+$color_appsmenu_text: #1e293b;
+$color_appbar_text: #475569;
+$color_appbar_active: #0284c7;
+$color_appbar_background: #ffffff;
+
+$mk_color_brand: $color_brand;
+$mk_color_primary: $color_primary;
+$mk_color_appsmenu_text: $color_appsmenu_text;
+$mk_color_appbar_text: $color_appbar_text;
+$mk_color_appbar_active: $color_appbar_active;
+$mk_color_appbar_background: $color_appbar_background;
+
+// Odoo Core Variables
+
+$o-brand-odoo: $color_brand;
+$o-brand-primary: $color_primary;
+$o-brand-secondary: #64748b;
+$o-brand-lightsecondary: #f8fafc;
+
+$mk-appsmenu-color: $color_appsmenu_text;
+$mk-appbar-color: $color_appbar_text;
+$mk-appbar-active: $color_appbar_active;
+$mk-appbar-background: $color_appbar_background;

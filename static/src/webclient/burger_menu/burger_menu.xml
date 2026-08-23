@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="ansis_web_theme.BurgerMenu" t-inherit="web.BurgerMenu" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_sidebar_topbar')]" position="replace">
+            <div class="o_sidebar_topbar d-flex align-items-center justify-content-between flex-shrink-0 px-3 py-3">
+                <div class="d-flex align-items-center gap-3">
+                    <img class="o_burger_menu_avatar rounded-circle shadow-sm"
+                         t-att-src="'/web/image?model=res.users&amp;field=avatar_128&amp;id=' + user.userId"
+                         alt="Avatar" />
+                    <div class="d-flex flex-column">
+                        <span class="o_burger_menu_username fw-bold fs-6 text-truncate" style="max-width: 180px;">
+                            <t t-esc="user.name"/>
+                        </span>
+                        <span t-if="currentCompanyName" class="o_burger_menu_company text-muted small text-truncate" style="max-width: 180px;">
+                            <t t-esc="currentCompanyName"/>
+                        </span>
+                    </div>
+                </div>
+                <button class="o_sidebar_close oi oi-close btn btn-light rounded-circle d-flex align-items-center justify-content-center border-0 fs-5 text-secondary"
+                        aria-label="Close menu"
+                        title="Close menu"
+                        t-on-click.stop="_closeBurger"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//nav[hasclass('o_burger_menu_content')]" position="inside">
+            <div class="ansis_burger_home_btn px-3 pt-3 pb-2">
+                <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2 py-2 fs-6 fw-semibold rounded-3 shadow-sm text-white"
+                        t-on-click.stop="_openHomeMenu">
+                    <i class="oi oi-apps fs-5"/>
+                    <span>All Apps / Dashboard</span>
+                </button>
+            </div>
+        </xpath>
+    </t>
+
+</templates>
