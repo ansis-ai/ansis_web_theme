@@ -13,6 +13,7 @@ class ResUsers(models.Model):
         return super().SELF_READABLE_FIELDS + [
             "chatter_position",
             "dialog_size",
+            "sidebar_type",
         ]
 
     @property
@@ -20,6 +21,7 @@ class ResUsers(models.Model):
         return super().SELF_WRITEABLE_FIELDS + [
             "chatter_position",
             "dialog_size",
+            "sidebar_type",
         ]
 
     chatter_position = fields.Selection(
@@ -42,4 +44,16 @@ class ResUsers(models.Model):
         default="minimize",
         required=True,
         help="Default display size when opening modal dialogs and wizards.",
+    )
+
+    sidebar_type = fields.Selection(
+        selection=[
+            ("invisible", "Invisible"),
+            ("small", "Small"),
+            ("large", "Large"),
+        ],
+        string="Sidebar Type",
+        default="invisible",
+        required=True,
+        help="Sidebar display type fallback.",
     )
