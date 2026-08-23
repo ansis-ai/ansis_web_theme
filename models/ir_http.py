@@ -3,6 +3,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.html).
 
 from odoo import models
+from odoo.tools import str2bool
 
 
 class IrHttp(models.AbstractModel):
@@ -12,6 +13,12 @@ class IrHttp(models.AbstractModel):
         result = super().session_info()
         result["chatter_position"] = self.env.user.chatter_position or "side"
         result["dialog_size"] = self.env.user.dialog_size or "minimize"
+        get_param = self.env["ir.config_parameter"].sudo().get_param
+        result["disable_quick_create"] = str2bool(
+            get_param("ansis_web_theme.disable_quick_create")
+            or get_param("muk_web_utils.disable_quick_create", default=""),
+            default=False,
+        )
         if self.env.user._is_internal():
             user_companies = result.get("user_companies", {})
             allowed_companies = user_companies.get("allowed_companies", {})

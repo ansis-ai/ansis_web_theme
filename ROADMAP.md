@@ -194,11 +194,20 @@ This roadmap documents the implementation progress, UX architecture, and planned
   - **Web Client Grid Streamlining**: Configured modern single-column CSS grid (`100%` width) in `WebClient` with zero sidebar overhead or layout shift.
   - **Clean Models & Views**: Streamlined `res.company`, `res.config.settings`, and `res.users` by eliminating sidebar-specific fields (`sidebar_type`, `appbar_image`).
   - **Dependency Decoupling**: Completely eliminated `muk_web_appsbar` dependency.
-- [x] **8.4 Theme Color Engine & Asset Utilities (`muk_web_colors` / `muk_web_utils`)** `[Status: ✅ Completed]`
+- [x] **8.4 Theme Color Engine & Asset Utilities (`muk_web_colors`)** `[Status: ✅ Completed]`
   - **SCSS Color Variables & Dark Mode**: Added native SCSS primary color variables (`static/src/scss/colors.scss`) and dark mode palette overrides (`static/src/scss/colors_dark.scss`).
   - **Native SCSS Asset Compiler (`web_editor.assets`)**: Implemented `models/web_editor_assets.py` supporting dynamic regex variable extraction, replacement, and custom asset attachment bundle overrides.
   - **Asset Reset & Maintenance Actions**: Integrated color asset reset handlers directly into `res.config.settings`.
   - **100% Zero-Muk Self-Contained Theme**: Decoupled and eliminated all external Muk dependencies (`muk_web_colors`, `muk_web_appsbar`, `muk_web_chatter`, `muk_web_dialog`, `muk_web_theme`), leaving `ansis_web_theme` completely standalone with only `["mail", "web_editor"]` core dependencies.
+- [x] **8.5 Web Client Utilities & Custom Field Widgets (`muk_web_utils`)** `[Status: ✅ Completed]`
+  - **Block UI Progress Service**: Integrated full-screen progress overlay with batch counter, progress bar, and real-time ETA calculation (`@ansis_web_theme/core/block_progress/block_progress_ui`).
+  - **Binary Field Previews**: Patched `BinaryField` and `ListBinaryField` with inline file preview support (PDF viewer, image lightbox, video player, code/text inspector).
+  - **List Image Field**: Registered `list.image` compact 30px thumbnail field widget for table views.
+  - **Many2One Quick-Create Disable**: Added `ansis_web_theme.disable_quick_create` support to `ir.http` session info and patched `many2OneField`.
+  - **Selection Icons Field**: Implemented `selection_icons` widget rendering FontAwesome icons in place of raw text.
+  - **Text Icon Field**: Implemented `text_icon` widget displaying tooltip popovers for dense text/char/html table columns.
+  - **X2Many `no_open` Patch**: Patched `X2ManyField` to support `options="{'no_open': True}"`.
+  - **Complete Muk Elimination**: Fully deprecated and uninstalled `muk_web_utils`.
 
 ---
 
