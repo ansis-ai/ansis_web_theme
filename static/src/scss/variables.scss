@@ -55,14 +55,12 @@ body,
   background-color: var(--ansis-canvas) !important;
 }
 
-// Inherit primary font family across core UI controls while strictly excluding icon font elements
-button:not(.oi):not(.fa):not([class*="oi-"]):not([class*="fa-"]),
+// Inherit primary font family across core UI controls while strictly preserving icon fonts
 input,
 select,
 textarea,
 .form-control,
 .form-select,
-.btn:not(.oi):not(.fa):not([class*="oi-"]):not([class*="fa-"]),
 .o_form_view,
 .o_list_view,
 .o_kanban_view,
@@ -77,11 +75,13 @@ textarea,
 // Explicitly protect and guarantee icon fonts from being overridden
 .oi,
 [class*="oi-"],
-.o_facet_remove.oi {
-  font-family: "odoo_icons" !important;
+.o_facet_remove {
+  font-family: 'odoo_ui_icons' !important;
 }
 
 .fa,
-[class*="fa-"] {
-  font-family: "FontAwesome" !important;
+[class*="fa-"],
+.fa:before,
+[class*="fa-"]:before {
+  font-family: 'FontAwesome' !important;
 }
