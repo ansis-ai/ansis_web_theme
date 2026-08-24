@@ -6,12 +6,23 @@
 
 [![License: LGPL-3](https://img.shields.io/badge/License-LGPL--3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![Odoo Version](https://img.shields.io/badge/Odoo-18.0-714B67.svg)](https://github.com/ansis-ai/ansis_web_theme)
-[![Version](https://img.shields.io/badge/Version-18.0.1.0.0-0284c7.svg)](https://github.com/ansis-ai/ansis_web_theme)
+[![Version](https://img.shields.io/badge/Version-18.0.1.1.0-0284c7.svg)](https://github.com/ansis-ai/ansis_web_theme)
 [![Maintained by ANSIS](https://img.shields.io/badge/Maintained%20by-ANSIS%20Pte%20Ltd-0f172a.svg)](https://ansis.com.sg)
 
 ---
 
 </div>
+
+
+## 🆕 What's New in 18.0.1.1.0
+
+1. ✅ **Uninstall crash fixed.** `_reset_theme_color_assets` now correctly available on `res.config.settings` so module removal no longer raises `AttributeError`.
+2. ✅ **Palette round-trip fixed.** Brand colors persist across save #2, #3, and #4. Previously, 2nd+ save silently discarded the user's new color choice (regex-wrote an unprefixed SCSS variable that the read-side couldn't match anymore).
+3. ✅ **Multi-company defaults on install.** ANSIS wallpaper + favicon now auto-applied to EVERY company on first install (not just `base.main_company`), including archived companies — using empty-field-only semantics so pre-existing user customizations are preserved on upgrade/re-install.
+
+Also shipped: sudo() compliance comments, hex-color `@api.constrains` validation, `sidebar_type` exposed in User Preferences form, LIKE→= exact lookup fix for asset overrides, PALETTES dedup across two model files, and a fixed `ir.asset` lookup in `_save_color_asset`.
+
+---
 
 ## 🌟 Overview
 
@@ -56,11 +67,30 @@ Built with native **OWL 2** lifecycle patching and modular SCSS design tokens, i
   - **Standard**: 40px balanced modern SaaS density.
   - **Comfortable**: 48px spacious enterprise layout.
 - **Dynamic Brand Palette Generator**: Pick a brand accent color to automatically derive hover shades, light background tints (`--ansis-primary-light`), border accents, and focus rings in real-time.
+- Chatter position per user: `side` split-screen OR `bottom` under form. Includes horizontal drag-to-resize splitter.
+- Dialog size default per user: `minimize` OR `maximize`. Maximize / restore toggle button in every dialog header.
+- Sidebar type selector for mobile drawer variants, now exposed in the User Preferences form so non-admins can change their own.
+- Global Many2One Quick-Create on/off override via the `ansis_web_theme.disable_quick_create` system parameter.
 
 ### 📱 6. Mobile Offcanvas Sidebar (< 768px)
 - **User Profile Header Tile**: Displays user avatar, name, and active company badge.
 - **1-Tap All Apps Button**: Direct jump button to the fullscreen Home Menu overlay.
 - **Touch-Friendly Submenus**: `44px` touch targets with indentation for nested menus.
+- sidebar_type preference is user-selectable via User Preferences so each user can pick their preferred mobile drawer variant.
+
+### 7. Chatter & Dialog UX
+
+- Draggable + resizable dialog windows. Maximize / restore header toggle with fullscreen mode support.
+- Horizontal side-chatter layout (`chatter_position = side`) with draggable splitter; double-click the splitter to reset the default width.
+- Eye-icon notification filter inside chatter so users can hide automated notification messages on demand and show only human chatter / comments / tracked changes.
+
+### 8. Field Widget Enhancements
+
+- Binary field inline previews: PDF viewer, image lightbox, embedded video player, code/text inspector modal.
+- `list.image` compact 30px thumbnail widget for list view columns.
+- `selection_icons` widget renders FontAwesome glyphs instead of raw-text selection values.
+- `text_icon` widget: icon + tooltip popovers for dense `Char` / `Text` / `Html` list columns.
+- X2Many `no_open` patch: supports `options="{'no_open': True}"` on One2Many / Many2Many fields to block drilling into related records.
 
 ---
 
@@ -76,9 +106,11 @@ Built with native **OWL 2** lifecycle patching and modular SCSS design tokens, i
    addons_path = /path/to/odoo/addons,/path/to/odoo/custom/addons
    ```
 3. Update Apps list and install **ANSIS Web Theme** via Odoo Apps Store or CLI:
-   ```bash
-   odoo -u ansis_web_theme -d <database_name> --stop-after-init
-   ```
+   - **Fresh install:** `odoo-bin -i ansis_web_theme -d <database_name> --stop-after-init`
+   - **Upgrade existing:** `odoo-bin -u ansis_web_theme -d <database_name> --stop-after-init`
+   - (`-i` installs a new module; `-u` updates an existing installation.)
+   - **Compatibility:** This module explicitly excludes `web_enterprise` (see `__manifest__.py`). It works only with Odoo Community 18.0.
+   - **Post-install auto-configuration:** On first install, the registered `post_init_hook=_setup_module` auto-configures every company's Home Menu wallpaper + browser-tab favicon binary default (empty-field-only semantics, so user customizations are preserved on upgrades).
 
 ---
 
@@ -105,6 +137,8 @@ Built with native **OWL 2** lifecycle patching and modular SCSS design tokens, i
 | **Modular SCSS & Tokens** | Design tokens centralized in `:root` CSS variables (`--ansis-*`), enabling runtime customization without asset recompilation. |
 | **Zero Core Modifications** | Strictly community-native logic and CSS without modifying Odoo core files. |
 | **Linters & Tooling** | Configured with `.editorconfig` and `.pre-commit-config.yaml`. |
+| **Post-init & uninstall hooks** | `_setup_module` (applies company wallpaper/favicon defaults) and `_uninstall_cleanup` (deletes overridden SCSS assets without leftovers) are both registered in `__manifest__.py` L85-L86. |
+| **Hindsight memory retention** | Durable initiative + 4 detailed knowledge docs retained in Hindsight bank `coding-agent` at `https://hindsight.ansis.com.sg`. |
 
 ---
 

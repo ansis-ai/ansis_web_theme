@@ -10,17 +10,20 @@ from . import models
 
 
 def _setup_module(env):
-    if env.ref("base.main_company", False):
-        with file_open("web/static/img/favicon.ico", "rb") as file:
-            env.ref("base.main_company").write(
-                {"favicon": base64.b64encode(file.read())}
-            )
-        with file_open(
-            "ansis_web_theme/static/src/img/background.svg", "rb"
-        ) as file:
-            env.ref("base.main_company").write(
-                {"background_image": base64.b64encode(file.read())}
-            )
+    with file_open("web/static/img/favicon.ico", "rb") as favicon_file:
+        favicon = base64.b64encode(favicon_file.read())
+    with file_open(
+        "ansis_web_theme/static/src/img/background.svg", "rb"
+    ) as background_file:
+        background = base64.b64encode(background_file.read())
+    # Apply default branding to every company (not just main_company) so that
+    # multi-company instances see consistent favicon / menu wallpaper when
+    # switching companies after fresh module install.
+    for company in env["res.company"].with_context(active_test=False).search([]):
+        if not company.favicon:
+            company.favicon = favicon
+        if not company.background_image:
+            company.background_image = background
 
 
 def _uninstall_cleanup(env):

@@ -2,18 +2,12 @@
 # Copyright 2024-2026 ANSIS Pte Ltd
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.html).
 
-from odoo import api, fields, models
+import re
 
-PALETTES = {
-    "sapphire": "#0284c7",
-    "violet": "#7c3aed",
-    "emerald": "#059669",
-    "amber": "#ea580c",
-    "crimson": "#e11d48",
-    "teal": "#0d9488",
-    "slate": "#334155",
-    "rose": "#db2777",
-}
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
+
+from odoo.addons.ansis_web_theme.models import PALETTES
 
 
 class ResCompany(models.Model):
@@ -86,3 +80,15 @@ class ResCompany(models.Model):
     def _onchange_theme_color_palette(self):
         if self.theme_color_palette and self.theme_color_palette != "custom":
             self.theme_brand_color = PALETTES.get(self.theme_color_palette, "#0284c7")
+
+    @api.constrains("theme_brand_color")
+    def _check_theme_brand_color_hex(self):
+        pattern = re.compile(r"^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$")
+        for company in self:
+            if not company.theme_brand_color:
+                continue
+            if not pattern.match(company.theme_brand_color.strip()):
+                raise ValidationError(
+                    "Theme Brand Color must be a valid hex color in "
+                    "#RGB or #RRGGBB format (e.g. #0284c7)."
+                )

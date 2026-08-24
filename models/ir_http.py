@@ -13,6 +13,10 @@ class IrHttp(models.AbstractModel):
         result = super().session_info()
         result["chatter_position"] = self.env.user.chatter_position or "side"
         result["dialog_size"] = self.env.user.dialog_size or "minimize"
+        # sudo: internal users read ir.config_parameter to determine JS-level
+        # feature toggles (disable_quick_create); non-admin users normally
+        # cannot read ir.config_parameter rows, so we elevate briefly to
+        # expose only these two well-known keys (ansis + legacy muk fallback).
         get_param = self.env["ir.config_parameter"].sudo().get_param
         result["disable_quick_create"] = str2bool(
             get_param("ansis_web_theme.disable_quick_create")
@@ -22,6 +26,13 @@ class IrHttp(models.AbstractModel):
         if self.env.user._is_internal():
             user_companies = result.get("user_companies", {})
             allowed_companies = user_companies.get("allowed_companies", {})
+            # sudo: internal user only knows companies via company_ids relation
+            # but needs to know branding/theme metadata (favicon bool, font,
+            # palette, hex color) for ALL companies they can switch to (not
+            # just ones with direct record-rule visibility of res.company's
+            # branding fields). bin_size=True avoids streaming blob bytes
+            # (we only need the boolean "has image" via truthiness, not the
+            # binary itself).
             for company in self.env.user.company_ids.sudo().with_context(
                 bin_size=True
             ):

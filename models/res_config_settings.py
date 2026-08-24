@@ -4,16 +4,7 @@
 
 from odoo import api, fields, models
 
-PALETTES = {
-    "sapphire": "#0284c7",
-    "violet": "#7c3aed",
-    "emerald": "#059669",
-    "amber": "#ea580c",
-    "crimson": "#e11d48",
-    "teal": "#0d9488",
-    "slate": "#334155",
-    "rose": "#db2777",
-}
+from odoo.addons.ansis_web_theme.models import PALETTES
 
 
 class ResConfigSettings(models.TransientModel):

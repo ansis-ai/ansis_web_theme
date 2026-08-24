@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 from odoo.http import _request_stack
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
-from odoo.addons.ansis_web_theme.models.res_company import PALETTES
+from odoo.addons.ansis_web_theme.models import PALETTES
 from odoo.addons.ansis_web_theme import _setup_module, _uninstall_cleanup
 
 
@@ -178,7 +178,7 @@ class TestThemeWebEditorAssets(TransactionCase):
         replaced_scss = assets_model._replace_color_variables(sample_scss, [
             {"name": "color_brand", "value": "#7c3aed"}
         ])
-        self.assertIn("$color_brand: #7c3aed;", replaced_scss)
+        self.assertIn("$mk_color_brand: #7c3aed;", replaced_scss)
 
 
 @tagged("post_install", "-at_install", "ansis_web_theme")
