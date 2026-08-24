@@ -55,7 +55,25 @@ class ResConfigSettings(models.TransientModel):
             self.theme_brand_color = PALETTES.get(self.theme_color_palette, "#0284c7")
 
     def action_reset_theme_color_assets(self):
+        self._reset_theme_color_assets()
         return {
             "type": "ir.actions.client",
             "tag": "reload",
         }
+
+    def _reset_theme_color_assets(self):
+        assets_model = self.env["web_editor.assets"]
+        primary_bundle = "web._assets_primary_variables"
+        dark_bundle = "web.assets_web_dark"
+        color_urls = (
+            "/ansis_web_theme/static/src/scss/colors.scss",
+            "/ansis_web_theme/static/src/scss/colors_dark.scss",
+            "/ansis_web_theme/static/src/scss/variables.scss",
+        )
+        for url in color_urls:
+            if "colors_dark" in url:
+                assets_model.reset_color_asset(url, dark_bundle)
+            else:
+                assets_model.reset_color_asset(url, primary_bundle)
+                assets_model.reset_color_asset(url, dark_bundle)
+        self.env.registry.clear_cache("assets")
