@@ -63,6 +63,13 @@ patch(NavBar.prototype, {
             document.addEventListener("keydown", this._onCustomHomeMenuKeydown);
             this._syncActiveMenu();
             requestAnimationFrame(() => this.adapt());
+            if (window.ResizeObserver && this.root?.el) {
+                const ro = new ResizeObserver(() => {
+                    this.adapt();
+                });
+                ro.observe(this.root.el);
+                this._navbarResizeObserver = ro;
+            }
             if (document.fonts) {
                 document.fonts.ready.then(() => {
                     if (this.root?.el) {
@@ -77,6 +84,9 @@ patch(NavBar.prototype, {
         });
 
         onWillUnmount(() => {
+            if (this._navbarResizeObserver) {
+                this._navbarResizeObserver.disconnect();
+            }
             document.removeEventListener("click", this._onDocumentClick);
             document.removeEventListener("keydown", this._onCustomHomeMenuKeydown);
         });
@@ -174,8 +184,8 @@ patch(NavBar.prototype, {
         const brandWidth = brandEl ? brandEl.getBoundingClientRect().width : 0;
         const systrayWidth = systrayEl ? systrayEl.getBoundingClientRect().width : 0;
 
-        // Reserve 24px safety buffer for paddings and margins
-        const trueAvailableWidth = Math.max(0, navbarWidth - brandWidth - systrayWidth - 24);
+        // Reserve 24px safety buffer for paddings and margins; ensure minimum 46px to allow '+' more button
+        const trueAvailableWidth = Math.max(46, navbarWidth - brandWidth - systrayWidth - 24);
 
         const sectionsTotalWidth = sections.reduce(
             (sum, s) => sum + s.getBoundingClientRect().width,

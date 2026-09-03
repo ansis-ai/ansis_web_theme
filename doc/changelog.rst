@@ -1,6 +1,15 @@
 Changelog
 =========
 
+`18.0.1.2.3`
+------------
+* **Guaranteed '+' More Button Visibility on Narrow Screens**:
+  - Added ``d-none`` class binding directly onto section ``<button>`` elements in ``web.NavBar.SectionsMenu`` Owl template to ensure overflowing sections collapse to 0px.
+  - Set ``min-width: 44px !important`` and ``flex: 1 1 auto !important`` on ``.o_menu_sections`` so flexbox can never crush the container or hide the ``(+)`` button.
+  - Allowed brand text to shrink gracefully (``flex-shrink: 1``, ``max-width: 220px``, ``text-overflow: ellipsis``) on constrained screens.
+  - Added instant ``ResizeObserver`` on the navbar container for real-time zero-lag adaptation upon browser window resizing.
+  - Enhanced the ``(+)`` button styling with visible borders and subtle shadow.
+
 `18.0.1.2.2`
 ------------
 * **Reactive '+' More Button & Small Screen Visibility**:

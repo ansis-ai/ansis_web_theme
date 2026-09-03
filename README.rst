@@ -5,9 +5,9 @@ ANSIS Web Theme
 .. image:: https://img.shields.io/badge/license-LGPL--3-blue.svg
    :target: https://www.gnu.org/licenses/lgpl-3.0-standalone.html
    :alt: License: LGPL-3
-.. image:: https://img.shields.io/badge/version-18.0.1.2.2-informational.svg
+.. image:: https://img.shields.io/badge/version-18.0.1.2.3-informational.svg
    :target: https://github.com/ansis-ai/ansis_web_theme
-   :alt: Version: 18.0.1.2.2
+   :alt: Version: 18.0.1.2.3
 .. image:: https://img.shields.io/badge/Odoo-18.0-blue.svg
    :target: https://github.com/ansis-ai/ansis_web_theme
    :alt: Odoo: 18.0

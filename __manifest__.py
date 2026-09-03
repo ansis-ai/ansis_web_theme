@@ -11,7 +11,7 @@
         Originally derived from and incorporating architectural elements of MuK Backend Theme
         (Copyright MuK IT GmbH & Co. KG) under LGPL-3.0.
     """,
-    "version": "18.0.1.2.2",
+    "version": "18.0.1.2.3",
     "category": "Themes/Backend",
     "license": "LGPL-3",
     "author": "ANSIS Pte Ltd, MuK IT",

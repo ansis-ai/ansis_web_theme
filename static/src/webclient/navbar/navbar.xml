@@ -46,11 +46,8 @@
             <attribute name="class" remove="'o_nav_entry'"/>
             <attribute name="class">{ 'o_nav_entry': true, 'active': this.isMenuActive(section), 'd-none': this.isSectionExtra(section) }</attribute>
         </xpath>
-        <xpath expr="//t[@t-foreach='sections']/t[@t-else]/Dropdown" position="attributes">
-            <attribute name="class">{ 'd-none': this.isSectionExtra(section) }</attribute>
-        </xpath>
         <xpath expr="//button[span[@t-att-data-section='section.id']]" position="attributes">
-            <attribute name="t-att-class">{ 'active': this.isMenuActive(section) }</attribute>
+            <attribute name="t-att-class">{ 'active': this.isMenuActive(section), 'd-none': this.isSectionExtra(section) }</attribute>
         </xpath>
     </t>
 
