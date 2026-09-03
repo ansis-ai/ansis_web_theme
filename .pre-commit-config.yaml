@@ -1,12 +1,16 @@
 exclude: |
   (?x)
-  # Exclude binary and minified assets
+  # Exclude vendor / third-party libs
+  ^static/lib/.*$|
   ^static/description/.*|
-  ^static/src/img/.*
+  ^.*\.min\.(css|js)$
+
+default_language_version:
+  python: python3
 
 repos:
   - repo: https://github.com/OCA/maintainer-tools
-    rev: OCA-maintainer-tools-odoo18
+    rev: master
     hooks:
       - id: oca-gen-addon-readme
         args:
@@ -15,15 +19,45 @@ repos:
           - --branch=18.0
           - --addons-dir=.
 
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.4
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
     hooks:
-      - id: ruff
-        args: [--fix, --exit-non-zero-on-fix]
-      - id: ruff-format
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-xml
+      - id: check-json
+      - id: fix-byte-order-marker
+      - id: check-merge-conflict
+      - id: check-case-conflict
+
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+      - id: black
+        args: [--line-length=120]
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: [--profile=black, --line-length=120]
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.1.1
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-bugbear==24.4.26
+        args:
+          - --max-line-length=120
+          - --extend-ignore=E203,E501,W503
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.1.0
+    rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
-        types_or: [javascript, scss, xml, json, yaml, markdown]
+        types_or: [javascript, scss, json]
+        exclude: |
+          (?x)
+          ^static/lib/.*$

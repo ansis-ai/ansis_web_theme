@@ -1,4 +1,11 @@
-* **Wilson Loh** <wilson@ansis.com.sg>
-* **ANSIS Pte Ltd** <https://ansis.com.sg>
-* **Mathias Markl** <mathias.markl@mukit.at>
-* **MuK IT GmbH & Co. KG** <https://www.mukit.at>
+Authors
+~~~~~~~
+
+* ANSIS Pte Ltd <info@ansis.com.sg>
+* MuK IT GmbH & Co. KG <support@mukit.at>
+
+Contributors
+~~~~~~~~~~~~
+
+* ANSIS Pte Ltd <info@ansis.com.sg>
+* Mathias Markl <mathias.markl@mukit.at>

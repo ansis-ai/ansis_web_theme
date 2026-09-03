@@ -40,6 +40,12 @@
     </t>
 
     <!-- Multi-level Nested Submenus in MoreDropdown -->
+    <!--
+        OCA Contribution Guideline:
+        The following position="replace" is strictly necessary to substitute Odoo's default flat
+        static group header (<div class="dropdown-header">) with an interactive recursive <Dropdown>
+        component supporting multi-level flyout cascading submenus.
+    -->
     <t t-inherit="web.NavBar.SectionsMenu.MoreDropdown" t-inherit-mode="extension">
         <xpath expr="//DropdownItem[contains(@class, 'o_more_dropdown_section')]" position="attributes">
             <attribute name="class">{ 'o_more_dropdown_section': true, 'ansis_sf_menu_leaf': true, 'active': this.isMenuActive(section) }</attribute>

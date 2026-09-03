@@ -1,4 +1,4 @@
-- **8.1 Chatter Architecture Integration**: Native split-screen side chatter and bottom chatter toggle with responsive layout.
-- **8.2 Draggable & Resizable Dialogs**: Native modal draggable headers and corner resizing handles with viewport clamping.
-- **8.3 Navigation & AppsBar Clean Architecture**: Standalone navigation, app switcher, and navbar brand hooks without external dependency.
-- **8.4 Theme Color Engine & Asset Utilities**: Native SCSS color asset compiler and web editor asset reset tools.
+Known Issues & Planned Improvements:
+
+* Add Dark Mode palette toggle in user preferences.
+* Introduce progressive web app (PWA) offline asset caching optimization.
