@@ -53,6 +53,7 @@ patch(NavBar.prototype, {
                 this.closeCustomHomeMenu(false);
             }
             this._syncActiveMenu();
+            requestAnimationFrame(() => this.adapt());
         });
 
         onMounted(() => {
@@ -61,6 +62,14 @@ patch(NavBar.prototype, {
             document.addEventListener("click", this._onDocumentClick);
             document.addEventListener("keydown", this._onCustomHomeMenuKeydown);
             this._syncActiveMenu();
+            requestAnimationFrame(() => this.adapt());
+            if (document.fonts) {
+                document.fonts.ready.then(() => {
+                    if (this.root?.el) {
+                        this.adapt();
+                    }
+                });
+            }
         });
 
         onPatched(() => {
@@ -124,6 +133,83 @@ patch(NavBar.prototype, {
                 this.state.currentActiveMenuId = matching.id;
             }
         }
+    },
+
+    async adapt() {
+        if (!this.root?.el) {
+            return;
+        }
+
+        const sectionsMenu = this.appSubMenus?.el;
+        if (!sectionsMenu) {
+            return;
+        }
+
+        const initialAppSectionsExtra = this.currentAppSectionsExtra || [];
+        const firstInitialAppSectionExtra = [...initialAppSectionsExtra].shift();
+        const initialAppId = firstInitialAppSectionExtra && firstInitialAppSectionExtra.appID;
+
+        // Restore all sections to measure their natural unconstrained dimensions
+        const sections = [
+            ...sectionsMenu.querySelectorAll(":scope > *:not(.o_menu_sections_more)"),
+        ];
+        for (const section of sections) {
+            section.classList.remove("d-none");
+        }
+        this.currentAppSectionsExtra = [];
+
+        // Accurate available width calculation:
+        // Use total navbar width minus brand and systray boundaries to prevent any overlap on the right side
+        const navbarEl = this.root.el;
+        const brandEl = navbarEl.querySelector(".o_menu_brand, .o_navbar_apps_menu");
+        const systrayEl = navbarEl.querySelector(".o_menu_systray");
+        const navbarWidth = navbarEl.getBoundingClientRect().width;
+        const brandWidth = brandEl ? brandEl.getBoundingClientRect().width : 0;
+        const systrayWidth = systrayEl ? systrayEl.getBoundingClientRect().width : 0;
+
+        // Reserve 28px safety buffer for paddings and margins
+        const trueAvailableWidth = Math.max(0, navbarWidth - brandWidth - systrayWidth - 28);
+
+        const sectionsTotalWidth = sections.reduce(
+            (sum, s) => sum + s.getBoundingClientRect().width,
+            0
+        );
+
+        if (trueAvailableWidth < sectionsTotalWidth) {
+            // Sections overflow available space -> collapse overflowing items into More menu
+            // 46px reserved for the "+" More dropdown button
+            let consumedWidth = 46;
+            for (const section of sections) {
+                const sectionWidth = section.offsetWidth || section.getBoundingClientRect().width;
+                if (trueAvailableWidth < consumedWidth + sectionWidth + 3) {
+                    const overflowingSections = sections.slice(sections.indexOf(section));
+                    overflowingSections.forEach((s) => {
+                        s.classList.add("d-none");
+                        const sectionId =
+                            s.dataset.section ||
+                            s.querySelector("[data-section]")?.getAttribute("data-section");
+                        const currentAppSection = this.currentAppSections.find(
+                            (appSection) => appSection.id.toString() === sectionId
+                        );
+                        if (currentAppSection) {
+                            this.currentAppSectionsExtra.push(currentAppSection);
+                        }
+                    });
+                    break;
+                }
+                consumedWidth += sectionWidth + 3;
+            }
+        }
+
+        const firstCurrentAppSectionExtra = [...this.currentAppSectionsExtra].shift();
+        const currentAppId = firstCurrentAppSectionExtra && firstCurrentAppSectionExtra.appID;
+        if (
+            initialAppSectionsExtra.length === this.currentAppSectionsExtra.length &&
+            initialAppId === currentAppId
+        ) {
+            return;
+        }
+        return this.render();
     },
 
     toggleCustomHomeMenu() {

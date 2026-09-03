@@ -224,3 +224,44 @@ body
 | `_syncActiveMenu()` | `navbar.js` | Synchronizes active menu ID on `ACTION_MANAGER:UI-UPDATED`, `onMounted`, and direct URL hash changes (`#menu_id=...`). |
 | `onNavBarDropdownItemSelection(menu)` | `navbar.js` | Updates `this.state.currentActiveMenuId = menu.id` upon menu click. |
 
+---
+
+## 5.7 Navbar Overflow & Collision Prevention Architecture (18.0.1.2.1)
+
+### The Sizing Problem on Smaller Displays (Laptops, Tablets, Narrow Windows)
+
+When screen resolution is narrow or an app (such as *Settings, Accounting, Inventory*) possesses many top-level sections:
+1. Standard Flexbox items without `min-width: 0` default to `min-width: auto`, preventing the section container from shrinking below its natural content width.
+2. If `.o_menu_sections` has `overflow: visible`, it unrolls past the right side of the navbar.
+3. Because `.o_menu_systray` is anchored to the right margin (`margin-left: auto; flex-shrink: 0`), top-level section buttons and systray elements overlap directly on top of each other.
+4. Stock Odoo's `adapt()` measures available width via `getBoundingClientRect.call(sectionsMenu).width`. When `.o_menu_sections` has stretched to accommodate its children, `sectionsAvailableWidth` equals `sectionsTotalWidth`, so `adapt()` incorrectly assumes there is no overflow and fails to collapse items into the `+` More menu.
+
+### Two-Tier Architectural Solution
+
+```
+┌──────────────────────────────────────── .o_main_navbar ────────────────────────────────────────┐
+│                                                                                                │
+│  [ Brand ]      [ Section 1 ] [ Section 2 ] [ Section 3 ] [ + ]             [ Systray Items ]  │
+│  flex-shrink:0  ├──────────────── .o_menu_sections ─────────────┤            flex-shrink:0     │
+│                 │ flex: 1 1 0%; min-width: 0; overflow: hidden; │            margin-left: auto │
+│                 └───────────────────────────────────────────────┘                              │
+└────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Flexbox Boundaries in SCSS (`navbar.scss`)**:
+   - `.o_menu_brand`: Enforced with `flex-shrink: 0 !important;`.
+   - `.o_menu_systray`: Enforced with `flex-shrink: 0 !important; margin-left: auto !important;`.
+   - `.o_menu_sections`: Given `flex: 1 1 0% !important; min-width: 0 !important; max-width: 100% !important; overflow: hidden !important;`. This strictly confines the container between the brand and systray boundaries.
+   - `.o_menu_sections_more`: Given `flex-shrink: 0 !important;`.
+
+2. **Accurate True-Space Calculation in `NavBar.adapt()` (`navbar.js`)**:
+   - Rather than relying on the potentially expanded width of `.o_menu_sections`, `adapt()` computes:
+     ```javascript
+     const trueAvailableWidth = Math.max(0, navbarWidth - brandWidth - systrayWidth - 28);
+     ```
+   - It iterates through the sections taking into account item widths, the 3px flex gap, and the 46px width reserved for the `+` button.
+   - Any section exceeding `trueAvailableWidth` is cleanly given class `d-none` and pushed into `this.currentAppSectionsExtra`.
+   - `adapt()` is triggered automatically on `ACTION_MANAGER:UI-UPDATED`, `onMounted`, and after web fonts finish loading (`document.fonts.ready`).
+   - Nested submenus originating from `MoreDropdown` declare `position="'left-start'"` to cascade cleanly into the interior of the screen rather than clipping off the right edge.
+
+

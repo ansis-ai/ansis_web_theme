@@ -46,7 +46,7 @@
         </xpath>
         <xpath expr="//t[@t-foreach='sections']/t[@t-else]" position="replace">
             <t t-else="">
-                <Dropdown menuClass="'ansis_sf_dropdown_menu'">
+                <Dropdown menuClass="'ansis_sf_dropdown_menu'" position="'left-start'">
                     <button
                         class="'dropdown-item ansis_sf_menu_open_dropdown o_more_dropdown_section'"
                         t-att-class="{ 'active': this.isMenuActive(section) }"

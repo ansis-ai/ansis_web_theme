@@ -65,6 +65,7 @@
         .o_menu_brand {
             position: relative !important;
             display: inline-flex !important;
+            flex-shrink: 0 !important;
             align-items: center !important;
             height: 34px !important;
             font-weight: 700 !important;
@@ -123,11 +124,14 @@
         .o_menu_sections {
             display: flex !important;
             align-items: center !important;
+            flex: 1 1 0% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
             gap: 3px !important;
             height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
-            overflow: visible !important;
+            overflow: hidden !important;
             pointer-events: auto !important;
 
             .dropdown {
@@ -197,6 +201,7 @@
             .o_menu_sections_more {
                 display: inline-flex !important;
                 align-items: center !important;
+                flex-shrink: 0 !important;
                 height: 100% !important;
 
                 button {
@@ -285,6 +290,7 @@
     .o_menu_systray {
         display: flex !important;
         align-items: center !important;
+        flex-shrink: 0 !important;
         gap: 4px !important;
         height: 100% !important;
         margin-left: auto !important;
@@ -438,6 +444,7 @@
         box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
         padding: 6px !important;
         min-width: 190px !important;
+        max-width: calc(100vw - 24px) !important;
         max-height: calc(100vh - 80px);
         overflow-y: auto;
         overflow-x: hidden;

@@ -6,13 +6,22 @@
 
 [![License: LGPL-3](https://img.shields.io/badge/License-LGPL--3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![Odoo Version](https://img.shields.io/badge/Odoo-18.0-714B67.svg)](https://github.com/ansis-ai/ansis_web_theme)
-[![Version](https://img.shields.io/badge/Version-18.0.1.2.0-0284c7.svg)](https://github.com/ansis-ai/ansis_web_theme)
+[![Version](https://img.shields.io/badge/Version-18.0.1.2.1-0284c7.svg)](https://github.com/ansis-ai/ansis_web_theme)
 [![Maintained by ANSIS](https://img.shields.io/badge/Maintained%20by-ANSIS%20Pte%20Ltd-0f172a.svg)](https://ansis.com.sg)
 
 ---
 
 </div>
 
+
+## 🆕 What's New in 18.0.1.2.1
+
+1. ✅ **Smart Navbar Overflow & Collision Prevention.** Eliminated navbar section overlap on smaller screens (tablets, laptops, narrow browser windows) by measuring true available space between the app brand and systray boundaries.
+2. ✅ **Strict Flexbox Sizing & Right-Side Clamping.** Added strict `flex: 1 1 0%`, `min-width: 0`, and `overflow: hidden` constraints to `.o_menu_sections` along with `flex-shrink: 0` to systray items and the `+` More button, ensuring menus never push into or overlap systray icons.
+3. ✅ **Boundary-Safe Cascading Submenus.** Configured nested dropdowns inside the More menu with `position="left-start"` to cascade cleanly away from the right screen boundary, with `max-width: calc(100vw - 24px)` popover clamping.
+4. ✅ **Dynamic Adapt Triggers.** Automatically recalculates navbar capacity on action changes, UI updates, and web font loading.
+
+---
 
 ## 🆕 What's New in 18.0.1.2.0
 
@@ -34,7 +43,7 @@ Built with native **OWL 2** lifecycle patching and modular SCSS design tokens, i
 ## ✨ Key Features
 
 ### 🚀 1. Core Navigation & Screen Real Estate
-- **Multi-Level Cascading Submenus (`pw_theme_layout` style)**: Smooth right-flyout nested dropdowns with FontAwesome right chevrons (`\f105`), hover transitions, and hierarchical active state indicators across unlimited depth levels.
+- **Multi-Level Cascading Submenus**: Smooth right-flyout nested dropdowns with FontAwesome right chevrons (`\f105`), hover transitions, and hierarchical active state indicators across unlimited depth levels.
 - **Brand Chevron Navigation (`<`)**: Displays the active app icon in the top navbar; transforms on hover from `Application` → `< Application` to smoothly open the Home Menu overlay without interfering with browser history or Back navigation.
 - **Smart Overflow Submenus (`+` Dropdown)**: When an app has numerous top-level sections, excess menus automatically collapse into a clean `+` dropdown instead of wrapping onto an awkward second line.
 - **100% Full-Width Screen Workspace**: Neutralizes redundant left sidebars (`AppsBar`) to reclaim 100% viewport width for data tables, form sheets, and chatter feeds.

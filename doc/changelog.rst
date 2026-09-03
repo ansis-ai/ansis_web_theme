@@ -1,6 +1,14 @@
 Changelog
 =========
 
+`18.0.1.2.1`
+------------
+* **Navbar Overflow & Overlap Prevention on Smaller Screens**:
+  - Implemented boundary-aware ``adapt()`` calculation in ``NavBar`` measuring actual available space between brand and systray boundaries.
+  - Added strict Flexbox sizing constraints (``flex: 1 1 0%``, ``min-width: 0``, ``overflow: hidden``) to ``.o_menu_sections`` and ``flex-shrink: 0`` to brand, systray, and More button to prevent menu collisions and overlaps on right navbar edge.
+  - Added ``position="'left-start'"`` for nested submenus originating from ``MoreDropdown`` to open safely away from the right screen boundary.
+  - Added automatic adaptation triggers on action updates (``ACTION_MANAGER:UI-UPDATED``) and font ready states.
+
 `18.0.1.2.0`
 ------------
 * **Multi-Level Nested Submenus Cascading (`pw_theme_layout` style)**:
