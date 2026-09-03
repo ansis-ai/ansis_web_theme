@@ -27,7 +27,8 @@ Features
 * **Smart Navigation**:
   - Multi-level nested cascading flyout submenus (``pw_theme_layout`` style) with rightward angle chevrons (``\f105``) and full hierarchical active menu highlighting.
   - Interactive top-left brand chevron (``<``) transforming on hover (``Application`` → ``< Application``) to open the Home Menu overlay.
-  - Automatic ``+`` dropdown for overflowing navbar submenus.
+  - Automatic ``+`` dropdown for overflowing navbar submenus with boundary-aware adapt measurement to prevent right-side systray overlap.
+  - Boundary-safe submenu flyouts with ``left-start`` positioning in More dropdown and viewport clamping.
   - 100% full-width screen layout (neutralizes redundant left sidebars).
   - Systray items pinned to the far right with floating pill notification badges.
 * **Instant App Dashboard**:
