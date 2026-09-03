@@ -9,7 +9,7 @@ This module is fully functional after install with sane defaults. No additional 
 
 (screenshot: static/description/usage_home_menu.png — home menu overlay with search + drag-drop grid)
 
-Click the ANSIS logo or the ``<`` chevron at the top-left of the left navigation to open the *Home Menu* overlay. The overlay shows your enabled apps as a large icon grid with built-in search.
+Click the active app brand or hover to reveal the ``<`` chevron at the top-left of the navigation bar to open the *Home Menu* overlay. The overlay shows your enabled apps as a large icon grid with built-in search.
 
 Keyboard Shortcuts
 ------------------
@@ -17,7 +17,7 @@ Keyboard Shortcuts
 +----------------------------------+--------------------------------------------------------------------------------+
 | Shortcut                         | Action                                                                         |
 +==================================+================================================================================+
-| Hover brand icon / ``<`` chevron | Return to Home Menu overlay                                                    |
+| Hover brand icon / ``<`` chevron | Open Home Menu overlay                                                         |
 +----------------------------------+--------------------------------------------------------------------------------+
 | Type any alphanumeric key        | Immediate real-time app-search filter. Matching cards shrink; non-matching     |
 |                                  | fade out.                                                                      |

@@ -15,7 +15,7 @@ This roadmap documents the implementation progress, UX architecture, and planned
   - Modern `32px` input fields with sapphire focus glow rings (`0 0 0 3px rgba(2, 132, 199, 0.14)`).
   - Search view container with pill facet filter chips (`#f0f9ff` bg, `#bae6fd` border) and unified view switchers.
   - Soft warm amber styling (`#fffdf5`) for internal chatter log notes.
-- [x] **0.3 Uniform Main Menu App Card Grid**
+- [x] **0.3 Uniform Home Menu App Card Grid**
   - Standardized tile box dimensions (`104px × 124px`) with fixed `32px` 2-line centered label areas.
 - [x] **0.4 100% Full-Width Screen Workspace**
   - Neutralized redundant left sidebar (`AppsBar`) to reclaim 100% viewport width for data tables, forms, and chatter panels.

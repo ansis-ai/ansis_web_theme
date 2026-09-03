@@ -25,7 +25,7 @@ Features
 
 * **Modern Light SaaS Palette & Tokens**: Sapphire blue primary accents (``#0284c7``), clean slate typography, and elevated card shadows.
 * **Smart Navigation**:
-  - Interactive top-left brand chevron (``<``) returning to the Home Menu overlay.
+  - Interactive top-left brand chevron (``<``) transforming on hover (``Application`` → ``< Application``) to open the Home Menu overlay.
   - Automatic ``+`` dropdown for overflowing navbar submenus.
   - 100% full-width screen layout (neutralizes redundant left sidebars).
   - Systray items pinned to the far right with floating pill notification badges.
@@ -69,7 +69,7 @@ To customize company typography, colors, and branding:
 Usage
 =====
 
-1. **Open Home Menu**: Click the brand icon or hover over the top-left app title to click the ``<`` back chevron.
+1. **Open Home Menu**: Click the active app brand in the top-left navbar.
 2. **Search Apps**: Start typing anywhere in the Home Menu overlay to filter apps instantly.
 3. **Reorder Apps**: Click and drag any app tile to a new position on the dashboard.
 4. **Mobile Navigation**: On screens < 768px, tap the burger menu icon to open the slide-out drawer.

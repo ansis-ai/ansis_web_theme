@@ -35,7 +35,7 @@ Built with native **OWL 2** lifecycle patching and modular SCSS design tokens, i
 ## ✨ Key Features
 
 ### 🚀 1. Core Navigation & Screen Real Estate
-- **Brand Chevron Navigation (`<`)**: Displays the active app icon in the top navbar; transforms into an interactive `<` back chevron on hover to smoothly return to the Home Menu overlay.
+- **Brand Chevron Navigation (`<`)**: Displays the active app icon in the top navbar; transforms on hover from `Application` → `< Application` to smoothly open the Home Menu overlay without interfering with browser history or Back navigation.
 - **Smart Overflow Submenus (`+` Dropdown)**: When an app has numerous top-level sections, excess menus automatically collapse into a clean `+` dropdown instead of wrapping onto an awkward second line.
 - **100% Full-Width Screen Workspace**: Neutralizes redundant left sidebars (`AppsBar`) to reclaim 100% viewport width for data tables, form sheets, and chatter feeds.
 - **Pinned Systray**: Anchored to the far right with floating pill notification badges and modern icon buttons (`36×36px`).

@@ -10,7 +10,7 @@ import { patch } from "@web/core/utils/patch";
 import { onMounted, onPatched, onWillUnmount } from "@odoo/owl";
 import { user } from "@web/core/user";
 import { session } from "@web/session";
-import { useService } from "@web/core/utils/hooks";
+import { useBus, useService } from "@web/core/utils/hooks";
 
 patch(NavBar.prototype, {
     setup() {
@@ -24,32 +24,38 @@ patch(NavBar.prototype, {
 
         this.focusedAppIndex = 0;
         this._onCustomHomeMenuKeydown = this.onCustomHomeMenuKeydown.bind(this);
-        this._onPopState = this.onPopState.bind(this);
-        this._onRouteChange = this.onRouteChange.bind(this);
 
         this._onDocumentClick = (ev) => {
             const toggle = ev.target.closest(
                 ".o_menu_brand, .o_navbar_apps_menu button, .mk_app_menu button, button[data-hotkey='h'], .o_menu_toggle"
             );
-            if (toggle && !this.state.isCustomHomeMenuOpen) {
+            if (toggle) {
                 // If it's a submenu dropdown or entry inside .o_menu_sections, ignore unless it is the brand tile
                 if (toggle.closest(".o_menu_sections") && !toggle.classList.contains("o_menu_brand")) {
                     return;
                 }
                 ev.preventDefault();
                 ev.stopPropagation();
-                this.openCustomHomeMenu();
+                if (this.state.isCustomHomeMenuOpen) {
+                    this.closeCustomHomeMenu(false);
+                } else {
+                    this.openCustomHomeMenu();
+                }
             }
         };
+
+        // Automatically close custom home menu overlay whenever an action updates (including via browser Back/Forward)
+        useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => {
+            if (this.state.isCustomHomeMenuOpen) {
+                this.closeCustomHomeMenu(false);
+            }
+        });
 
         onMounted(() => {
             this.renderCustomOverlay();
             this.bindBrandClick();
             document.addEventListener("click", this._onDocumentClick);
             document.addEventListener("keydown", this._onCustomHomeMenuKeydown);
-            window.addEventListener("popstate", this._onPopState);
-            this.env.bus?.addEventListener("ROUTE_CHANGE", this._onRouteChange);
-            this.restoreCustomHomeMenuOnRefresh();
         });
 
         onPatched(() => {
@@ -59,8 +65,6 @@ patch(NavBar.prototype, {
         onWillUnmount(() => {
             document.removeEventListener("click", this._onDocumentClick);
             document.removeEventListener("keydown", this._onCustomHomeMenuKeydown);
-            window.removeEventListener("popstate", this._onPopState);
-            this.env.bus?.removeEventListener("ROUTE_CHANGE", this._onRouteChange);
         });
     },
 
@@ -78,44 +82,6 @@ patch(NavBar.prototype, {
         } else {
             this.openCustomHomeMenu();
         }
-    },
-
-    isHomeMenuHash() {
-        const hash = window.location.hash;
-        return !hash || hash === "" || hash === "#" || hash === "#home";
-    },
-
-    restoreCustomHomeMenuOnRefresh() {
-        if (this.isHomeMenuHash()) {
-            setTimeout(() => {
-                this.state.isCustomHomeMenuOpen = true;
-                document.body.classList.add("o_custom_home_menu_shown");
-                this.renderCustomOverlay();
-            }, 50);
-        }
-    },
-
-    syncCustomHomeMenuWithUrl() {
-        if (this.isHomeMenuHash()) {
-            if (!this.state.isCustomHomeMenuOpen) {
-                this.state.isCustomHomeMenuOpen = true;
-                document.body.classList.add("o_custom_home_menu_shown");
-                this.renderCustomOverlay();
-            }
-        } else if (this.state.isCustomHomeMenuOpen) {
-            this.state.isCustomHomeMenuOpen = false;
-            document.body.classList.remove("o_custom_home_menu_shown");
-            this.renderCustomOverlay();
-        }
-    },
-
-    onPopState() {
-        this.syncCustomHomeMenuWithUrl();
-    },
-
-    onRouteChange() {
-        this.syncCustomHomeMenuWithUrl();
-        this.bindBrandClick();
     },
 
     openCustomHomeMenu() {
@@ -273,8 +239,8 @@ patch(NavBar.prototype, {
                 }
             }
 
-            brand.setAttribute('title', 'Main Menu');
-            brand.setAttribute('aria-label', 'Main Menu');
+            brand.setAttribute('title', 'Home menu');
+            brand.setAttribute('aria-label', 'Home menu');
             brand.style.cursor = 'pointer';
         }
     },
@@ -440,6 +406,7 @@ patch(NavBar.prototype, {
     },
 
     attachOverlayEventListeners(container) {
+
         const searchInput = container.querySelector("#ansis_home_menu_search_input");
         const clearBtn = container.querySelector("#ansis_home_menu_search_clear");
         const grid = container.querySelector(".ansis_home_menu_grid");

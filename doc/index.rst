@@ -6,7 +6,7 @@ ANSIS Web Theme is an ergonomic Modern Light SaaS Backend Theme for Odoo 18.0 Co
 
 Key Capabilities
 ================
-* Interactive brand chevron navigation (<)
+* Dedicated Apps Menu button (9-dot grid) and brand navigation to open Home Menu
 * Fullscreen Home Menu app card grid with drag-and-drop reordering
 * Instant client-side app filtering with keyboard navigation
 * Sticky list view table headers and frozen selection column

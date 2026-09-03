@@ -50,17 +50,18 @@
        DESKTOP VIEW (> 768px) - LEFT HAND SIDE
        ---------------------------------------------------------------------- */
     @media (min-width: 769px) {
-        // Hide duplicate/third-party apps menu buttons on desktop in favor of brand chevron
+        // Hide 9-dot apps menu box button on desktop
         .o_navbar_apps_menu,
         .custom_home_menu_button,
         .mk_app_menu,
         > .dropdown:first-child:has(> button[data-hotkey="h"]),
         > .dropdown:first-child:has(> button[title="Home Menu"]),
+        > .dropdown:first-child:has(> button[title="Home menu"]),
         > .dropdown:first-child:has(> button .oi-apps) {
             display: none !important;
         }
 
-        // Active App Brand (Clickable Tile with Icon & '<' Back Chevron on Hover)
+        // Active App Brand (Clickable Tile with Icon)
         .o_menu_brand {
             position: relative !important;
             display: inline-flex !important;
@@ -95,10 +96,10 @@
                 border-radius: 4px;
                 opacity: 1;
                 pointer-events: none !important;
-                transition: opacity 0.10s ease;
+                transition: opacity 0.10s ease, transform 0.15s ease;
             }
 
-            // Hover state: Transforms icon into back chevron '<'
+            // Hover state: transforms icon into '<' chevron: Application --> < Application
             &:hover {
                 color: var(--ansis-primary, #0284c7) !important;
                 background-color: #f1f5f9 !important;
