@@ -21,6 +21,9 @@ patch(NavBar.prototype, {
         if (this.state.isCustomHomeMenuOpen === undefined) {
             this.state.isCustomHomeMenuOpen = false;
         }
+        if (this.state.currentActiveMenuId === undefined) {
+            this.state.currentActiveMenuId = null;
+        }
 
         this.focusedAppIndex = 0;
         this._onCustomHomeMenuKeydown = this.onCustomHomeMenuKeydown.bind(this);
@@ -49,6 +52,7 @@ patch(NavBar.prototype, {
             if (this.state.isCustomHomeMenuOpen) {
                 this.closeCustomHomeMenu(false);
             }
+            this._syncActiveMenu();
         });
 
         onMounted(() => {
@@ -56,6 +60,7 @@ patch(NavBar.prototype, {
             this.bindBrandClick();
             document.addEventListener("click", this._onDocumentClick);
             document.addEventListener("keydown", this._onCustomHomeMenuKeydown);
+            this._syncActiveMenu();
         });
 
         onPatched(() => {
@@ -74,6 +79,51 @@ patch(NavBar.prototype, {
             return;
         }
         super.onNavBarDropdownItemSelection(menu);
+        if (menu && menu.id) {
+            this.state.currentActiveMenuId = menu.id;
+        }
+    },
+
+    isMenuActive(menu) {
+        if (!menu || !this.state.currentActiveMenuId || !this.menuService) {
+            return false;
+        }
+        const activeId = String(menu.id);
+        if (String(this.state.currentActiveMenuId) === activeId) {
+            return true;
+        }
+        let cur = this.menuService.getMenu(this.state.currentActiveMenuId);
+        while (cur) {
+            if (String(cur.id) === activeId) {
+                return true;
+            }
+            if (cur.parent_id && cur.parent_id[0] && cur.parent_id[0] !== "root") {
+                cur = this.menuService.getMenu(cur.parent_id[0]);
+            } else {
+                break;
+            }
+        }
+        return false;
+    },
+
+    _syncActiveMenu() {
+        const params = new URLSearchParams(window.location.hash.slice(1));
+        const hashMenuId = params.get("menu_id");
+        if (hashMenuId) {
+            const parsed = parseInt(hashMenuId, 10);
+            this.state.currentActiveMenuId = isNaN(parsed) ? hashMenuId : parsed;
+            return;
+        }
+        const actionId = this.actionService?.currentController?.action?.id;
+        if (actionId && this.menuService) {
+            const all = this.menuService.getAll();
+            const matching = all.find(
+                (m) => m.actionID === actionId || (typeof m.action === "string" && m.action.endsWith("," + actionId))
+            );
+            if (matching) {
+                this.state.currentActiveMenuId = matching.id;
+            }
+        }
     },
 
     toggleCustomHomeMenu() {

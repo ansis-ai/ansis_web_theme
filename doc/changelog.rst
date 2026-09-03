@@ -1,6 +1,21 @@
 Changelog
 =========
 
+`18.0.1.2.0`
+------------
+* **Multi-Level Nested Submenus Cascading (`pw_theme_layout` style)**:
+  - Extended ``web.NavBar.SectionsMenu.Dropdown.MenuSlot`` and ``web.NavBar.SectionsMenu.MoreDropdown`` to recursively render nested ``Dropdown`` components for submenus with child trees.
+  - Enabled desktop flyout cascading to the right with FontAwesome rightward chevrons (``\f105``) and smooth hover transitions.
+  - Added pure Owl reactive active menu tracking (``isMenuActive(menu)``) that simultaneously highlights active leaf items, intermediate dropdown triggers, and the top-level navbar section button.
+  - Added active menu state synchronization (``_syncActiveMenu()``) on ``ACTION_MANAGER:UI-UPDATED`` and URL ``#menu_id=...`` changes.
+  - Moved dropdown menu styles to ``.o-overlay-container, .o_web_client`` to support Odoo 18's popover overlay portal architecture.
+
+`18.0.1.1.0`
+------------
+* Fix uninstall crash by adding ``_reset_theme_color_assets`` to ``res.config.settings``.
+* Fix palette round-trip bug by writing canonical ``$mk_`` prefix on color variable replacements.
+* Ensure multi-company branding defaults on install for all companies including archived records.
+
 `18.0.1.0.0`
 ------------
 * Initial release of ANSIS Web Theme for Odoo 18.0 Community Edition.

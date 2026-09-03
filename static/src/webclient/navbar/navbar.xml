@@ -1,3 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
+
+    <!-- Multi-level Nested Submenus Cascading (pw_theme_layout style) -->
+    <t t-inherit="web.NavBar.SectionsMenu.Dropdown.MenuSlot" t-inherit-mode="extension">
+        <xpath expr="//DropdownItem[contains(@class, 'dropdown-item')]" position="attributes">
+            <attribute name="class">{ 'dropdown-item': true, 'ansis_sf_menu_leaf': true, 'active': this.isMenuActive(item), o_dropdown_menu_group_entry: decalage gt 20 }</attribute>
+        </xpath>
+        <xpath expr="//t[@t-foreach='items']/t[@t-else]" position="replace">
+            <t t-else="">
+                <Dropdown menuClass="'ansis_sf_dropdown_menu'">
+                    <button
+                        class="'dropdown-item ansis_sf_menu_open_dropdown'"
+                        t-att-class="{ 'active': this.isMenuActive(item) }"
+                        t-att-data-menu-xmlid="item.xmlid"
+                        t-att-data-section="item.id"
+                    >
+                        <span t-esc="item.name"/>
+                    </button>
+                    <t t-set-slot="content">
+                        <t t-call="web.NavBar.SectionsMenu.Dropdown.MenuSlot">
+                            <t t-set="items" t-value="item.childrenTree"/>
+                            <t t-set="decalage" t-value="20"/>
+                        </t>
+                    </t>
+                </Dropdown>
+            </t>
+        </xpath>
+    </t>
+
+    <!-- Top-Level Sections Active State Highlight -->
+    <t t-inherit="web.NavBar.SectionsMenu" t-inherit-mode="extension">
+        <xpath expr="//button[span[@t-att-data-section='section.id']]" position="attributes">
+            <attribute name="t-att-class">{ 'active': this.isMenuActive(section) }</attribute>
+        </xpath>
+        <xpath expr="//DropdownItem[contains(@class, 'o_nav_entry')]" position="attributes">
+            <attribute name="class" remove="'o_nav_entry'"/>
+            <attribute name="class">{ 'o_nav_entry': true, 'active': this.isMenuActive(section) }</attribute>
+        </xpath>
+    </t>
+
+    <!-- Multi-level Nested Submenus in MoreDropdown -->
+    <t t-inherit="web.NavBar.SectionsMenu.MoreDropdown" t-inherit-mode="extension">
+        <xpath expr="//DropdownItem[contains(@class, 'o_more_dropdown_section')]" position="attributes">
+            <attribute name="class">{ 'o_more_dropdown_section': true, 'ansis_sf_menu_leaf': true, 'active': this.isMenuActive(section) }</attribute>
+        </xpath>
+        <xpath expr="//t[@t-foreach='sections']/t[@t-else]" position="replace">
+            <t t-else="">
+                <Dropdown menuClass="'ansis_sf_dropdown_menu'">
+                    <button
+                        class="'dropdown-item ansis_sf_menu_open_dropdown o_more_dropdown_section'"
+                        t-att-class="{ 'active': this.isMenuActive(section) }"
+                        t-att-data-menu-xmlid="section.xmlid"
+                        t-att-data-section="section.id"
+                    >
+                        <span t-esc="section.name"/>
+                    </button>
+                    <t t-set-slot="content">
+                        <t t-call="web.NavBar.SectionsMenu.Dropdown.MenuSlot">
+                            <t t-set="items" t-value="section.childrenTree"/>
+                            <t t-set="decalage" t-value="20"/>
+                        </t>
+                    </t>
+                </Dropdown>
+            </t>
+        </xpath>
+    </t>
+
 </templates>

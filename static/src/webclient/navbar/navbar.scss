@@ -421,22 +421,40 @@
             }
         }
     }
+}
 
-    /* ----------------------------------------------------------------------
-       SUBMENU DROPDOWN MENUS (Dropdown Floating Panel)
-       ---------------------------------------------------------------------- */
-    .dropdown-menu {
+/* --------------------------------------------------------------------------
+   MULTI-LEVEL NESTED SUBMENU DROPDOWNS (pw_theme_layout style)
+   Supports cascading flyout submenus rendered via Odoo 18 Popover/Overlay
+   -------------------------------------------------------------------------- */
+.o-overlay-container,
+.o_web_client {
+    // Dropdown menu floating panels
+    .dropdown-menu,
+    .o-dropdown--menu {
         background-color: #ffffff !important;
         border: 1px solid #e2e8f0 !important;
         border-radius: 8px !important;
-        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
         padding: 6px !important;
-        min-width: 180px !important;
-        margin-top: 4px !important;
+        min-width: 190px !important;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        overflow-x: hidden;
         z-index: 1050 !important;
-        pointer-events: auto !important;
 
-        .dropdown-item {
+        // Submenu flyout panel specific styling
+        &.ansis_sf_dropdown_menu,
+        &.o-dropdown--menu-submenu {
+            min-width: 200px !important;
+            margin-left: 1px !important;
+        }
+
+        .dropdown-item,
+        .o-dropdown-item {
+            display: flex !important;
+            align-items: center !important;
+            width: 100% !important;
             border-radius: 6px !important;
             padding: 6px 12px !important;
             font-size: 0.85rem !important;
@@ -444,18 +462,56 @@
             color: #334155 !important;
             cursor: pointer !important;
             pointer-events: auto !important;
-            transition: all 0.12s ease !important;
+            text-decoration: none !important;
+            background: transparent;
+            border: none;
+            transition: color 0.12s ease, background-color 0.12s ease !important;
 
             &:hover,
-            &:focus {
+            &:focus,
+            &.focus {
                 background-color: var(--ansis-primary-light, #f0f9ff) !important;
                 color: var(--ansis-primary, #0284c7) !important;
-                transform: none !important;
+                outline: none !important;
             }
 
+            // Active state (matching pw_theme_layout)
             &.active {
-                background-color: var(--ansis-primary, #0284c7) !important;
-                color: #ffffff !important;
+                color: var(--ansis-primary, #0284c7) !important;
+                background-color: var(--ansis-primary-light, #f0f9ff) !important;
+                font-weight: 600 !important;
+            }
+
+            // Submenu trigger item (has children) -> rightward chevron
+            &.ansis_sf_menu_open_dropdown,
+            &.o-dropdown--has-parent {
+                justify-content: space-between !important;
+                padding-right: 10px !important;
+
+                &::after {
+                    content: "\f105" !important; // FontAwesome fa-angle-right
+                    font-family: FontAwesome !important;
+                    font-size: 13px !important;
+                    font-weight: 900 !important;
+                    line-height: 1 !important;
+                    margin-left: auto !important;
+                    padding-left: 8px !important;
+                    border: none !important;
+                    transform: none !important;
+                    opacity: 0.6 !important;
+                    transition: opacity 0.15s ease, transform 0.15s ease !important;
+                }
+
+                &:hover::after,
+                &.show::after,
+                &.focus::after {
+                    opacity: 1 !important;
+                    transform: translateX(2px) !important;
+                }
+
+                &.dropdown-toggle::after {
+                    display: inline-block !important;
+                }
             }
         }
 

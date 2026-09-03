@@ -4,7 +4,7 @@
 >
 > **Goal:** Pure technical reference material for `ansis_web_theme`. End users should never need this file; see `readme/USAGE.rst` and `readme/CONFIGURE.rst` instead.
 >
-> **Target version:** 18.0.1.1.0 (August 2026 doc-batch). Lines-of-code references from the `2026-08-24` checkout.
+> **Target version:** 18.0.1.2.0 (September 2026). Lines-of-code references from the `2026-09-03` checkout.
 
 ---
 
@@ -188,3 +188,39 @@ Copy-paste commands for the `LOCAL_ODOO18` container against the `SEQ8` database
   4. Expected values after each save: `rgb(2, 132, 199)` → `rgb(124, 58, 237)` → `rgb(5, 150, 105)` → `rgb(234, 88, 12)`.
 
 All six recipes are preserved verbatim as a durable Hindsight doc tagged `kind:runbook` in the `coding-agent` bank at `https://hindsight.ansis.com.sg` for future recall by the coding agent.
+
+---
+
+## 5.6 JavaScript & OWL Navigation Architecture (18.0.1.2.0)
+
+### Odoo 18 Dropdown Portal & Teleportation Model
+
+In Odoo 18, all dropdowns and popover panels are rendered via `usePopover(DropdownPopover, ...)` inside `.o-overlay-container` directly appended to `document.body` (outside `.o_main_navbar`).
+
+```
+body
+├── .o_web_client
+│   └── .o_main_navbar
+│       └── .o_menu_sections (Trigger buttons only)
+└── .o-overlay-container (PORTAL ROOT)
+    ├── .o-overlay-item -> DropdownPopover (Level 1)
+    └── .o-overlay-item -> DropdownPopover (Level 2+ Submenu)
+```
+
+**Architectural Rules:**
+1. **Never manipulate dropdown DOM directly**: Calling `innerHTML = ""` or querying `.o_main_navbar .o_menu_sections .dropdown-menu` destroys Owl's virtual DOM nodes, breaks `useDropdownNesting` internal states, and detaches action dispatch listeners.
+2. **QWeb Recursive Nesting**: Submenu cascading is achieved purely through QWeb template inheritance on `web.NavBar.SectionsMenu.Dropdown.MenuSlot` and `web.NavBar.SectionsMenu.MoreDropdown`. When an item has `childrenTree.length > 0`, it renders a child `<Dropdown menuClass="'ansis_sf_dropdown_menu'">` containing a recursive `<t t-call="web.NavBar.SectionsMenu.Dropdown.MenuSlot">`.
+3. **Automatic Right-Start Positioning**: Odoo 18's `<Dropdown>` natively integrates `useDropdownNesting()`. When an open dropdown component detects a parent dropdown context (`this.hasParent === true`), it automatically:
+   - Sets popover position to `right-start` (cascading flyout to the right).
+   - Adds `.o-dropdown--has-parent` class to the trigger button.
+   - Binds `mouseenter` to open the flyout and `dropdownControl.closeChildren()` on sibling leaf hover.
+   - Handles `ArrowRight` (open), `ArrowLeft` (close), and `Escape`.
+
+### Reactive Active Menu State (`NavBar.js`)
+
+| Method / Hook | File | Purpose |
+|---|---|---|
+| `isMenuActive(menu)` | `navbar.js` | Evaluates reactively in QWeb templates. Traces `this.state.currentActiveMenuId` up ancestor links via `menuService.getMenu(parentId)`. Returns `true` for the active leaf item, intermediate flyout triggers, AND the top-level navbar section button. |
+| `_syncActiveMenu()` | `navbar.js` | Synchronizes active menu ID on `ACTION_MANAGER:UI-UPDATED`, `onMounted`, and direct URL hash changes (`#menu_id=...`). |
+| `onNavBarDropdownItemSelection(menu)` | `navbar.js` | Updates `this.state.currentActiveMenuId = menu.id` upon menu click. |
+

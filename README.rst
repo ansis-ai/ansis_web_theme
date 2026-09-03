@@ -5,9 +5,9 @@ ANSIS Web Theme
 .. image:: https://img.shields.io/badge/license-LGPL--3-blue.svg
    :target: https://www.gnu.org/licenses/lgpl-3.0-standalone.html
    :alt: License: LGPL-3
-.. image:: https://img.shields.io/badge/version-18.0.1.0.0-informational.svg
+.. image:: https://img.shields.io/badge/version-18.0.1.2.0-informational.svg
    :target: https://github.com/ansis-ai/ansis_web_theme
-   :alt: Version: 18.0.1.0.0
+   :alt: Version: 18.0.1.2.0
 .. image:: https://img.shields.io/badge/Odoo-18.0-blue.svg
    :target: https://github.com/ansis-ai/ansis_web_theme
    :alt: Odoo: 18.0
@@ -25,6 +25,7 @@ Features
 
 * **Modern Light SaaS Palette & Tokens**: Sapphire blue primary accents (``#0284c7``), clean slate typography, and elevated card shadows.
 * **Smart Navigation**:
+  - Multi-level nested cascading flyout submenus (``pw_theme_layout`` style) with rightward angle chevrons (``\f105``) and full hierarchical active menu highlighting.
   - Interactive top-left brand chevron (``<``) transforming on hover (``Application`` → ``< Application``) to open the Home Menu overlay.
   - Automatic ``+`` dropdown for overflowing navbar submenus.
   - 100% full-width screen layout (neutralizes redundant left sidebars).

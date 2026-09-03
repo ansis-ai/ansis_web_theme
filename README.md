@@ -6,7 +6,7 @@
 
 [![License: LGPL-3](https://img.shields.io/badge/License-LGPL--3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![Odoo Version](https://img.shields.io/badge/Odoo-18.0-714B67.svg)](https://github.com/ansis-ai/ansis_web_theme)
-[![Version](https://img.shields.io/badge/Version-18.0.1.1.0-0284c7.svg)](https://github.com/ansis-ai/ansis_web_theme)
+[![Version](https://img.shields.io/badge/Version-18.0.1.2.0-0284c7.svg)](https://github.com/ansis-ai/ansis_web_theme)
 [![Maintained by ANSIS](https://img.shields.io/badge/Maintained%20by-ANSIS%20Pte%20Ltd-0f172a.svg)](https://ansis.com.sg)
 
 ---
@@ -14,13 +14,12 @@
 </div>
 
 
-## 🆕 What's New in 18.0.1.1.0
+## 🆕 What's New in 18.0.1.2.0
 
-1. ✅ **Uninstall crash fixed.** `_reset_theme_color_assets` now correctly available on `res.config.settings` so module removal no longer raises `AttributeError`.
-2. ✅ **Palette round-trip fixed.** Brand colors persist across save #2, #3, and #4. Previously, 2nd+ save silently discarded the user's new color choice (regex-wrote an unprefixed SCSS variable that the read-side couldn't match anymore).
-3. ✅ **Multi-company defaults on install.** ANSIS wallpaper + favicon now auto-applied to EVERY company on first install (not just `base.main_company`), including archived companies — using empty-field-only semantics so pre-existing user customizations are preserved on upgrade/re-install.
-
-Also shipped: sudo() compliance comments, hex-color `@api.constrains` validation, `sidebar_type` exposed in User Preferences form, LIKE→= exact lookup fix for asset overrides, PALETTES dedup across two model files, and a fixed `ir.asset` lookup in `_save_color_asset`.
+1. ✅ **Multi-Level Nested Submenus Cascading (`pw_theme_layout` style).** Deeply nested menus (e.g. *Settings → Technical → Database Structure → Models*) now cascade smoothly to the right into flyout dropdown panels instead of flattening into indented text headers.
+2. ✅ **Pure Owl Popover Integration.** Implemented natively via Odoo 18 `<Dropdown>` QWeb inheritance (`web.NavBar.SectionsMenu.Dropdown.MenuSlot` and `MoreDropdown`), fully compatible with Odoo 18's `.o-overlay-container` portal rendering.
+3. ✅ **Reactive Hierarchical Active Highlighting.** Active menu state is automatically traced up the tree (`isMenuActive`), highlighting the active leaf item, intermediate submenu triggers, and the top navbar section button simultaneously.
+4. ✅ **Action & URL Synchronization.** Menu active indicators reactively synchronize with browser Back/Forward navigation, direct URL hash changes (`#menu_id=...`), and `ACTION_MANAGER:UI-UPDATED` events.
 
 ---
 
@@ -35,6 +34,7 @@ Built with native **OWL 2** lifecycle patching and modular SCSS design tokens, i
 ## ✨ Key Features
 
 ### 🚀 1. Core Navigation & Screen Real Estate
+- **Multi-Level Cascading Submenus (`pw_theme_layout` style)**: Smooth right-flyout nested dropdowns with FontAwesome right chevrons (`\f105`), hover transitions, and hierarchical active state indicators across unlimited depth levels.
 - **Brand Chevron Navigation (`<`)**: Displays the active app icon in the top navbar; transforms on hover from `Application` → `< Application` to smoothly open the Home Menu overlay without interfering with browser history or Back navigation.
 - **Smart Overflow Submenus (`+` Dropdown)**: When an app has numerous top-level sections, excess menus automatically collapse into a clean `+` dropdown instead of wrapping onto an awkward second line.
 - **100% Full-Width Screen Workspace**: Neutralizes redundant left sidebars (`AppsBar`) to reclaim 100% viewport width for data tables, form sheets, and chatter feeds.
