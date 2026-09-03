@@ -119,20 +119,21 @@
                 }
             }
         }
+    }
 
-        // App Submenu Sections Container
-        .o_menu_sections {
-            display: flex !important;
-            align-items: center !important;
-            flex: 1 1 0% !important;
-            min-width: 0 !important;
-            max-width: 100% !important;
-            gap: 3px !important;
-            height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: hidden !important;
-            pointer-events: auto !important;
+    // App Submenu Sections Container (Applies to all screens, collapses to '+' on narrow widths)
+    .o_menu_sections {
+        display: flex !important;
+        align-items: center !important;
+        flex: 1 1 0% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        gap: 3px !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        pointer-events: auto !important;
 
             .dropdown {
                 position: relative !important;
@@ -224,12 +225,24 @@
                 }
             }
         }
-    }
 
     /* ----------------------------------------------------------------------
        MOBILE VIEW (< 768px) - LEFT HAND SIDE
        ---------------------------------------------------------------------- */
     @media (max-width: 768px) {
+        .o_menu_sections {
+            margin-left: 4px !important;
+
+            .o_menu_sections_more button {
+                width: 34px !important;
+                height: 34px !important;
+                border-radius: 6px !important;
+                border: 1px solid #e2e8f0 !important;
+                background-color: #f8fafc !important;
+                color: #334155 !important;
+            }
+        }
+
         .o_menu_brand {
             font-size: 0.9rem !important;
             font-weight: 700 !important;

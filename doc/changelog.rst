@@ -1,6 +1,13 @@
 Changelog
 =========
 
+`18.0.1.2.2`
+------------
+* **Reactive '+' More Button & Small Screen Visibility**:
+  - Bound reactive ``d-none`` visibility (``isSectionExtra(section)``) in ``web.NavBar.SectionsMenu`` Owl template so overflowing sections take 0px and never push the ``(+)`` More button off-screen.
+  - Enabled ``SectionsMenu`` across all screen sizes (including < 768px) so that when screen width is small, menu items collapse cleanly into the ``(+)`` sign instead of disappearing.
+  - Moved ``.o_menu_sections`` and ``.o_menu_sections_more`` styling outside the desktop-only media query, adding mobile button styles.
+
 `18.0.1.2.1`
 ------------
 * **Navbar Overflow & Overlap Prevention on Smaller Screens**:

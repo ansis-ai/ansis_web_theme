@@ -28,14 +28,29 @@
         </xpath>
     </t>
 
-    <!-- Top-Level Sections Active State Highlight -->
+    <!-- Enable SectionsMenu on All Screen Sizes (Collapse into '+' on narrow widths) -->
+    <t t-inherit="web.NavBar" t-inherit-mode="extension">
+        <xpath expr="//header//nav/t[@t-if='!this.ui.isSmall']" position="replace">
+            <t t-if="currentAppSections.length" t-call="web.NavBar.SectionsMenu">
+                <t t-set="sections" t-value="currentAppSections" />
+            </t>
+        </xpath>
+    </t>
+
+    <!-- Top-Level Sections Active State & Reactive Overflow Visibility -->
     <t t-inherit="web.NavBar.SectionsMenu" t-inherit-mode="extension">
-        <xpath expr="//button[span[@t-att-data-section='section.id']]" position="attributes">
-            <attribute name="t-att-class">{ 'active': this.isMenuActive(section) }</attribute>
+        <xpath expr="//div[@t-ref='appSubMenus']/t[@t-if='!this.ui.isSmall']" position="attributes">
+            <attribute name="t-if">true</attribute>
         </xpath>
         <xpath expr="//DropdownItem[contains(@class, 'o_nav_entry')]" position="attributes">
             <attribute name="class" remove="'o_nav_entry'"/>
-            <attribute name="class">{ 'o_nav_entry': true, 'active': this.isMenuActive(section) }</attribute>
+            <attribute name="class">{ 'o_nav_entry': true, 'active': this.isMenuActive(section), 'd-none': this.isSectionExtra(section) }</attribute>
+        </xpath>
+        <xpath expr="//t[@t-foreach='sections']/t[@t-else]/Dropdown" position="attributes">
+            <attribute name="class">{ 'd-none': this.isSectionExtra(section) }</attribute>
+        </xpath>
+        <xpath expr="//button[span[@t-att-data-section='section.id']]" position="attributes">
+            <attribute name="t-att-class">{ 'active': this.isMenuActive(section) }</attribute>
         </xpath>
     </t>
 

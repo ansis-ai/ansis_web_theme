@@ -115,6 +115,14 @@ patch(NavBar.prototype, {
         return false;
     },
 
+    isSectionExtra(section) {
+        if (!this.currentAppSectionsExtra || !this.currentAppSectionsExtra.length || !section) {
+            return false;
+        }
+        const sid = String(section.id);
+        return this.currentAppSectionsExtra.some((extra) => extra && String(extra.id) === sid);
+    },
+
     _syncActiveMenu() {
         const params = new URLSearchParams(window.location.hash.slice(1));
         const hashMenuId = params.get("menu_id");
@@ -146,10 +154,9 @@ patch(NavBar.prototype, {
         }
 
         const initialAppSectionsExtra = this.currentAppSectionsExtra || [];
-        const firstInitialAppSectionExtra = [...initialAppSectionsExtra].shift();
-        const initialAppId = firstInitialAppSectionExtra && firstInitialAppSectionExtra.appID;
+        const initialIds = initialAppSectionsExtra.map((s) => s.id).join(",");
 
-        // Restore all sections to measure their natural unconstrained dimensions
+        // Temporarily remove d-none to measure natural unconstrained dimensions
         const sections = [
             ...sectionsMenu.querySelectorAll(":scope > *:not(.o_menu_sections_more)"),
         ];
@@ -167,8 +174,8 @@ patch(NavBar.prototype, {
         const brandWidth = brandEl ? brandEl.getBoundingClientRect().width : 0;
         const systrayWidth = systrayEl ? systrayEl.getBoundingClientRect().width : 0;
 
-        // Reserve 28px safety buffer for paddings and margins
-        const trueAvailableWidth = Math.max(0, navbarWidth - brandWidth - systrayWidth - 28);
+        // Reserve 24px safety buffer for paddings and margins
+        const trueAvailableWidth = Math.max(0, navbarWidth - brandWidth - systrayWidth - 24);
 
         const sectionsTotalWidth = sections.reduce(
             (sum, s) => sum + s.getBoundingClientRect().width,
@@ -184,7 +191,6 @@ patch(NavBar.prototype, {
                 if (trueAvailableWidth < consumedWidth + sectionWidth + 3) {
                     const overflowingSections = sections.slice(sections.indexOf(section));
                     overflowingSections.forEach((s) => {
-                        s.classList.add("d-none");
                         const sectionId =
                             s.dataset.section ||
                             s.querySelector("[data-section]")?.getAttribute("data-section");
@@ -201,12 +207,17 @@ patch(NavBar.prototype, {
             }
         }
 
-        const firstCurrentAppSectionExtra = [...this.currentAppSectionsExtra].shift();
-        const currentAppId = firstCurrentAppSectionExtra && firstCurrentAppSectionExtra.appID;
-        if (
-            initialAppSectionsExtra.length === this.currentAppSectionsExtra.length &&
-            initialAppId === currentAppId
-        ) {
+        const currentIds = this.currentAppSectionsExtra.map((s) => s.id).join(",");
+        if (initialIds === currentIds) {
+            // Re-hide overflowing sections in DOM without re-rendering if list didn't change
+            for (const section of sections) {
+                const sectionId =
+                    section.dataset.section ||
+                    section.querySelector("[data-section]")?.getAttribute("data-section");
+                if (this.currentAppSectionsExtra.some((s) => String(s.id) === String(sectionId))) {
+                    section.classList.add("d-none");
+                }
+            }
             return;
         }
         return this.render();
