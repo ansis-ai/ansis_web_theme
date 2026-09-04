@@ -1,6 +1,12 @@
 Changelog
 =========
 
+`18.0.1.2.4`
+------------
+* **Fix undefined appbar_image field error in Settings**:
+  - Restored ``appbar_image`` binary field on ``res.company`` and ``res.config.settings`` for backward compatibility with databases containing legacy views.
+  - Prevents Owl client-side crash (`res.config.settings.appbar_image field is undefined`) when opening the Settings app.
+
 `18.0.1.2.3`
 ------------
 * **Guaranteed '+' More Button Visibility on Narrow Screens**:

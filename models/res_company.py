@@ -17,6 +17,11 @@ class ResCompany(models.Model):
     background_image = fields.Binary(
         string="Apps Menu Background Image", attachment=True
     )
+    appbar_image = fields.Binary(
+        string="Sidebar Logo (Deprecated)",
+        help="Legacy sidebar logo retained for backward compatibility with existing views.",
+        attachment=True,
+    )
 
     theme_font_family = fields.Selection(
         selection=[

@@ -19,6 +19,11 @@ class ResConfigSettings(models.TransientModel):
     theme_background_image = fields.Binary(
         related="company_id.background_image", readonly=False
     )
+    appbar_image = fields.Binary(
+        related="company_id.appbar_image",
+        readonly=False,
+        string="Sidebar Logo (Deprecated)",
+    )
 
     theme_font_family = fields.Selection(
         related="company_id.theme_font_family", readonly=False
